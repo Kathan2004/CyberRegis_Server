@@ -1,0 +1,360 @@
+2025-04-27 00:13:25,991 [INFO] Starting Security Checker API...
+2025-04-27 00:13:25,991 [INFO] Verifying API keys...
+2025-04-27 00:14:14,486 [INFO] Starting Security Checker API...
+2025-04-27 00:14:14,486 [INFO] Verifying API keys...
+2025-04-27 00:18:16,873 [INFO] Starting Security Checker API...
+2025-04-27 00:18:16,882 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-27 00:18:16,882 [INFO] [33mPress CTRL+C to quit[0m
+2025-04-27 00:18:17,878 [INFO] Verifying API keys...
+2025-04-27 00:18:19,939 [INFO] 127.0.0.1 - - [27/Apr/2025 00:18:19] "GET /api/status HTTP/1.1" 200 -
+2025-04-27 00:18:19,941 [INFO] API status check successful: {'data': {'apis': {'abuseipdb': True, 'google_safe_browsing': True, 'telegram': True}, 'status': 'operational', 'timestamp': '2025-04-27T00:18:19.937124'}, 'formatted': "<pre style='background-color: #f4f4f4; padding: 10px; border-radius: 5px;'>{\n  &quot;apis&quot;: {\n    &quot;abuseipdb&quot;: true,\n    &quot;google_safe_browsing&quot;: true,\n    &quot;telegram&quot;: true\n  },\n  &quot;status&quot;: &quot;operational&quot;,\n  &quot;timestamp&quot;: &quot;2025-04-27T00:18:19.937124&quot;\n}</pre>", 'status': 'success', 'timestamp': '2025-04-27 00:18:19'}
+2025-04-27 00:18:19,941 [WARNING] Some APIs are not responding correctly:
+2025-04-27 00:18:19,941 [WARNING] - abuseipdb: OK
+2025-04-27 00:18:19,941 [WARNING] - google_safe_browsing: OK
+2025-04-27 00:18:19,941 [WARNING] - telegram: OK
+2025-04-27 00:18:19,941 [INFO] Server is running on http://127.0.0.1:5000
+2025-04-27 00:19:20,559 [INFO] Shutting down server...
+2025-04-27 00:19:23,472 [INFO] Starting Security Checker API...
+2025-04-27 00:19:23,472 [ERROR] Port 5000 is already in use. Please free the port or use a different one.
+2025-04-27 00:19:25,320 [INFO] Starting Security Checker API...
+2025-04-27 00:19:25,320 [ERROR] Port 5000 is already in use. Please free the port or use a different one.
+2025-04-27 00:19:26,586 [INFO] Starting Security Checker API...
+2025-04-27 00:19:26,586 [ERROR] Port 5000 is already in use. Please free the port or use a different one.
+2025-04-27 00:19:27,578 [INFO] Starting Security Checker API...
+2025-04-27 00:19:27,579 [ERROR] Port 5000 is already in use. Please free the port or use a different one.
+2025-04-27 00:19:28,273 [INFO] Starting Security Checker API...
+2025-04-27 00:19:28,274 [ERROR] Port 5000 is already in use. Please free the port or use a different one.
+2025-04-27 00:19:28,753 [INFO] Starting Security Checker API...
+2025-04-27 00:19:28,754 [ERROR] Port 5000 is already in use. Please free the port or use a different one.
+2025-04-27 00:19:29,288 [INFO] Starting Security Checker API...
+2025-04-27 00:19:29,288 [ERROR] Port 5000 is already in use. Please free the port or use a different one.
+2025-04-27 00:19:29,845 [INFO] Starting Security Checker API...
+2025-04-27 00:19:29,845 [ERROR] Port 5000 is already in use. Please free the port or use a different one.
+2025-04-27 00:19:30,645 [INFO] Starting Security Checker API...
+2025-04-27 00:19:30,645 [ERROR] Port 5000 is already in use. Please free the port or use a different one.
+2025-04-27 00:19:37,847 [INFO] Starting Security Checker API...
+2025-04-27 00:19:37,848 [ERROR] Port 5000 is already in use. Please free the port or use a different one.
+2025-04-27 00:20:16,504 [INFO] Starting Security Checker API...
+2025-04-27 00:20:16,504 [ERROR] Port 5000 is already in use. Please free the port or use a different one.
+2025-04-27 03:09:28,547 [INFO] Starting Security Checker API...
+2025-04-27 03:09:28,547 [ERROR] Port 4000 is already in use. Please free the port or use a different one.
+2025-04-27 03:10:02,411 [INFO] Starting Security Checker API...
+2025-04-27 03:10:02,411 [ERROR] Port 4000 is already in use. Please free the port or use a different one.
+2025-04-27 03:10:12,090 [INFO] Starting Security Checker API...
+2025-04-27 03:10:12,096 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:4000
+2025-04-27 03:10:12,096 [INFO] [33mPress CTRL+C to quit[0m
+2025-04-27 03:10:13,095 [INFO] Verifying API keys...
+2025-04-27 03:10:15,177 [INFO] 127.0.0.1 - - [27/Apr/2025 03:10:15] "GET /api/status HTTP/1.1" 200 -
+2025-04-27 03:10:15,179 [INFO] API status check successful: {'data': {'apis': {'abuseipdb': True, 'google_safe_browsing': True, 'telegram': True, 'together_ai': True}, 'status': 'operational', 'timestamp': '2025-04-27T03:10:15.175022'}, 'formatted': "<pre style='color: #22c55e; background: black; padding: 0;'>{\n  &quot;apis&quot;: {\n    &quot;abuseipdb&quot;: true,\n    &quot;google_safe_browsing&quot;: true,\n    &quot;telegram&quot;: true,\n    &quot;together_ai&quot;: true\n  },\n  &quot;status&quot;: &quot;operational&quot;,\n  &quot;timestamp&quot;: &quot;2025-04-27T03:10:15.175022&quot;\n}</pre>", 'status': 'success', 'timestamp': '2025-04-27 03:10:15'}
+2025-04-27 03:10:15,179 [WARNING] Some APIs are not responding correctly:
+2025-04-27 03:10:15,179 [WARNING] - abuseipdb: OK
+2025-04-27 03:10:15,179 [WARNING] - google_safe_browsing: OK
+2025-04-27 03:10:15,179 [WARNING] - telegram: OK
+2025-04-27 03:10:15,179 [WARNING] - together_ai: OK
+2025-04-27 03:10:15,180 [INFO] Server is running on http://127.0.0.1:4000
+2025-04-27 03:10:23,602 [INFO] Starting Security Checker API...
+2025-04-27 03:10:23,606 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:4000
+2025-04-27 03:10:23,606 [INFO] [33mPress CTRL+C to quit[0m
+2025-04-27 03:10:24,607 [INFO] Verifying API keys...
+2025-04-27 03:10:26,686 [INFO] 127.0.0.1 - - [27/Apr/2025 03:10:26] "GET /api/status HTTP/1.1" 200 -
+2025-04-27 03:10:26,687 [INFO] API status check successful: {'data': {'apis': {'abuseipdb': True, 'google_safe_browsing': True, 'telegram': True, 'together_ai': True}, 'status': 'operational', 'timestamp': '2025-04-27T03:10:26.684105'}, 'formatted': "<pre style='color: #22c55e; background: black; padding: 0;'>{\n  &quot;apis&quot;: {\n    &quot;abuseipdb&quot;: true,\n    &quot;google_safe_browsing&quot;: true,\n    &quot;telegram&quot;: true,\n    &quot;together_ai&quot;: true\n  },\n  &quot;status&quot;: &quot;operational&quot;,\n  &quot;timestamp&quot;: &quot;2025-04-27T03:10:26.684105&quot;\n}</pre>", 'status': 'success', 'timestamp': '2025-04-27 03:10:26'}
+2025-04-27 03:10:26,687 [WARNING] Some APIs are not responding correctly:
+2025-04-27 03:10:26,687 [WARNING] - abuseipdb: OK
+2025-04-27 03:10:26,688 [WARNING] - google_safe_browsing: OK
+2025-04-27 03:10:26,688 [WARNING] - telegram: OK
+2025-04-27 03:10:26,688 [WARNING] - together_ai: OK
+2025-04-27 03:10:26,688 [INFO] Server is running on http://127.0.0.1:4000
+2025-04-27 03:11:09,285 [INFO] 127.0.0.1 - - [27/Apr/2025 03:11:09] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-04-27 03:11:09,295 [INFO] Checking IP: 1.1.1.1
+2025-04-27 03:11:10,688 [INFO] Telegram notification sent for ip check: 1.1.1.1
+2025-04-27 03:11:10,690 [INFO] 127.0.0.1 - - [27/Apr/2025 03:11:10] "POST /api/check-ip HTTP/1.1" 200 -
+2025-04-27 03:11:33,037 [INFO] 127.0.0.1 - - [27/Apr/2025 03:11:33] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-04-27 03:11:33,042 [INFO] Checking URL: https://grok.com/chat/811d67f8-704a-4d78-853a-c14cda43660d
+2025-04-27 03:11:35,739 [INFO] Telegram notification sent for url check: https://grok.com/chat/811d67f8-704a-4d78-853a-c14cda43660d
+2025-04-27 03:11:35,742 [INFO] 127.0.0.1 - - [27/Apr/2025 03:11:35] "POST /api/check-url HTTP/1.1" 200 -
+2025-04-27 03:11:51,170 [INFO] 127.0.0.1 - - [27/Apr/2025 03:11:51] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-04-27 03:11:51,174 [INFO] Processing chat message: hey
+2025-04-27 03:11:53,102 [INFO] Telegram notification sent for chat check: hey
+2025-04-27 03:11:53,104 [INFO] 127.0.0.1 - - [27/Apr/2025 03:11:53] "POST /api/chat HTTP/1.1" 200 -
+2025-04-27 03:12:03,318 [INFO] 127.0.0.1 - - [27/Apr/2025 03:12:03] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-04-27 03:12:03,323 [INFO] Processing chat message: what is Ip
+2025-04-27 03:12:07,964 [ERROR] Failed to send Telegram notification: 400 Client Error: Bad Request for url: https://api.telegram.org/bot7631413879:AAH1eDKDIKYGepmKZRplMXnAVyRFljHjEQo/sendMessage
+2025-04-27 03:12:07,965 [INFO] 127.0.0.1 - - [27/Apr/2025 03:12:07] "POST /api/chat HTTP/1.1" 200 -
+2025-04-27 03:22:42,622 [INFO] Starting Security Checker API...
+2025-04-27 03:22:42,630 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:4000
+2025-04-27 03:22:42,630 [INFO] [33mPress CTRL+C to quit[0m
+2025-04-27 03:22:43,628 [INFO] Verifying API keys...
+2025-04-27 03:22:45,544 [INFO] 127.0.0.1 - - [27/Apr/2025 03:22:45] "GET /api/status HTTP/1.1" 200 -
+2025-04-27 03:22:45,545 [INFO] API status check successful: {'data': {'apis': {'abuseipdb': True, 'google_safe_browsing': True, 'telegram': True, 'together_ai': True}, 'status': 'operational', 'timestamp': '2025-04-27T03:22:45.543095'}, 'formatted': "<pre style='color: #22c55e; background: black; padding: 0;'>{\n  &quot;apis&quot;: {\n    &quot;abuseipdb&quot;: true,\n    &quot;google_safe_browsing&quot;: true,\n    &quot;telegram&quot;: true,\n    &quot;together_ai&quot;: true\n  },\n  &quot;status&quot;: &quot;operational&quot;,\n  &quot;timestamp&quot;: &quot;2025-04-27T03:22:45.543095&quot;\n}</pre>", 'status': 'success', 'timestamp': '2025-04-27 03:22:45'}
+2025-04-27 03:22:45,545 [WARNING] Some APIs are not responding correctly:
+2025-04-27 03:22:45,545 [WARNING] - abuseipdb: OK
+2025-04-27 03:22:45,545 [WARNING] - google_safe_browsing: OK
+2025-04-27 03:22:45,545 [WARNING] - telegram: OK
+2025-04-27 03:22:45,545 [WARNING] - together_ai: OK
+2025-04-27 03:22:45,545 [INFO] Server is running on http://127.0.0.1:4000
+2025-04-27 03:23:38,378 [INFO] 127.0.0.1 - - [27/Apr/2025 03:23:38] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-04-27 03:23:38,384 [INFO] Processing chat message: hey
+2025-04-27 03:23:41,157 [INFO] Telegram notification sent for chat check: hey
+2025-04-27 03:23:41,159 [INFO] 127.0.0.1 - - [27/Apr/2025 03:23:41] "POST /api/chat HTTP/1.1" 200 -
+2025-04-27 03:23:55,798 [INFO] 127.0.0.1 - - [27/Apr/2025 03:23:55] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-04-27 03:23:55,802 [INFO] Checking URL: https://grok.com/chat/811d67f8-704a-4d78-853a-c14cda43660d
+2025-04-27 03:23:58,230 [INFO] Telegram notification sent for url check: https://grok.com/chat/811d67f8-704a-4d78-853a-c14cda43660d
+2025-04-27 03:23:58,232 [INFO] 127.0.0.1 - - [27/Apr/2025 03:23:58] "POST /api/check-url HTTP/1.1" 200 -
+2025-04-27 03:24:40,814 [INFO] 127.0.0.1 - - [27/Apr/2025 03:24:40] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-04-27 03:24:40,820 [INFO] Checking URL: https://jpel.com
+2025-04-27 03:24:49,743 [INFO] Telegram notification sent for url check: https://jpel.com
+2025-04-27 03:24:49,745 [INFO] 127.0.0.1 - - [27/Apr/2025 03:24:49] "POST /api/check-url HTTP/1.1" 200 -
+2025-04-27 03:25:05,217 [INFO] 127.0.0.1 - - [27/Apr/2025 03:25:05] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-04-27 03:25:05,221 [INFO] Checking URL: https://jpel.in
+2025-04-27 03:25:07,618 [INFO] Telegram notification sent for url check: https://jpel.in
+2025-04-27 03:25:07,620 [INFO] 127.0.0.1 - - [27/Apr/2025 03:25:07] "POST /api/check-url HTTP/1.1" 200 -
+2025-04-27 03:33:29,705 [INFO] 127.0.0.1 - - [27/Apr/2025 03:33:29] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-04-27 03:33:29,713 [INFO] Processing chat message: hi
+2025-04-27 03:33:33,053 [INFO] Telegram notification sent for chat check: hi
+2025-04-27 03:33:33,054 [INFO] 127.0.0.1 - - [27/Apr/2025 03:33:33] "POST /api/chat HTTP/1.1" 200 -
+2025-04-27 03:33:45,915 [INFO] 127.0.0.1 - - [27/Apr/2025 03:33:45] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-04-27 03:33:45,920 [INFO] Processing chat message: can you explain;ain me how to hack a wifi
+2025-04-27 03:33:47,769 [INFO] Telegram notification sent for chat check: can you explain;ain me how to hack a wifi
+2025-04-27 03:33:47,771 [INFO] 127.0.0.1 - - [27/Apr/2025 03:33:47] "POST /api/chat HTTP/1.1" 200 -
+2025-04-27 03:34:08,165 [INFO] 127.0.0.1 - - [27/Apr/2025 03:34:08] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-04-27 03:34:08,170 [INFO] Processing chat message: can you give me code to use aircrack-ng
+2025-04-27 03:34:15,124 [INFO] Telegram notification sent for chat check: can you give me code to use aircrack-ng
+2025-04-27 03:34:15,126 [INFO] 127.0.0.1 - - [27/Apr/2025 03:34:15] "POST /api/chat HTTP/1.1" 200 -
+2025-04-27 03:34:40,682 [INFO] 127.0.0.1 - - [27/Apr/2025 03:34:40] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-04-27 03:34:40,687 [INFO] Processing chat message: explain to me ssl
+2025-04-27 03:34:48,461 [INFO] Telegram notification sent for chat check: explain to me ssl
+2025-04-27 03:34:48,463 [INFO] 127.0.0.1 - - [27/Apr/2025 03:34:48] "POST /api/chat HTTP/1.1" 200 -
+2025-04-27 03:35:30,795 [INFO] 127.0.0.1 - - [27/Apr/2025 03:35:30] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-04-27 03:35:30,801 [INFO] Processing chat message: what did I ask  in my previous chat
+2025-04-27 03:35:32,688 [INFO] Telegram notification sent for chat check: what did I ask  in my previous chat
+2025-04-27 03:35:32,690 [INFO] 127.0.0.1 - - [27/Apr/2025 03:35:32] "POST /api/chat HTTP/1.1" 200 -
+2025-04-27 03:36:12,508 [INFO] 127.0.0.1 - - [27/Apr/2025 03:36:12] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-04-27 03:36:12,514 [INFO] Processing chat message: hye
+2025-04-27 03:36:14,442 [INFO] Telegram notification sent for chat check: hye
+2025-04-27 03:36:14,444 [INFO] 127.0.0.1 - - [27/Apr/2025 03:36:14] "POST /api/chat HTTP/1.1" 200 -
+2025-04-27 03:46:15,575 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:4000
+ * Running on http://192.168.1.41:4000
+2025-04-27 03:46:15,575 [INFO] [33mPress CTRL+C to quit[0m
+2025-04-27 03:46:15,576 [INFO]  * Restarting with stat
+2025-04-27 03:46:16,114 [WARNING]  * Debugger is active!
+2025-04-27 03:46:16,123 [INFO]  * Debugger PIN: 344-475-627
+2025-04-27 03:47:43,575 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:4000
+ * Running on http://192.168.1.41:4000
+2025-04-27 03:47:43,576 [INFO] [33mPress CTRL+C to quit[0m
+2025-04-27 03:47:43,576 [INFO]  * Restarting with stat
+2025-04-27 03:47:44,124 [WARNING]  * Debugger is active!
+2025-04-27 03:47:44,132 [INFO]  * Debugger PIN: 344-475-627
+2025-04-27 03:47:54,448 [INFO] 127.0.0.1 - - [27/Apr/2025 03:47:54] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-04-27 03:47:55,801 [INFO] Telegram notification sent for ip check: 1.1.1.1
+2025-04-27 03:47:55,803 [INFO] 127.0.0.1 - - [27/Apr/2025 03:47:55] "POST /api/check-ip HTTP/1.1" 200 -
+2025-04-27 03:48:18,584 [INFO] 127.0.0.1 - - [27/Apr/2025 03:48:18] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-04-27 03:48:20,931 [INFO] Telegram notification sent for url check: https://grok.com/chat/811d67f8-704a-4d78-853a-c14cda43660d
+2025-04-27 03:48:20,933 [INFO] 127.0.0.1 - - [27/Apr/2025 03:48:20] "POST /api/check-url HTTP/1.1" 200 -
+2025-04-27 03:48:31,380 [INFO] 127.0.0.1 - - [27/Apr/2025 03:48:31] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-04-27 03:48:31,385 [INFO] Processing chat message: hey
+2025-04-27 03:48:33,554 [INFO] Telegram notification sent for chat check: hey
+2025-04-27 03:48:33,557 [INFO] 127.0.0.1 - - [27/Apr/2025 03:48:33] "POST /api/chat HTTP/1.1" 200 -
+2025-04-27 03:51:23,862 [INFO]  * Detected change in '/Users/darshandorik/Desktop/Cyberegis server/KALE.py', reloading
+2025-04-27 03:51:24,052 [INFO]  * Restarting with stat
+2025-04-27 03:51:24,885 [WARNING]  * Debugger is active!
+2025-04-27 03:51:24,892 [INFO]  * Debugger PIN: 344-475-627
+2025-04-27 03:52:03,511 [INFO] 127.0.0.1 - - [27/Apr/2025 03:52:03] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-04-27 03:52:06,547 [INFO] Telegram notification sent for url check: https://grok.com/chat/811d67f8-704a-4d78-853a-c14cda43660d
+2025-04-27 03:52:06,550 [INFO] 127.0.0.1 - - [27/Apr/2025 03:52:06] "POST /api/check-url HTTP/1.1" 200 -
+2025-04-27 03:53:06,692 [ERROR] Error fetching VirusTotal report: VirusTotal analysis not completed in time
+2025-04-27 03:53:07,800 [INFO] PDF report generated: /Users/darshandorik/Desktop/Cyberegis server/uploads/fuzz-2006-09-29-28586_analysis_report.pdf
+2025-04-27 03:53:09,372 [INFO] Telegram notification sent for pcap check: fuzz-2006-09-29-28586.pcap
+2025-04-27 03:53:09,373 [INFO] 127.0.0.1 - - [27/Apr/2025 03:53:09] "POST /api/analyze-pcap HTTP/1.1" 200 -
+2025-04-27 03:53:14,792 [INFO] 127.0.0.1 - - [27/Apr/2025 03:53:14] "[33mGET /api/download/fuzz-2006-09-29-28586_protocol_chart.png HTTP/1.1[0m" 404 -
+2025-04-27 03:53:22,275 [INFO] 127.0.0.1 - - [27/Apr/2025 03:53:22] "[33mGET /api/download/fuzz-2006-09-29-28586_analysis_report.pdf HTTP/1.1[0m" 404 -
+2025-04-27 04:00:37,930 [INFO]  * Detected change in '/Users/darshandorik/Desktop/Cyberegis server/KALE.py', reloading
+2025-04-27 04:00:38,113 [INFO]  * Restarting with stat
+2025-04-27 04:00:38,948 [WARNING]  * Debugger is active!
+2025-04-27 04:00:38,955 [INFO]  * Debugger PIN: 344-475-627
+2025-04-27 04:01:49,751 [INFO] PDF report generated: /Users/darshandorik/Desktop/Cyberegis server/uploads/fuzz-2006-09-29-28586_analysis_report.pdf
+2025-04-27 04:01:50,444 [INFO] Telegram notification sent for pcap check: fuzz-2006-09-29-28586.pcap
+2025-04-27 04:01:50,450 [INFO] 127.0.0.1 - - [27/Apr/2025 04:01:50] "POST /api/analyze-pcap HTTP/1.1" 200 -
+2025-04-27 04:01:59,375 [INFO] Attempting to download file: /Users/darshandorik/Desktop/Cyberegis server/uploads/uploads/fuzz-2006-09-29-28586_protocol_chart.png
+2025-04-27 04:01:59,375 [ERROR] File not found: /Users/darshandorik/Desktop/Cyberegis server/uploads/uploads/fuzz-2006-09-29-28586_protocol_chart.png
+2025-04-27 04:01:59,375 [INFO] 127.0.0.1 - - [27/Apr/2025 04:01:59] "[33mGET /api/download/fuzz-2006-09-29-28586_protocol_chart.png HTTP/1.1[0m" 404 -
+2025-04-27 04:02:16,629 [INFO] Attempting to download file: /Users/darshandorik/Desktop/Cyberegis server/uploads/uploads/fuzz-2006-09-29-28586_analysis_report.pdf
+2025-04-27 04:02:16,630 [ERROR] File not found: /Users/darshandorik/Desktop/Cyberegis server/uploads/uploads/fuzz-2006-09-29-28586_analysis_report.pdf
+2025-04-27 04:02:16,631 [INFO] 127.0.0.1 - - [27/Apr/2025 04:02:16] "[33mGET /api/download/fuzz-2006-09-29-28586_analysis_report.pdf HTTP/1.1[0m" 404 -
+2025-04-27 04:02:55,295 [ERROR] Error fetching VirusTotal report: VirusTotal analysis not completed in time
+2025-04-27 04:02:55,903 [INFO] PDF report generated: /Users/darshandorik/Desktop/Cyberegis server/uploads/uploads/fuzz-2012-04-12-17918_analysis_report.pdf
+2025-04-27 04:02:56,568 [INFO] Telegram notification sent for pcap check: fuzz-2012-04-12-17918.pcap
+2025-04-27 04:02:56,570 [INFO] 127.0.0.1 - - [27/Apr/2025 04:02:56] "POST /api/analyze-pcap HTTP/1.1" 200 -
+2025-04-27 04:03:02,289 [INFO] Attempting to download file: /Users/darshandorik/Desktop/Cyberegis server/uploads/uploads/uploads/fuzz-2012-04-12-17918_analysis_report.pdf
+2025-04-27 04:03:02,289 [ERROR] File not found: /Users/darshandorik/Desktop/Cyberegis server/uploads/uploads/uploads/fuzz-2012-04-12-17918_analysis_report.pdf
+2025-04-27 04:03:02,290 [INFO] 127.0.0.1 - - [27/Apr/2025 04:03:02] "[33mGET /api/download/fuzz-2012-04-12-17918_analysis_report.pdf HTTP/1.1[0m" 404 -
+2025-04-27 04:03:07,859 [INFO] Attempting to download file: /Users/darshandorik/Desktop/Cyberegis server/uploads/uploads/uploads/fuzz-2012-04-12-17918_protocol_chart.png
+2025-04-27 04:03:07,859 [ERROR] File not found: /Users/darshandorik/Desktop/Cyberegis server/uploads/uploads/uploads/fuzz-2012-04-12-17918_protocol_chart.png
+2025-04-27 04:03:07,859 [INFO] 127.0.0.1 - - [27/Apr/2025 04:03:07] "[33mGET /api/download/fuzz-2012-04-12-17918_protocol_chart.png HTTP/1.1[0m" 404 -
+2025-04-27 04:03:21,037 [INFO] PDF report generated: /Users/darshandorik/Desktop/Cyberegis server/uploads/uploads/uploads/fuzz-2012-04-12-17918_analysis_report.pdf
+2025-04-27 04:03:21,692 [INFO] Telegram notification sent for pcap check: fuzz-2012-04-12-17918.pcap
+2025-04-27 04:03:21,695 [INFO] 127.0.0.1 - - [27/Apr/2025 04:03:21] "POST /api/analyze-pcap HTTP/1.1" 200 -
+2025-04-27 04:04:06,154 [ERROR] Error fetching VirusTotal report: VirusTotal analysis not completed in time
+2025-04-27 04:04:06,823 [INFO] PDF report generated: /Users/darshandorik/Desktop/Cyberegis server/uploads/uploads/uploads/uploads/fuzz-2010-02-21-31103_analysis_report.pdf
+2025-04-27 04:04:07,558 [INFO] Telegram notification sent for pcap check: fuzz-2010-02-21-31103.pcap
+2025-04-27 04:04:07,561 [INFO] 127.0.0.1 - - [27/Apr/2025 04:04:07] "POST /api/analyze-pcap HTTP/1.1" 200 -
+2025-04-27 04:07:17,125 [INFO]  * Detected change in '/Users/darshandorik/Desktop/Cyberegis server/KALE.py', reloading
+2025-04-27 04:07:17,312 [INFO]  * Restarting with stat
+2025-04-27 04:07:18,227 [WARNING]  * Debugger is active!
+2025-04-27 04:07:18,235 [INFO]  * Debugger PIN: 344-475-627
+2025-04-27 04:07:19,262 [INFO]  * Detected change in '/Users/darshandorik/Desktop/Cyberegis server/KALE.py', reloading
+2025-04-27 04:07:19,463 [INFO]  * Restarting with stat
+2025-04-27 04:07:20,350 [WARNING]  * Debugger is active!
+2025-04-27 04:07:20,357 [INFO]  * Debugger PIN: 344-475-627
+2025-04-27 04:07:24,453 [INFO]  * Detected change in '/Users/darshandorik/Desktop/Cyberegis server/KALE.py', reloading
+2025-04-27 04:07:24,668 [INFO]  * Restarting with stat
+2025-04-27 04:07:25,265 [WARNING]  * Debugger is active!
+2025-04-27 04:07:25,273 [INFO]  * Debugger PIN: 344-475-627
+2025-04-27 04:07:48,263 [INFO] Telegram notification sent for pcap check: fuzz-2010-02-21-31103.pcap
+2025-04-27 04:07:48,269 [INFO] 127.0.0.1 - - [27/Apr/2025 04:07:48] "POST /api/analyze-pcap HTTP/1.1" 200 -
+2025-04-27 04:08:01,416 [INFO] 127.0.0.1 - - [27/Apr/2025 04:08:01] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-04-27 04:08:02,751 [INFO] Telegram notification sent for ip check: 1.1.1.1
+2025-04-27 04:08:02,754 [INFO] 127.0.0.1 - - [27/Apr/2025 04:08:02] "POST /api/check-ip HTTP/1.1" 200 -
+2025-04-27 04:08:19,496 [INFO] 127.0.0.1 - - [27/Apr/2025 04:08:19] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-04-27 04:08:39,706 [INFO] Telegram notification sent for url check: https://niriksh.com
+2025-04-27 04:08:39,710 [INFO] 127.0.0.1 - - [27/Apr/2025 04:08:39] "POST /api/check-url HTTP/1.1" 200 -
+2025-04-27 04:13:24,994 [INFO] 127.0.0.1 - - [27/Apr/2025 04:13:24] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-04-27 04:13:25,001 [INFO] Processing chat message: hey sexy
+2025-04-27 04:13:26,899 [INFO] Telegram notification sent for chat check: hey sexy
+2025-04-27 04:13:26,901 [INFO] 127.0.0.1 - - [27/Apr/2025 04:13:26] "POST /api/chat HTTP/1.1" 200 -
+2025-04-27 04:13:30,943 [INFO] 127.0.0.1 - - [27/Apr/2025 04:13:30] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-04-27 04:13:30,946 [INFO] Processing chat message: you
+2025-04-27 04:13:33,709 [INFO] Telegram notification sent for chat check: you
+2025-04-27 04:13:33,710 [INFO] 127.0.0.1 - - [27/Apr/2025 04:13:33] "POST /api/chat HTTP/1.1" 200 -
+2025-04-27 04:13:47,012 [INFO] 127.0.0.1 - - [27/Apr/2025 04:13:47] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-04-27 04:13:47,015 [INFO] Processing chat message: what's this mean 403 status code
+2025-04-27 04:13:51,443 [INFO] Telegram notification sent for chat check: what's this mean 403 status code
+2025-04-27 04:13:51,445 [INFO] 127.0.0.1 - - [27/Apr/2025 04:13:51] "POST /api/chat HTTP/1.1" 200 -
+2025-04-27 04:14:08,205 [INFO] 127.0.0.1 - - [27/Apr/2025 04:14:08] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-04-27 04:14:10,897 [INFO] Telegram notification sent for url check: https://grok.com/chat/811d67f8-704a-4d78-853a-c14cda43660d
+2025-04-27 04:14:10,899 [INFO] 127.0.0.1 - - [27/Apr/2025 04:14:10] "POST /api/check-url HTTP/1.1" 200 -
+2025-04-27 04:14:27,574 [INFO] Telegram notification sent for pcap check: fuzz-2010-02-21-31103.pcap
+2025-04-27 04:14:27,581 [INFO] 127.0.0.1 - - [27/Apr/2025 04:14:27] "POST /api/analyze-pcap HTTP/1.1" 200 -
+2025-04-27 04:15:25,057 [ERROR] Error fetching VirusTotal report: VirusTotal analysis not completed in time
+2025-04-27 04:15:26,271 [INFO] Telegram notification sent for pcap check: fuzz-2006-09-29-28586.pcap
+2025-04-27 04:15:26,274 [INFO] 127.0.0.1 - - [27/Apr/2025 04:15:26] "POST /api/analyze-pcap HTTP/1.1" 200 -
+2025-04-27 23:17:37,761 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:4000
+ * Running on http://192.168.1.40:4000
+2025-04-27 23:17:37,761 [INFO] [33mPress CTRL+C to quit[0m
+2025-04-27 23:17:37,763 [INFO]  * Restarting with stat
+2025-04-27 23:17:38,425 [WARNING]  * Debugger is active!
+2025-04-27 23:17:38,434 [INFO]  * Debugger PIN: 734-987-095
+2025-04-27 23:18:44,021 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:4000
+ * Running on http://192.168.1.40:4000
+2025-04-27 23:18:44,022 [INFO] [33mPress CTRL+C to quit[0m
+2025-04-27 23:18:44,022 [INFO]  * Restarting with stat
+2025-04-27 23:18:44,519 [WARNING]  * Debugger is active!
+2025-04-27 23:18:44,525 [INFO]  * Debugger PIN: 734-987-095
+2025-04-27 23:21:45,721 [INFO]  * Detected change in '/Users/kathan/Downloads/cyberRegis final 3/Cyberegis server copy/tempCodeRunnerFile.py', reloading
+2025-04-27 23:21:45,865 [INFO]  * Restarting with stat
+2025-04-27 23:21:46,602 [WARNING]  * Debugger is active!
+2025-04-27 23:21:46,609 [INFO]  * Debugger PIN: 734-987-095
+2025-04-27 23:24:16,541 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:4000
+ * Running on http://192.168.1.40:4000
+2025-04-27 23:24:16,541 [INFO] [33mPress CTRL+C to quit[0m
+2025-04-27 23:24:16,545 [INFO]  * Restarting with stat
+2025-04-27 23:24:17,076 [WARNING]  * Debugger is active!
+2025-04-27 23:24:17,085 [INFO]  * Debugger PIN: 734-987-095
+2025-04-27 23:25:16,247 [INFO] 127.0.0.1 - - [27/Apr/2025 23:25:16] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-04-27 23:25:17,795 [INFO] Telegram notification sent for ip check: 1.1.1.1
+2025-04-27 23:25:17,796 [INFO] 127.0.0.1 - - [27/Apr/2025 23:25:17] "POST /api/check-ip HTTP/1.1" 200 -
+2025-04-27 23:25:34,463 [INFO] 127.0.0.1 - - [27/Apr/2025 23:25:34] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-04-27 23:25:34,470 [INFO] Processing chat message: hey baby give python code to crack aircrack-ng
+2025-04-27 23:25:43,216 [INFO] Telegram notification sent for chat check: hey baby give python code to crack aircrack-ng
+2025-04-27 23:25:43,218 [INFO] 127.0.0.1 - - [27/Apr/2025 23:25:43] "POST /api/chat HTTP/1.1" 200 -
+2025-04-28 00:44:28,057 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:4000
+ * Running on http://192.168.1.40:4000
+2025-04-28 00:44:28,057 [INFO] [33mPress CTRL+C to quit[0m
+2025-04-28 00:44:28,058 [INFO]  * Restarting with stat
+2025-04-28 00:44:28,573 [WARNING]  * Debugger is active!
+2025-04-28 00:44:28,580 [INFO]  * Debugger PIN: 734-987-095
+2025-04-28 00:45:27,540 [INFO] 127.0.0.1 - - [28/Apr/2025 00:45:27] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-04-28 00:45:40,973 [INFO] Telegram notification sent for url check: https://niriksh.com
+2025-04-28 00:45:40,978 [INFO] 127.0.0.1 - - [28/Apr/2025 00:45:40] "POST /api/check-url HTTP/1.1" 200 -
+2025-04-28 00:45:58,910 [INFO] 127.0.0.1 - - [28/Apr/2025 00:45:58] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-04-28 00:46:00,391 [INFO] Telegram notification sent for ip check: 1.1.1.1
+2025-04-28 00:46:00,392 [INFO] 127.0.0.1 - - [28/Apr/2025 00:46:00] "POST /api/check-ip HTTP/1.1" 200 -
+2025-04-28 00:50:12,413 [INFO] Telegram notification sent for pcap check: fuzz-2006-08-27-23430.pcap
+2025-04-28 00:50:12,417 [INFO] 127.0.0.1 - - [28/Apr/2025 00:50:12] "POST /api/analyze-pcap HTTP/1.1" 200 -
+2025-04-28 00:50:52,575 [INFO] 127.0.0.1 - - [28/Apr/2025 00:50:52] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-04-28 00:50:52,586 [INFO] Processing chat message: what is port 80
+2025-04-28 00:50:56,408 [INFO] Telegram notification sent for chat check: what is port 80
+2025-04-28 00:50:56,410 [INFO] 127.0.0.1 - - [28/Apr/2025 00:50:56] "POST /api/chat HTTP/1.1" 200 -
+2025-04-28 00:51:11,186 [INFO] 127.0.0.1 - - [28/Apr/2025 00:51:11] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-04-28 00:51:11,192 [INFO] Processing chat message: what is the meaning of porn
+2025-04-28 00:51:16,590 [INFO] Telegram notification sent for chat check: what is the meaning of porn
+2025-04-28 00:51:16,592 [INFO] 127.0.0.1 - - [28/Apr/2025 00:51:16] "POST /api/chat HTTP/1.1" 200 -
+2025-04-28 00:54:34,615 [INFO] 127.0.0.1 - - [28/Apr/2025 00:54:34] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-04-28 00:54:34,628 [INFO] Processing chat message: hi
+2025-04-28 00:54:37,365 [INFO] Telegram notification sent for chat check: hi
+2025-04-28 00:54:37,367 [INFO] 127.0.0.1 - - [28/Apr/2025 00:54:37] "POST /api/chat HTTP/1.1" 200 -
+2025-04-28 02:46:43,133 [INFO] 127.0.0.1 - - [28/Apr/2025 02:46:43] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-04-28 02:46:43,142 [INFO] Processing chat message: hey
+2025-04-28 02:46:44,833 [INFO] Telegram notification sent for chat check: hey
+2025-04-28 02:46:44,835 [INFO] 127.0.0.1 - - [28/Apr/2025 02:46:44] "POST /api/chat HTTP/1.1" 200 -
+2025-04-28 02:46:53,733 [INFO] 127.0.0.1 - - [28/Apr/2025 02:46:53] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-04-28 02:46:55,186 [INFO] Telegram notification sent for ip check: 1.1.1.1
+2025-04-28 02:46:55,187 [INFO] 127.0.0.1 - - [28/Apr/2025 02:46:55] "POST /api/check-ip HTTP/1.1" 200 -
+2025-04-28 02:51:11,989 [ERROR] Error fetching VirusTotal report: VirusTotal analysis not completed in time
+2025-04-28 02:51:13,624 [INFO] Telegram notification sent for pcap check: fuzz-2006-08-27-23430.pcap
+2025-04-28 02:51:13,625 [INFO] 127.0.0.1 - - [28/Apr/2025 02:51:13] "POST /api/analyze-pcap HTTP/1.1" 200 -
+2025-04-28 03:02:56,515 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:4000
+ * Running on http://192.168.1.40:4000
+2025-04-28 03:02:56,515 [INFO] [33mPress CTRL+C to quit[0m
+2025-04-28 03:02:56,516 [INFO]  * Restarting with stat
+2025-04-28 03:02:57,028 [WARNING]  * Debugger is active!
+2025-04-28 03:02:57,037 [INFO]  * Debugger PIN: 734-987-095
+2025-04-28 03:06:00,209 [INFO] 127.0.0.1 - - [28/Apr/2025 03:06:00] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-04-28 03:06:01,619 [INFO] Telegram notification sent for ip check: 1.1.1.1
+2025-04-28 03:06:01,622 [INFO] 127.0.0.1 - - [28/Apr/2025 03:06:01] "POST /api/check-ip HTTP/1.1" 200 -
+2025-04-28 03:06:37,937 [INFO] 127.0.0.1 - - [28/Apr/2025 03:06:37] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-04-28 03:06:52,043 [INFO] Telegram notification sent for url check: https://niriksh.com
+2025-04-28 03:06:52,047 [INFO] 127.0.0.1 - - [28/Apr/2025 03:06:52] "POST /api/check-url HTTP/1.1" 200 -
+2025-04-28 03:10:58,002 [INFO] 127.0.0.1 - - [28/Apr/2025 03:10:58] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-04-28 03:10:58,009 [INFO] Cache hit for IP: 1.1.1.1
+2025-04-28 03:10:58,010 [INFO] 127.0.0.1 - - [28/Apr/2025 03:10:58] "POST /api/check-ip HTTP/1.1" 200 -
+2025-04-28 03:11:08,329 [INFO] 127.0.0.1 - - [28/Apr/2025 03:11:08] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-04-28 03:11:09,858 [INFO] Telegram notification sent for ip check: 8.8.8.8
+2025-04-28 03:11:09,862 [INFO] 127.0.0.1 - - [28/Apr/2025 03:11:09] "POST /api/check-ip HTTP/1.1" 200 -
+2025-04-28 03:11:45,471 [INFO] 127.0.0.1 - - [28/Apr/2025 03:11:45] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-04-28 03:11:49,031 [INFO] Telegram notification sent for url check: https://google.com
+2025-04-28 03:11:49,033 [INFO] 127.0.0.1 - - [28/Apr/2025 03:11:49] "POST /api/check-url HTTP/1.1" 200 -
+2025-04-28 03:14:42,137 [INFO] 127.0.0.1 - - [28/Apr/2025 03:14:42] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-04-28 03:14:42,144 [INFO] Cache hit for URL: https://google.com
+2025-04-28 03:14:42,149 [INFO] 127.0.0.1 - - [28/Apr/2025 03:14:42] "POST /api/check-url HTTP/1.1" 200 -
+2025-04-28 03:14:43,364 [INFO] Cache hit for URL: https://google.com
+2025-04-28 03:14:43,364 [INFO] 127.0.0.1 - - [28/Apr/2025 03:14:43] "POST /api/check-url HTTP/1.1" 200 -
+2025-04-28 03:14:52,752 [INFO] 127.0.0.1 - - [28/Apr/2025 03:14:52] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-04-28 03:14:52,754 [INFO] Cache hit for URL: https://google.com
+2025-04-28 03:14:52,754 [INFO] 127.0.0.1 - - [28/Apr/2025 03:14:52] "POST /api/check-url HTTP/1.1" 200 -
+2025-04-28 03:15:05,373 [INFO] 127.0.0.1 - - [28/Apr/2025 03:15:05] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-04-28 03:15:09,819 [INFO] Telegram notification sent for url check: https://oracle.com
+2025-04-28 03:15:09,822 [INFO] 127.0.0.1 - - [28/Apr/2025 03:15:09] "POST /api/check-url HTTP/1.1" 200 -
+2025-04-28 03:20:00,383 [INFO] 127.0.0.1 - - [28/Apr/2025 03:20:00] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-04-28 03:20:02,010 [INFO] Telegram notification sent for ip check: 192.68.9.9
+2025-04-28 03:20:02,014 [INFO] 127.0.0.1 - - [28/Apr/2025 03:20:02] "POST /api/check-ip HTTP/1.1" 200 -
+2025-04-28 03:20:33,516 [INFO] 127.0.0.1 - - [28/Apr/2025 03:20:33] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-04-28 03:20:35,046 [INFO] Telegram notification sent for ip check: 176.65.149.6
+2025-04-28 03:20:35,048 [INFO] 127.0.0.1 - - [28/Apr/2025 03:20:35] "POST /api/check-ip HTTP/1.1" 200 -

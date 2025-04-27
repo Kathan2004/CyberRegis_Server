@@ -1,0 +1,9 @@
+Flask
+flask-cors
+flask-limiter
+requests
+cachetools
+python-whois
+together
+pyshark
+matplotlib
