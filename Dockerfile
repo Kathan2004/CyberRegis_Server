@@ -10,4 +10,4 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
-CMD gunicorn -w 4 -b 0.0.0.0:${PORT:-4000} KALE:app
+CMD gunicorn -w 4 -b 0.0.0.0:$PORT KALE:app
