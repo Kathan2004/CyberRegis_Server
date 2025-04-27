@@ -20,7 +20,7 @@ import time
 import socket
 import threading
 from together import Together
-import pyshark
+import scapy.all as scapy
 import matplotlib.pyplot as plt
 import io
 import base64
@@ -139,17 +139,20 @@ class AnalysisReport:
             return {}
 
     def analyze_pcap(self, file_path):
-        capture = pyshark.FileCapture(file_path)
-        protocol_counts = {}
-
-        for packet in capture:
-            protocol = packet.highest_layer
-            protocol_counts[protocol] = protocol_counts.get(protocol, 0) + 1
-
-        capture.close()
-        return protocol_counts
+        try:
+            packets = scapy.rdpcap(file_path)
+            protocol_counts = {}
+            for packet in packets:
+                proto = packet.__class__.__name__
+                protocol_counts[proto] = protocol_counts.get(proto, 0) + 1
+            return protocol_counts
+        except Exception as e:
+            logger.error(f"Error analyzing PCAP with Scapy: {e}")
+            return {"error": str(e)}
 
     def generate_pcap_chart(self, protocol_counts, file_path):
+        if "error" in protocol_counts:
+            return ""
         protocols = list(protocol_counts.keys())
         counts = list(protocol_counts.values())
 
@@ -161,7 +164,6 @@ class AnalysisReport:
         plt.xticks(rotation=45)
         plt.tight_layout()
 
-        # Save chart to a bytes buffer and encode as base64
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png', bbox_inches='tight')
         buffer.seek(0)
@@ -619,7 +621,6 @@ def api_check_ip():
             "error": "IP check failed",
             "message": str(e)
         })), 500
-
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 4000))  # Use Railway's dynamic port if available

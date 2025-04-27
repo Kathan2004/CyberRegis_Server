@@ -5,6 +5,6 @@ requests
 cachetools
 python-whois
 together
-pyshark
+scapy
 matplotlib
 gunicorn
