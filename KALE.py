@@ -620,5 +620,7 @@ def api_check_ip():
             "message": str(e)
         })), 500
 
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=4000, debug=True, threaded=False)
+    port = int(os.environ.get('PORT', 4000))  # Use Railway's dynamic port if available
+    app.run(host="0.0.0.0", port=port, debug=True, threaded=True)

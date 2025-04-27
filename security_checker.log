@@ -358,3 +358,11 @@
 2025-04-28 03:20:33,516 [INFO] 127.0.0.1 - - [28/Apr/2025 03:20:33] "OPTIONS /api/check-ip HTTP/1.1" 200 -
 2025-04-28 03:20:35,046 [INFO] Telegram notification sent for ip check: 176.65.149.6
 2025-04-28 03:20:35,048 [INFO] 127.0.0.1 - - [28/Apr/2025 03:20:35] "POST /api/check-ip HTTP/1.1" 200 -
+2025-04-28 03:40:12,504 [INFO] 127.0.0.1 - - [28/Apr/2025 03:40:12] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-04-28 03:40:12,515 [INFO] Cache hit for IP: 176.65.149.6
+2025-04-28 03:40:12,516 [INFO] 127.0.0.1 - - [28/Apr/2025 03:40:12] "POST /api/check-ip HTTP/1.1" 200 -
+2025-04-28 03:40:13,338 [INFO] Cache hit for IP: 176.65.149.6
+2025-04-28 03:40:13,338 [INFO] 127.0.0.1 - - [28/Apr/2025 03:40:13] "POST /api/check-ip HTTP/1.1" 200 -
+2025-04-28 03:40:18,563 [INFO] 127.0.0.1 - - [28/Apr/2025 03:40:18] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-04-28 03:40:20,345 [INFO] Telegram notification sent for ip check: 176.65.149.1
+2025-04-28 03:40:20,346 [INFO] 127.0.0.1 - - [28/Apr/2025 03:40:20] "POST /api/check-ip HTTP/1.1" 200 -
