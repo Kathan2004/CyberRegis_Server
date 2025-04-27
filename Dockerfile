@@ -1,9 +1,9 @@
 # Use a lightweight Python base image
 FROM python:3.11-slim
 
-# Install TShark and dependencies
+# Install TShark and matplotlib dependencies
 RUN apt-get update && \
-    apt-get install -y tshark && \
+    apt-get install -y tshark libfreetype6-dev libpng-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -23,4 +23,4 @@ COPY . .
 EXPOSE $PORT
 
 # Run the Flask app with gunicorn
-CMD gunicorn -w 4 -b 0.0.0.0:$PORT app:app
+CMD gunicorn -w 4 -b 0.0.0.0:$PORT KALE:app
