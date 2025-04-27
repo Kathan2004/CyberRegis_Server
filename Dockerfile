@@ -19,8 +19,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code
 COPY . .
 
-# Expose the port Railway assigns
-EXPOSE $PORT
-
-# Run the Flask app with gunicorn
+# Run the Flask app with gunicorn, binding to $PORT
 CMD gunicorn -w 4 -b 0.0.0.0:$PORT KALE:app
