@@ -10,4 +10,8 @@ jobs:
     steps:
       - name: Check if server is running
         run: |
-          curl -X GET https://effective-computing-machine-w6pqwrj9rj93gvp9-4000.app.github.dev
+          curl -X GET https://bug-free-space-palm-tree-56j7wgp4grxfv4p5-3002.app.github.dev
+
+
+
+
