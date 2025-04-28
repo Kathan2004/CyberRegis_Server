@@ -1,0 +1,13 @@
+name: Keep Codespace Alive
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"  # Runs every 30 minutes
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if server is running
+        run: |
+          curl -X GET https://effective-computing-machine-w6pqwrj9rj93gvp9-4000.app.github.dev
