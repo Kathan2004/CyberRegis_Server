@@ -1,6 +1,6 @@
 import matplotlib
 matplotlib.use('Agg')
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -24,9 +24,25 @@ import pyshark
 import matplotlib.pyplot as plt
 import io
 import base64
+import traceback
+from all_functions import all_functions
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, 
+     origins=["http://localhost:3000", "http://127.0.0.1:3000", "https://yourdomain.com"],
+     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+     allow_headers=["Content-Type", "Authorization"],
+     supports_credentials=True)
+
+# Preflight handler for CORS
+@app.before_request
+def handle_preflight():
+    if request.method == "OPTIONS":
+        response = make_response()
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization")
+        response.headers.add("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS")
+        return response
 
 # Rate Limiting
 limiter = Limiter(
@@ -298,7 +314,7 @@ def get_whois_data(domain: str) -> Dict:
         logger.error(f"WHOIS lookup failed for {domain}: {e}")
         return {"error": "Failed to retrieve WHOIS data"}
 
-def analyze_domain(domain: str) -> Dict:
+def analyze_domain_security(domain: str) -> Dict:
     suspicious_patterns = {
         "number_substitution": bool(re.search(r'\d+', domain)),
         "special_chars": bool(re.search(r'[^a-zA-Z0-9\-\.]', domain)),
@@ -311,9 +327,6 @@ def analyze_domain(domain: str) -> Dict:
     if suspicious_patterns["number_substitution"]:
         risk_score += 1
         risk_factors.append("Contains number substitution")
-    if suspicious_patterns["special_chars"]:
-        risk_score += 2
-        risk_factors.append("Contains special characters")
     if suspicious_patterns["suspicious_tld"]:
         risk_score += 2
         risk_factors.append("Uses suspicious TLD")
@@ -347,6 +360,45 @@ def check_url_safety(url: str) -> Dict:
         logger.info(f"Cache hit for URL: {url}")
         return cache[cache_key]
     try:
+        # Check if API key is available
+        if not SAFE_BROWSING_KEY or SAFE_BROWSING_KEY == "":
+            print("Warning: Google Safe Browsing API key not configured")
+            # Fallback to basic checks without Google API
+            results = {
+                "url_analysis": {
+                    "input_url": url,
+                    "parsed_details": get_url_details(url),
+                    "security_check_time": datetime.now().isoformat()
+                },
+                "threat_analysis": {
+                    "is_malicious": False,
+                    "threats_found": 0,
+                    "threat_details": [],
+                    "google_safe_browsing": {
+                        "status": "not_configured",
+                        "note": "API key not configured"
+                    }
+                },
+                "additional_checks": {
+                    "ssl_security": check_ssl_certificate(url) if url.startswith("https://") else {"valid": False, "error": "Not HTTPS"},
+                    "suspicious_patterns": check_suspicious_keywords(url),
+                    "domain_analysis": analyze_domain_security(urlparse(url).netloc)
+                },
+                "recommendations": []
+            }
+            
+            # Add recommendations based on basic checks
+            if results["additional_checks"]["suspicious_patterns"]["risk_level"] == "high":
+                results["recommendations"].extend([
+                    "Proceed with caution",
+                    "Verify the website's authenticity",
+                    "Avoid entering sensitive information"
+                ])
+            
+            formatted_response = PrettyJSONResponse.format(results)
+            cache[cache_key] = formatted_response
+            return formatted_response
+        
         api_url = f"https://safebrowsing.googleapis.com/v4/threatMatches:find?key={SAFE_BROWSING_KEY}"
         payload = {
             "client": {"clientId": "security-checker", "clientVersion": "1.0.0"},
@@ -360,9 +412,12 @@ def check_url_safety(url: str) -> Dict:
                 "threatEntries": [{"url": url}]
             }
         }
+        
+        print(f"Calling Google Safe Browsing API for: {url}")
         response = requests.post(api_url, json=payload, timeout=10)
         response.raise_for_status()
         data = response.json()
+        print(f"Google Safe Browsing API response: {data}")
         results = {
             "url_analysis": {
                 "input_url": url,
@@ -381,7 +436,7 @@ def check_url_safety(url: str) -> Dict:
             "additional_checks": {
                 "ssl_security": check_ssl_certificate(url) if url.startswith("https://") else {"valid": False, "error": "Not HTTPS"},
                 "suspicious_patterns": check_suspicious_keywords(url),
-                "domain_analysis": analyze_domain(urlparse(url).netloc)
+                "domain_analysis": analyze_domain_security(urlparse(url).netloc)
             },
             "recommendations": []
         }
@@ -590,17 +645,40 @@ def api_chat():
 def api_check_url():
     try:
         data = request.get_json()
+        if not data:
+            return jsonify({
+                "status": "error",
+                "message": "No data provided"
+            }), 400
+            
         url = data.get("url", "").strip()
         if not url:
-            return jsonify(PrettyJSONResponse.format({"error": "URL is required"})), 400
-        result = check_url_safety(url)
-        return jsonify(result)
+            return jsonify({
+                "status": "error",
+                "message": "URL is required"
+            }), 400
+            
+        print(f"Processing URL check for: {url}")
+        
+        try:
+            result = check_url_safety(url)
+            print(f"URL check completed successfully for: {url}")
+            return jsonify(result)
+        except Exception as url_error:
+            print(f"Error in check_url_safety: {url_error}")
+            print(f"Traceback: {traceback.format_exc()}")
+            return jsonify({
+                "status": "error",
+                "message": f"URL safety check failed: {str(url_error)}"
+            }), 500
+            
     except Exception as e:
-        logger.error(f"Error in check-url endpoint: {e}")
-        return jsonify(PrettyJSONResponse.format({
-            "error": "URL check failed",
-            "message": str(e)
-        })), 500
+        print(f"Error in check-url endpoint: {e}")
+        print(f"Traceback: {traceback.format_exc()}")
+        return jsonify({
+            "status": "error",
+            "message": f"URL check failed: {str(e)}"
+        }), 500
 
 # IP Check Endpoint
 @app.route("/api/check-ip", methods=["POST"])
@@ -619,6 +697,820 @@ def api_check_ip():
             "error": "IP check failed",
             "message": str(e)
         })), 500
+
+# Domain Analysis Endpoint
+@app.route('/api/analyze-domain', methods=['POST'])
+@limiter.limit("10 per minute")
+def analyze_domain():
+    try:
+        data = request.get_json()
+        domain = data.get('domain', '').strip()
+        
+        if not domain:
+            return jsonify({
+                'status': 'error',
+                'message': 'Domain is required'
+            }), 400
+        
+        # Initialize the reconnaissance class
+        recon = all_functions()
+        
+        # Collect all domain information
+        domain_info = {
+            'domain': domain,
+            'whois': {},
+            'dns_records': {},
+            'ssl_info': {},
+            'security_features': {},
+            'subdomains': [],
+            'geolocation': {}
+        }
+        
+        recommendations = []
+        
+        # WHOIS Information
+        try:
+            whois_data = recon.perform_whois_lookup(domain)
+            if whois_data and isinstance(whois_data, list):
+                whois_info = {}
+                for item in whois_data:
+                    field = item.get('Field', '').lower()
+                    value = item.get('Value', '')
+                    if 'registrar' in field:
+                        whois_info['registrar'] = value
+                    elif 'created' in field or 'creation' in field:
+                        whois_info['creation_date'] = value
+                    elif 'expires' in field or 'expiration' in field:
+                        whois_info['expiration_date'] = value
+                    elif 'registrant' in field:
+                        whois_info['registrant'] = value
+                    elif 'country' in field:
+                        whois_info['country'] = value
+                    elif 'name servers' in field:
+                        whois_info['name_servers'] = value.split(', ')
+                domain_info['whois'] = whois_info
+        except Exception as e:
+            print(f"WHOIS lookup failed: {e}")
+        
+        # DNS Records
+        try:
+            dns_data = recon.get_dns_records(domain)
+            if dns_data and isinstance(dns_data, list):
+                dns_records = {}
+                for item in dns_data:
+                    record_type = item.get('Field', '')
+                    value = item.get('Value', '')
+                    if value and 'No records found' not in value and 'Error' not in value:
+                        dns_records[record_type] = value.split(', ')
+                domain_info['dns_records'] = dns_records
+        except Exception as e:
+            print(f"DNS lookup failed: {e}")
+        
+        # TXT Records (separate call)
+        try:
+            txt_data = recon.get_txt_records(domain)
+            if txt_data and isinstance(txt_data, list):
+                txt_records = []
+                for item in txt_data:
+                    if item.get('Field') == 'TXT Records':
+                        txt_records.append(item.get('Value', ''))
+                if txt_records:
+                    domain_info['dns_records']['TXT'] = txt_records
+        except Exception as e:
+            print(f"TXT records lookup failed: {e}")
+        
+        # SSL Certificate Information
+        try:
+            ssl_data = recon.get_ssl_chain_details(domain)
+            if ssl_data and isinstance(ssl_data, list):
+                ssl_info = {}
+                for item in ssl_data:
+                    field = item.get('Field', '').lower()
+                    value = item.get('Value', '')
+                    if 'issuer' in field:
+                        ssl_info['issuer'] = value
+                    elif 'subject' in field:
+                        ssl_info['subject'] = value
+                    elif 'valid from' in field:
+                        ssl_info['valid_from'] = value
+                    elif 'valid until' in field:
+                        ssl_info['valid_until'] = value
+                    elif 'days until expiry' in field:
+                        try:
+                            ssl_info['days_until_expiry'] = int(value)
+                        except:
+                            ssl_info['days_until_expiry'] = value
+                ssl_info['valid'] = True if ssl_info else False
+                domain_info['ssl_info'] = ssl_info
+        except Exception as e:
+            print(f"SSL certificate lookup failed: {e}")
+            domain_info['ssl_info'] = {'valid': False}
+        
+        # SSL Labs Grade
+        try:
+            ssl_labs_data = recon.fetch_ssl_labs_report_table(domain)
+            if ssl_labs_data and isinstance(ssl_labs_data, list):
+                for item in ssl_labs_data:
+                    if item.get('Field') == 'Grade':
+                        domain_info['ssl_info']['grade'] = item.get('Value', 'N/A')
+                        break
+        except Exception as e:
+            print(f"SSL Labs lookup failed: {e}")
+        
+        # Security Features
+        security_features = {}
+        
+        # DNSSEC
+        try:
+            dnssec_data = recon.check_dnssec(domain)
+            dnssec_enabled = False
+            if dnssec_data and isinstance(dnssec_data, list):
+                for item in dnssec_data:
+                    if 'keys found' in item.get('Value', '').lower():
+                        dnssec_enabled = True
+                        break
+            security_features['dnssec'] = dnssec_enabled
+        except Exception as e:
+            security_features['dnssec'] = False
+        
+        # DMARC
+        try:
+            dmarc_data = recon.get_dmarc_record(domain)
+            dmarc_record = None
+            if dmarc_data and isinstance(dmarc_data, list):
+                for item in dmarc_data:
+                    if item.get('Field') == 'DMARC Record' and 'No DMARC' not in item.get('Value', ''):
+                        dmarc_record = item.get('Value', '')
+                        break
+            security_features['dmarc'] = dmarc_record or 'Not configured'
+        except Exception as e:
+            security_features['dmarc'] = 'Not configured'
+        
+        # WAF Detection
+        try:
+            waf_data = recon.detect_waf(domain)
+            waf_detected = 'None'
+            if waf_data and isinstance(waf_data, list):
+                for item in waf_data:
+                    value = item.get('Value', '')
+                    if 'No WAF found' not in value:
+                        waf_detected = value
+                        break
+            security_features['waf_detected'] = waf_detected
+        except Exception as e:
+            security_features['waf_detected'] = 'Unknown'
+        
+        # robots.txt
+        try:
+            robots_data = recon.check_robots_txt(domain)
+            robots_present = False
+            robots_url = None
+            if robots_data and isinstance(robots_data, list):
+                for item in robots_data:
+                    if item.get('Field') != 'Error' and item.get('Field') != 'Not Found':
+                        robots_present = True
+                        robots_url = f"http://{domain}/robots.txt"
+                        break
+            security_features['robots_txt'] = {
+                'present': robots_present,
+                'url': robots_url
+            }
+        except Exception as e:
+            security_features['robots_txt'] = {
+                'present': False,
+                'url': None
+            }
+        
+        # security.txt
+        try:
+            security_txt_data = recon.check_security_txt(domain)
+            security_txt_present = False
+            security_txt_url = None
+            if security_txt_data and isinstance(security_txt_data, list):
+                for item in security_txt_data:
+                    if item.get('Field') != 'Error' and item.get('Field') != 'Not Found':
+                        security_txt_present = True
+                        # Check both common locations for security.txt
+                        try:
+                            response = requests.get(f'http://{domain}/.well-known/security.txt', timeout=5)
+                            if response.status_code == 200:
+                                security_txt_url = f"http://{domain}/.well-known/security.txt"
+                            else:
+                                response = requests.get(f'http://{domain}/security.txt', timeout=5)
+                                if response.status_code == 200:
+                                    security_txt_url = f"http://{domain}/security.txt"
+                        except:
+                            # If we can't determine the exact URL, provide both options
+                            security_txt_url = f"http://{domain}/.well-known/security.txt"
+                        break
+            security_features['security_txt'] = {
+                'present': security_txt_present,
+                'url': security_txt_url
+            }
+        except Exception as e:
+            security_features['security_txt'] = {
+                'present': False,
+                'url': None
+            }
+        
+        domain_info['security_features'] = security_features
+        
+        # Subdomains
+        try:
+            subdomain_data = recon.fetch_subdomains(domain)
+            subdomains = []
+            if subdomain_data and isinstance(subdomain_data, list):
+                for item in subdomain_data:
+                    if item.get('Field') == 'Subdomain':
+                        subdomain = item.get('Value', '')
+                        if subdomain and subdomain not in subdomains:
+                            subdomains.append(subdomain)
+            domain_info['subdomains'] = subdomains[:50]  # Limit to 50 subdomains
+        except Exception as e:
+            print(f"Subdomain lookup failed: {e}")
+            domain_info['subdomains'] = []
+        
+        # Geolocation (from A record)
+        try:
+            geo_data = recon.get_ip_info_from_a_record(domain)
+            if geo_data and isinstance(geo_data, list):
+                geo_info = {}
+                for item in geo_data:
+                    field = item.get('Field', '').lower()
+                    value = item.get('Value', '')
+                    if 'ip address' in field:
+                        geo_info['ip'] = value
+                    elif 'country' in field:
+                        geo_info['country'] = value
+                    elif 'city' in field:
+                        geo_info['city'] = value
+                    elif 'isp' in field:
+                        geo_info['isp'] = value
+                    elif 'organization' in field:
+                        geo_info['organization'] = value
+                domain_info['geolocation'] = geo_info
+        except Exception as e:
+            print(f"Geolocation lookup failed: {e}")
+        
+        # Generate recommendations
+        if not security_features.get('dnssec', False):
+            recommendations.append("Enable DNSSEC for enhanced DNS security")
+        
+        if security_features.get('dmarc') == 'Not configured':
+            recommendations.append("Configure DMARC policy for email security")
+        
+        if domain_info['ssl_info'].get('days_until_expiry', 0) < 30:
+            recommendations.append("SSL certificate expires soon - plan for renewal")
+        
+        if not security_features.get('security_txt', {}).get('present', False):
+            recommendations.append("Consider adding security.txt for vulnerability disclosure")
+        else:
+            recommendations.append(f"security.txt is present - review at: {security_features['security_txt']['url']}")
+        
+        if not security_features.get('robots_txt', {}).get('present', False):
+            recommendations.append("Consider adding robots.txt for web crawler guidance")
+        else:
+            recommendations.append(f"robots.txt is present - review at: {security_features['robots_txt']['url']}")
+        
+        if security_features.get('waf_detected') == 'None':
+            recommendations.append("Consider implementing a Web Application Firewall (WAF)")
+        
+        response_data = {
+            'status': 'success',
+            'domain_info': domain_info,
+            'recommendations': recommendations,
+            'timestamp': datetime.now().isoformat()
+        }
+        
+        return jsonify(response_data)
+        
+    except Exception as e:
+        print(f"Domain analysis error: {e}")
+        print(traceback.format_exc())
+        return jsonify({
+            'status': 'error',
+            'message': f'Domain analysis failed: {str(e)}'
+        }), 500
+
+# Security File Content Endpoint
+@app.route('/api/security-file-content', methods=['POST'])
+@limiter.limit("20 per minute")
+def get_security_file_content():
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({
+                'status': 'error',
+                'message': 'No data provided'
+            }), 400
+            
+        file_type = data.get('file_type', '').strip()  # 'robots' or 'security'
+        domain = data.get('domain', '').strip()
+        
+        if not file_type or not domain:
+            return jsonify({
+                'status': 'error',
+                'message': 'Both file_type and domain are required'
+            }), 400
+        
+        if file_type not in ['robots', 'security']:
+            return jsonify({
+                'status': 'error',
+                'message': 'file_type must be either "robots" or "security"'
+            }), 400
+        
+        print(f"Fetching {file_type}.txt for domain: {domain}")
+        
+        try:
+            if file_type == 'robots':
+                url = f"http://{domain}/robots.txt"
+                print(f"Attempting to fetch robots.txt from: {url}")
+                
+                # Try to fetch robots.txt
+                try:
+                    response = requests.get(url, timeout=15, allow_redirects=True)
+                    print(f"Robots.txt response status: {response.status_code}")
+                    
+                    if response.status_code == 200:
+                        file_content = response.text
+                        file_info = {
+                            'domain': domain,
+                            'file_type': file_type,
+                            'url': url,
+                            'content': file_content,
+                            'content_length': len(file_content),
+                            'last_modified': response.headers.get('last-modified', 'Unknown'),
+                            'content_type': response.headers.get('content-type', 'text/plain')
+                        }
+                        
+                        return jsonify({
+                            'status': 'success',
+                            'file_info': file_info,
+                            'timestamp': datetime.now().isoformat()
+                        })
+                    else:
+                        # Return specific error for different status codes
+                        if response.status_code == 404:
+                            return jsonify({
+                                'status': 'error',
+                                'message': f'robots.txt not found at {url}',
+                                'http_status': 404,
+                                'domain': domain
+                            }), 404
+                        elif response.status_code == 503:
+                            return jsonify({
+                                'status': 'error',
+                                'message': f'Service temporarily unavailable for {domain}',
+                                'http_status': 503,
+                                'domain': domain,
+                                'note': 'The server may be down or overloaded'
+                            }), 503
+                        else:
+                            return jsonify({
+                                'status': 'error',
+                                'message': f'HTTP {response.status_code} when fetching robots.txt',
+                                'http_status': response.status_code,
+                                'domain': domain
+                            }), 400
+                            
+                except requests.exceptions.Timeout:
+                    return jsonify({
+                        'status': 'error',
+                        'message': f'Timeout while fetching robots.txt from {domain}',
+                        'domain': domain,
+                        'note': 'The server took too long to respond'
+                    }), 408
+                except requests.exceptions.ConnectionError:
+                    return jsonify({
+                        'status': 'error',
+                        'message': f'Connection error while fetching robots.txt from {domain}',
+                        'domain': domain,
+                        'note': 'The server may be unreachable'
+                    }), 503
+                except requests.exceptions.RequestException as e:
+                    return jsonify({
+                        'status': 'error',
+                        'message': f'Request failed: {str(e)}',
+                        'domain': domain
+                    }), 500
+                    
+            else:  # security.txt
+                print(f"Attempting to fetch security.txt for domain: {domain}")
+                
+                # Try .well-known first, then root
+                urls_to_try = [
+                    f'http://{domain}/.well-known/security.txt',
+                    f'http://{domain}/security.txt'
+                ]
+                
+                for url in urls_to_try:
+                    try:
+                        print(f"Trying: {url}")
+                        response = requests.get(url, timeout=15, allow_redirects=True)
+                        print(f"Security.txt response status: {response.status_code}")
+                        
+                        if response.status_code == 200:
+                            file_content = response.text
+                            file_info = {
+                                'domain': domain,
+                                'file_type': file_type,
+                                'url': url,
+                                'content': file_content,
+                                'content_length': len(file_content),
+                                'last_modified': response.headers.get('last-modified', 'Unknown'),
+                                'content_type': response.headers.get('content-type', 'text/plain')
+                            }
+                            
+                            return jsonify({
+                                'status': 'success',
+                                'file_info': file_info,
+                                'timestamp': datetime.now().isoformat()
+                            })
+                        elif response.status_code == 404:
+                            print(f"404 for {url}, trying next location...")
+                            continue
+                        else:
+                            print(f"HTTP {response.status_code} for {url}")
+                            continue
+                            
+                    except requests.exceptions.Timeout:
+                        print(f"Timeout for {url}")
+                        continue
+                    except requests.exceptions.ConnectionError:
+                        print(f"Connection error for {url}")
+                        continue
+                    except requests.exceptions.RequestException as e:
+                        print(f"Request error for {url}: {e}")
+                        continue
+                
+                # If we get here, security.txt wasn't found
+                return jsonify({
+                    'status': 'error',
+                    'message': 'security.txt not found in common locations',
+                    'domain': domain,
+                    'locations_tried': urls_to_try
+                }), 404
+            
+        except Exception as e:
+            print(f"Unexpected error in file fetching: {e}")
+            print(f"Traceback: {traceback.format_exc()}")
+            return jsonify({
+                'status': 'error',
+                'message': f'Unexpected error while fetching {file_type}.txt: {str(e)}',
+                'domain': domain
+            }), 500
+            
+    except Exception as e:
+        print(f"Security file content endpoint error: {e}")
+        print(f"Traceback: {traceback.format_exc()}")
+        return jsonify({
+            'status': 'error',
+            'message': f'Security file content retrieval failed: {str(e)}'
+        }), 500
+
+# Port Scanner Endpoint
+@app.route('/api/scan-ports', methods=['POST'])
+def scan_ports():
+    try:
+        data = request.get_json()
+        target = data.get('target', '').strip()
+        
+        if not target:
+            return jsonify({
+                'status': 'error',
+                'message': 'Target is required'
+            }), 400
+        
+        # Initialize the reconnaissance class
+        recon = all_functions()
+        
+        # Use the enhanced port scanner
+        result = recon.scan_ports_detailed(target)
+        
+        return jsonify(result)
+        
+    except Exception as e:
+        print(f"Port scan error: {e}")
+        return jsonify({
+            'status': 'error',
+            'message': f'Port scan failed: {str(e)}'
+        }), 500
+
+# Vulnerability Scanner Endpoint
+@app.route('/api/vulnerability-scan', methods=['POST'])
+def vulnerability_scan():
+    try:
+        data = request.get_json()
+        target = data.get('target', '').strip()
+        
+        if not target:
+            return jsonify({
+                'status': 'error',
+                'message': 'Target is required'
+            }), 400
+        
+        recon = all_functions()
+        result = recon.vulnerability_scan(target)
+        
+        return jsonify(result)
+        
+    except Exception as e:
+        print(f"Vulnerability scan error: {e}")
+        return jsonify({
+            'status': 'error',
+            'message': f'Vulnerability scan failed: {str(e)}'
+        }), 500
+
+# SSL/TLS Analyzer Endpoint
+@app.route('/api/ssl-analysis', methods=['POST'])
+def ssl_analysis():
+    try:
+        data = request.get_json()
+        domain = data.get('domain', '').strip()
+        
+        if not domain:
+            return jsonify({
+                'status': 'error',
+                'message': 'Domain is required'
+            }), 400
+        
+        recon = all_functions()
+        result = recon.ssl_detailed_analysis(domain)
+        
+        return jsonify(result)
+        
+    except Exception as e:
+        print(f"SSL analysis error: {e}")
+        return jsonify({
+            'status': 'error',
+            'message': f'SSL analysis failed: {str(e)}'
+        }), 500
+
+# Security Headers Scanner Endpoint
+@app.route('/api/security-headers', methods=['POST'])
+def security_headers():
+    try:
+        data = request.get_json()
+        url = data.get('url', '').strip()
+        
+        if not url:
+            return jsonify({
+                'status': 'error',
+                'message': 'URL is required'
+            }), 400
+        
+        recon = all_functions()
+        result = recon.security_headers_scan(url)
+        
+        return jsonify(result)
+        
+    except Exception as e:
+        print(f"Security headers scan error: {e}")
+        return jsonify({
+            'status': 'error',
+            'message': f'Security headers scan failed: {str(e)}'
+        }), 500
+
+# Email Security Scanner Endpoint
+@app.route('/api/email-security', methods=['POST'])
+def email_security():
+    try:
+        data = request.get_json()
+        domain = data.get('domain', '').strip()
+        
+        if not domain:
+            return jsonify({
+                'status': 'error',
+                'message': 'Domain is required'
+            }), 400
+        
+        recon = all_functions()
+        result = recon.email_security_deep_scan(domain)
+        
+        return jsonify(result)
+        
+    except Exception as e:
+        print(f"Email security scan error: {e}")
+        return jsonify({
+            'status': 'error',
+            'message': f'Email security scan failed: {str(e)}'
+        }), 500
+
+# Monitoring Results Endpoint
+@app.route('/api/monitoring-results', methods=['GET'])
+def get_monitoring_results():
+    try:
+        # Get current system status and recent activity
+        monitoring_data = {
+            "status": "success",
+            "timestamp": datetime.now().isoformat(),
+            "server_status": "running",
+            "uptime": "active",
+            "recent_scans": [],
+            "system_info": {
+                "python_version": "3.x",
+                "flask_version": "2.x",
+                "active_endpoints": [
+                    "/api/check-url",
+                    "/api/check-ip", 
+                    "/api/analyze-domain",
+                    "/api/scan-ports",
+                    "/api/vulnerability-scan",
+                    "/api/ssl-analysis",
+                    "/api/security-headers",
+                    "/api/email-security",
+                    "/api/analyze-pcap",
+                    "/api/chat"
+                ]
+            }
+        }
+        
+        return jsonify(monitoring_data)
+        
+    except Exception as e:
+        print(f"Monitoring results error: {e}")
+        return jsonify({
+            'status': 'error',
+            'message': f'Failed to get monitoring results: {str(e)}'
+        }), 500
+
+# Health Check Endpoint
+@app.route('/api/health', methods=['GET'])
+def health_check():
+    try:
+        return jsonify({
+            "status": "healthy",
+            "timestamp": datetime.now().isoformat(),
+            "service": "CyberRegis Security Scanner",
+            "version": "1.0.0"
+        })
+    except Exception as e:
+        return jsonify({
+            "status": "unhealthy",
+            "error": str(e)
+        }), 500
+
+# Test Endpoint for CORS verification
+@app.route('/api/test', methods=['GET', 'POST', 'OPTIONS'])
+def test_endpoint():
+    if request.method == 'OPTIONS':
+        response = make_response()
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization")
+        response.headers.add("Access-Control-Allow-Methods", "GET,POST,OPTIONS")
+        return response
+    
+    return jsonify({
+        "status": "success",
+        "message": "CORS test successful",
+        "method": request.method,
+        "timestamp": datetime.now().isoformat()
+    })
+
+# Simple URL Test Endpoint
+@app.route('/api/test-url', methods=['POST'])
+def test_url_endpoint():
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({"status": "error", "message": "No data provided"}), 400
+            
+        url = data.get("url", "").strip()
+        if not url:
+            return jsonify({"status": "error", "message": "URL is required"}), 400
+        
+        # Basic URL validation test
+        if not is_valid_url(url):
+            return jsonify({
+                "status": "error", 
+                "message": "Invalid URL format",
+                "url": url
+            }), 400
+        
+        return jsonify({
+            "status": "success",
+            "message": "URL validation successful",
+            "url": url,
+            "parsed": get_url_details(url),
+            "timestamp": datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        print(f"Test URL endpoint error: {e}")
+        return jsonify({
+            "status": "error",
+            "message": f"Test failed: {str(e)}"
+        }), 500
+
+# Test Security File Content Endpoint
+@app.route('/api/test-security-file', methods=['POST'])
+def test_security_file_endpoint():
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({"status": "error", "message": "No data provided"}), 400
+            
+        file_type = data.get('file_type', '').strip()
+        domain = data.get('domain', '').strip()
+        
+        if not file_type or not domain:
+            return jsonify({"status": "error", "message": "Both file_type and domain are required"}), 400
+        
+        if file_type not in ['robots', 'security']:
+            return jsonify({"status": "error", "message": "file_type must be 'robots' or 'security'"}), 400
+        
+        print(f"Testing {file_type}.txt fetch for domain: {domain}")
+        
+        # Test basic connectivity first
+        try:
+            test_response = requests.get(f"http://{domain}", timeout=5)
+            connectivity_status = f"Domain reachable (HTTP {test_response.status_code})"
+        except requests.exceptions.Timeout:
+            connectivity_status = "Domain timeout"
+        except requests.exceptions.ConnectionError:
+            connectivity_status = "Domain connection failed"
+        except Exception as e:
+            connectivity_status = f"Domain test error: {str(e)}"
+        
+        # Test the specific file
+        if file_type == 'robots':
+            test_url = f"http://{domain}/robots.txt"
+        else:
+            test_url = f"http://{domain}/.well-known/security.txt"
+        
+        try:
+            file_response = requests.get(test_url, timeout=10)
+            file_status = f"File accessible (HTTP {file_response.status_code})"
+            if file_response.status_code == 200:
+                file_content_preview = file_response.text[:100] + "..." if len(file_response.text) > 100 else file_response.text
+            else:
+                file_content_preview = "Not accessible"
+        except Exception as e:
+            file_status = f"File test error: {str(e)}"
+            file_content_preview = "Error occurred"
+        
+        return jsonify({
+            "status": "success",
+            "message": "Security file test completed",
+            "domain": domain,
+            "file_type": file_type,
+            "connectivity": connectivity_status,
+            "file_status": file_status,
+            "file_content_preview": file_content_preview,
+            "test_url": test_url,
+            "timestamp": datetime.now().isoformat()
+        })
+        
+    except Exception as e:
+        print(f"Test security file endpoint error: {e}")
+        return jsonify({
+            "status": "error",
+            "message": f"Test failed: {str(e)}"
+        }), 500
+
+# System Status Endpoint
+@app.route('/api/status', methods=['GET'])
+def system_status():
+    try:
+        import psutil
+        import os
+        
+        # Get system information
+        cpu_percent = psutil.cpu_percent(interval=1)
+        memory = psutil.virtual_memory()
+        disk = psutil.disk_usage('/')
+        
+        status_data = {
+            "status": "success",
+            "timestamp": datetime.now().isoformat(),
+            "system": {
+                "cpu_usage": f"{cpu_percent}%",
+                "memory_usage": f"{memory.percent}%",
+                "memory_available": f"{memory.available // (1024**3):.1f} GB",
+                "disk_usage": f"{disk.percent}%",
+                "disk_free": f"{disk.free // (1024**3):.1f} GB"
+            },
+            "process": {
+                "pid": os.getpid(),
+                "python_version": f"{os.sys.version_info.major}.{os.sys.version_info.minor}.{os.sys.version_info.micro}"
+            }
+        }
+        
+        return jsonify(status_data)
+        
+    except ImportError:
+        # psutil not available, return basic status
+        return jsonify({
+            "status": "success",
+            "timestamp": datetime.now().isoformat(),
+            "message": "Basic status available. Install psutil for detailed system metrics.",
+            "system": "psutil not available"
+        })
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": f"Status check failed: {str(e)}"
+        }), 500
     
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 4000))  # Use Railway's dynamic port if available
