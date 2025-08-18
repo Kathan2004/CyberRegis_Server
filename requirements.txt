@@ -8,3 +8,6 @@ together
 pyshark
 matplotlib
 gunicorn
+dnspython
+python-nmap
+psutil
