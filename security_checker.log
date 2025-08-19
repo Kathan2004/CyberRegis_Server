@@ -1028,3 +1028,324 @@
 2025-08-18 20:55:30,588 [INFO] 127.0.0.1 - - [18/Aug/2025 20:55:30] "POST /api/scan-ports HTTP/1.1" 200 -
 2025-08-18 22:31:17,087 [INFO] 127.0.0.1 - - [18/Aug/2025 22:31:17] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
 2025-08-18 22:31:18,956 [INFO] 127.0.0.1 - - [18/Aug/2025 22:31:18] "POST /api/security-file-content HTTP/1.1" 200 -
+2025-08-19 11:26:08,233 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:4000
+ * Running on http://192.168.197.165:4000
+2025-08-19 11:26:08,234 [INFO] [33mPress CTRL+C to quit[0m
+2025-08-19 11:26:08,235 [INFO]  * Restarting with stat
+2025-08-19 11:26:08,735 [WARNING]  * Debugger is active!
+2025-08-19 11:26:08,744 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 11:27:04,402 [INFO] 127.0.0.1 - - [19/Aug/2025 11:27:04] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:27:15,128 [INFO] 127.0.0.1 - - [19/Aug/2025 11:27:15] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:27:27,949 [INFO] 127.0.0.1 - - [19/Aug/2025 11:27:27] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2025-08-19 11:27:28,376 [INFO] 127.0.0.1 - - [19/Aug/2025 11:27:28] "POST /api/security-file-content HTTP/1.1" 200 -
+2025-08-19 11:27:34,973 [INFO] 127.0.0.1 - - [19/Aug/2025 11:27:34] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2025-08-19 11:27:35,487 [INFO] 127.0.0.1 - - [19/Aug/2025 11:27:35] "POST /api/security-file-content HTTP/1.1" 200 -
+2025-08-19 11:31:01,758 [INFO] 127.0.0.1 - - [19/Aug/2025 11:31:01] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:31:11,750 [INFO] 127.0.0.1 - - [19/Aug/2025 11:31:11] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:31:25,432 [INFO] 127.0.0.1 - - [19/Aug/2025 11:31:25] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2025-08-19 11:31:26,067 [INFO] 127.0.0.1 - - [19/Aug/2025 11:31:26] "[31m[1mPOST /api/security-file-content HTTP/1.1[0m" 400 -
+2025-08-19 11:31:35,916 [INFO] 127.0.0.1 - - [19/Aug/2025 11:31:35] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2025-08-19 11:31:36,654 [INFO] 127.0.0.1 - - [19/Aug/2025 11:31:36] "[31m[1mPOST /api/security-file-content HTTP/1.1[0m" 400 -
+2025-08-19 11:34:12,420 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:12] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:12,423 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:12] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:12,430 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:12] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:14,900 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:14] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:16,462 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:16] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:16,779 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:16] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:16,938 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:16] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:17,132 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:17] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,222 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:25,224 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:25,225 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:25,225 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:25,225 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:25,237 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,242 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,243 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,247 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:25,248 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:25,250 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,250 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:25,250 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,251 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:25,251 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,252 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:25,252 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,253 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:25,254 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,255 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:25,255 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,256 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:25,257 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,257 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:25,258 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,258 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:25,259 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,260 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:25,260 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:25,260 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,263 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,264 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,267 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,270 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,271 [INFO] ratelimit 10 per 1 minute (127.0.0.1) exceeded at endpoint: analyze_domain
+2025-08-19 11:34:25,277 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "[31m[1mPOST /api/analyze-domain HTTP/1.1[0m" 429 -
+2025-08-19 11:34:25,279 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,281 [INFO] ratelimit 10 per 1 minute (127.0.0.1) exceeded at endpoint: analyze_domain
+2025-08-19 11:34:25,282 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "[31m[1mPOST /api/analyze-domain HTTP/1.1[0m" 429 -
+2025-08-19 11:34:25,285 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,287 [INFO] ratelimit 10 per 1 minute (127.0.0.1) exceeded at endpoint: analyze_domain
+2025-08-19 11:34:25,287 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "[31m[1mPOST /api/analyze-domain HTTP/1.1[0m" 429 -
+2025-08-19 11:34:25,288 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,290 [INFO] ratelimit 10 per 1 minute (127.0.0.1) exceeded at endpoint: analyze_domain
+2025-08-19 11:34:25,290 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "[31m[1mPOST /api/analyze-domain HTTP/1.1[0m" 429 -
+2025-08-19 11:34:25,292 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,293 [INFO] ratelimit 10 per 1 minute (127.0.0.1) exceeded at endpoint: analyze_domain
+2025-08-19 11:34:25,294 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "[31m[1mPOST /api/analyze-domain HTTP/1.1[0m" 429 -
+2025-08-19 11:34:25,295 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,297 [INFO] ratelimit 10 per 1 minute (127.0.0.1) exceeded at endpoint: analyze_domain
+2025-08-19 11:34:25,297 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "[31m[1mPOST /api/analyze-domain HTTP/1.1[0m" 429 -
+2025-08-19 11:34:25,300 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,301 [INFO] ratelimit 10 per 1 minute (127.0.0.1) exceeded at endpoint: analyze_domain
+2025-08-19 11:34:25,302 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "[31m[1mPOST /api/analyze-domain HTTP/1.1[0m" 429 -
+2025-08-19 11:34:25,306 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:25,307 [INFO] ratelimit 10 per 1 minute (127.0.0.1) exceeded at endpoint: analyze_domain
+2025-08-19 11:34:25,308 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "[31m[1mPOST /api/analyze-domain HTTP/1.1[0m" 429 -
+2025-08-19 11:34:25,309 [INFO] ratelimit 10 per 1 minute (127.0.0.1) exceeded at endpoint: analyze_domain
+2025-08-19 11:34:25,309 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "[31m[1mPOST /api/analyze-domain HTTP/1.1[0m" 429 -
+2025-08-19 11:34:25,310 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:25] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:34:27,622 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:27] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:29,776 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:29] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:30,144 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:30] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:30,197 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:30] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:34:39,284 [INFO] 127.0.0.1 - - [19/Aug/2025 11:34:39] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:35:14,693 [INFO] 127.0.0.1 - - [19/Aug/2025 11:35:14] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:35:14,694 [INFO] 127.0.0.1 - - [19/Aug/2025 11:35:14] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:35:18,531 [INFO] Telegram notification sent for url check: https://niriksh.com
+2025-08-19 11:35:18,534 [INFO] 127.0.0.1 - - [19/Aug/2025 11:35:18] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:35:22,563 [INFO] 127.0.0.1 - - [19/Aug/2025 11:35:22] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:35:49,162 [INFO] 127.0.0.1 - - [19/Aug/2025 11:35:49] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2025-08-19 11:35:49,840 [INFO] 127.0.0.1 - - [19/Aug/2025 11:35:49] "POST /api/security-file-content HTTP/1.1" 200 -
+2025-08-19 11:38:10,519 [INFO] 127.0.0.1 - - [19/Aug/2025 11:38:10] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:38:10,521 [INFO] 127.0.0.1 - - [19/Aug/2025 11:38:10] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:38:16,781 [INFO] Telegram notification sent for url check: https://oracle.com
+2025-08-19 11:38:16,783 [INFO] 127.0.0.1 - - [19/Aug/2025 11:38:16] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:38:36,098 [INFO] 127.0.0.1 - - [19/Aug/2025 11:38:36] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:38:55,593 [INFO] 127.0.0.1 - - [19/Aug/2025 11:38:55] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2025-08-19 11:38:58,076 [INFO] 127.0.0.1 - - [19/Aug/2025 11:38:58] "POST /api/security-file-content HTTP/1.1" 200 -
+2025-08-19 11:42:55,441 [INFO] 127.0.0.1 - - [19/Aug/2025 11:42:55] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2025-08-19 11:42:56,933 [INFO] 127.0.0.1 - - [19/Aug/2025 11:42:56] "POST /api/security-file-content HTTP/1.1" 200 -
+2025-08-19 11:44:45,977 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/KALE.py', reloading
+2025-08-19 11:44:46,499 [INFO]  * Restarting with stat
+2025-08-19 11:44:47,540 [WARNING]  * Debugger is active!
+2025-08-19 11:44:47,551 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 11:44:58,900 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/KALE.py', reloading
+2025-08-19 11:44:59,116 [INFO]  * Restarting with stat
+2025-08-19 11:45:00,011 [WARNING]  * Debugger is active!
+2025-08-19 11:45:00,070 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 11:45:14,532 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/KALE.py', reloading
+2025-08-19 11:45:14,697 [INFO]  * Restarting with stat
+2025-08-19 11:45:15,472 [WARNING]  * Debugger is active!
+2025-08-19 11:45:15,482 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 11:45:22,817 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/KALE.py', reloading
+2025-08-19 11:45:23,017 [INFO]  * Restarting with stat
+2025-08-19 11:45:23,877 [WARNING]  * Debugger is active!
+2025-08-19 11:45:23,884 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 11:45:31,120 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/KALE.py', reloading
+2025-08-19 11:45:31,281 [INFO]  * Restarting with stat
+2025-08-19 11:45:32,043 [WARNING]  * Debugger is active!
+2025-08-19 11:45:32,050 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 11:45:37,268 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/KALE.py', reloading
+2025-08-19 11:45:37,658 [INFO]  * Restarting with stat
+2025-08-19 11:45:38,601 [WARNING]  * Debugger is active!
+2025-08-19 11:45:38,610 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 11:45:41,735 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/KALE.py', reloading
+2025-08-19 11:45:41,970 [INFO]  * Restarting with stat
+2025-08-19 11:45:42,586 [WARNING]  * Debugger is active!
+2025-08-19 11:45:42,592 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 11:45:56,964 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/KALE.py', reloading
+2025-08-19 11:45:57,151 [INFO]  * Restarting with stat
+2025-08-19 11:45:57,954 [WARNING]  * Debugger is active!
+2025-08-19 11:45:57,961 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 11:46:06,296 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/KALE.py', reloading
+2025-08-19 11:46:06,462 [INFO]  * Restarting with stat
+2025-08-19 11:46:07,173 [WARNING]  * Debugger is active!
+2025-08-19 11:46:07,181 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 11:46:10,320 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/KALE.py', reloading
+2025-08-19 11:46:10,552 [INFO]  * Restarting with stat
+2025-08-19 11:46:11,327 [WARNING]  * Debugger is active!
+2025-08-19 11:46:11,334 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 11:46:18,682 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/KALE.py', reloading
+2025-08-19 11:46:18,886 [INFO]  * Restarting with stat
+2025-08-19 11:46:20,090 [WARNING]  * Debugger is active!
+2025-08-19 11:46:20,103 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 11:46:25,302 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/KALE.py', reloading
+2025-08-19 11:46:25,549 [INFO]  * Restarting with stat
+2025-08-19 11:46:26,852 [WARNING]  * Debugger is active!
+2025-08-19 11:46:26,867 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 11:46:36,247 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/KALE.py', reloading
+2025-08-19 11:46:36,396 [INFO]  * Restarting with stat
+2025-08-19 11:46:37,103 [WARNING]  * Debugger is active!
+2025-08-19 11:46:37,114 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 11:46:44,353 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/KALE.py', reloading
+2025-08-19 11:46:44,508 [INFO]  * Restarting with stat
+2025-08-19 11:46:45,298 [WARNING]  * Debugger is active!
+2025-08-19 11:46:45,307 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 11:46:58,754 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/test_virustotal.py', reloading
+2025-08-19 11:46:58,894 [INFO]  * Restarting with stat
+2025-08-19 11:46:59,626 [WARNING]  * Debugger is active!
+2025-08-19 11:46:59,635 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 11:47:00,692 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/test_virustotal.py', reloading
+2025-08-19 11:47:00,848 [INFO]  * Restarting with stat
+2025-08-19 11:47:01,418 [WARNING]  * Debugger is active!
+2025-08-19 11:47:01,424 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 11:47:36,600 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/KALE.py', reloading
+2025-08-19 11:47:36,738 [INFO]  * Restarting with stat
+2025-08-19 11:47:37,443 [WARNING]  * Debugger is active!
+2025-08-19 11:47:37,450 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 11:57:03,208 [INFO] VirusTotal analysis queued for file NDZlMGY2ZmY3MWUzYmJjMWYwMWYwMzA0YmI3MDZkNDU6MTc1NTU4NDgyMg==, waiting...
+2025-08-19 11:57:09,352 [INFO] VirusTotal analysis queued for file NDZlMGY2ZmY3MWUzYmJjMWYwMWYwMzA0YmI3MDZkNDU6MTc1NTU4NDgyMg==, waiting...
+2025-08-19 11:57:15,188 [INFO] VirusTotal analysis queued for file NDZlMGY2ZmY3MWUzYmJjMWYwMWYwMzA0YmI3MDZkNDU6MTc1NTU4NDgyMg==, waiting...
+2025-08-19 11:57:20,351 [INFO] VirusTotal analysis queued for file NDZlMGY2ZmY3MWUzYmJjMWYwMWYwMzA0YmI3MDZkNDU6MTc1NTU4NDgyMg==, waiting...
+2025-08-19 11:57:20,879 [INFO] VirusTotal analysis queued for file NDZlMGY2ZmY3MWUzYmJjMWYwMWYwMzA0YmI3MDZkNDU6MTc1NTU4NDgyMg==, waiting...
+2025-08-19 11:57:24,484 [INFO] VirusTotal analysis queued for file NDZlMGY2ZmY3MWUzYmJjMWYwMWYwMzA0YmI3MDZkNDU6MTc1NTU4NDgyMg==, waiting...
+2025-08-19 11:57:28,869 [ERROR] Failed to send Telegram notification: 400 Client Error: Bad Request for url: https://api.telegram.org/bot7631413879:AAH1eDKDIKYGepmKZRplMXnAVyRFljHjEQo/sendMessage
+2025-08-19 11:57:28,875 [INFO] 127.0.0.1 - - [19/Aug/2025 11:57:28] "POST /api/analyze-pcap HTTP/1.1" 200 -
+2025-08-19 11:57:28,882 [ERROR] Failed to send Telegram notification: 400 Client Error: Bad Request for url: https://api.telegram.org/bot7631413879:AAH1eDKDIKYGepmKZRplMXnAVyRFljHjEQo/sendMessage
+2025-08-19 11:57:28,884 [INFO] 127.0.0.1 - - [19/Aug/2025 11:57:28] "POST /api/analyze-pcap HTTP/1.1" 200 -
+2025-08-19 11:57:32,089 [ERROR] Failed to send Telegram notification: 400 Client Error: Bad Request for url: https://api.telegram.org/bot7631413879:AAH1eDKDIKYGepmKZRplMXnAVyRFljHjEQo/sendMessage
+2025-08-19 11:57:32,092 [INFO] 127.0.0.1 - - [19/Aug/2025 11:57:32] "POST /api/analyze-pcap HTTP/1.1" 200 -
+2025-08-19 11:59:32,248 [INFO] 127.0.0.1 - - [19/Aug/2025 11:59:32] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:59:32,250 [INFO] 127.0.0.1 - - [19/Aug/2025 11:59:32] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:59:34,296 [ERROR] WHOIS lookup failed for nirksh.com: No match for "NIRKSH.COM".
+>>> Last update of whois database: 2025-08-19T06:29:21Z <<<
+
+NOTICE: The expiration date displayed in this record is the date the
+registrar's sponsorship of the domain name registration in the registry is
+currently set to expire. This date does not necessarily reflect the expiration
+date of the domain name registrant's agreement with the sponsoring
+registrar.  Users may consult the sponsoring registrar's Whois database to
+view the registrar's reported date of expiration for this registration.
+
+TERMS OF USE: You are not authorized to access or query our Whois
+database through the use of electronic processes that are high-volume and
+automated except as reasonably necessary to register domain names or
+modify existing registrations; the Data in VeriSign Global Registry
+Services' ("VeriSign") Whois database is provided by VeriSign for
+information purposes only, and to assist persons in obtaining information
+about or related to a domain name registration record. VeriSign does not
+guarantee its accuracy. By submitting a Whois query, you agree to abide
+by the following terms of use: You agree that you may use this Data only
+for lawful purposes and that under no circumstances will you use this Data
+to: (1) allow, enable, or otherwise support the transmission of mass
+unsolicited, commercial advertising or solicitations via e-mail, telephone,
+or facsimile; or (2) enable high volume, automated, electronic processes
+that apply to VeriSign (or its computer systems). The compilation,
+repackaging, dissemination or other use of this Data is expressly
+prohibited without the prior written consent of VeriSign. You agree not to
+use electronic processes that are automated and high-volume to access or
+query the Whois database except as reasonably necessary to register
+domain names or modify existing registrations. VeriSign reserves the right
+to restrict your access to the Whois database in its sole discretion to ensure
+operational stability.  VeriSign may restrict or terminate your access to the
+Whois database for failure to abide by these terms of use. VeriSign
+reserves the right to modify these terms at any time.
+
+The Registry database contains ONLY .COM, .NET, .EDU domains and
+Registrars.
+
+2025-08-19 11:59:35,311 [INFO] Telegram notification sent for url check: https://nirksh.com
+2025-08-19 11:59:35,314 [INFO] 127.0.0.1 - - [19/Aug/2025 11:59:35] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 11:59:38,592 [INFO] 127.0.0.1 - - [19/Aug/2025 11:59:38] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 12:00:28,064 [INFO] 127.0.0.1 - - [19/Aug/2025 12:00:28] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 12:00:28,067 [INFO] 127.0.0.1 - - [19/Aug/2025 12:00:28] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 12:00:28,074 [INFO] Cache hit for URL: https://nirksh.com
+2025-08-19 12:00:28,075 [INFO] 127.0.0.1 - - [19/Aug/2025 12:00:28] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 12:00:30,561 [INFO] 127.0.0.1 - - [19/Aug/2025 12:00:30] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 12:01:20,854 [INFO] 127.0.0.1 - - [19/Aug/2025 12:01:20] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 12:01:20,855 [INFO] 127.0.0.1 - - [19/Aug/2025 12:01:20] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 12:01:26,451 [INFO] Telegram notification sent for url check: https://niriksh.com
+2025-08-19 12:01:26,452 [INFO] 127.0.0.1 - - [19/Aug/2025 12:01:26] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 12:01:29,506 [INFO] 127.0.0.1 - - [19/Aug/2025 12:01:29] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 12:01:56,886 [INFO] 127.0.0.1 - - [19/Aug/2025 12:01:56] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-08-19 12:01:59,930 [INFO] Telegram notification sent for ip check: 1.1.1.1
+2025-08-19 12:01:59,932 [INFO] 127.0.0.1 - - [19/Aug/2025 12:01:59] "POST /api/check-ip HTTP/1.1" 200 -
+2025-08-19 12:02:37,053 [INFO] 127.0.0.1 - - [19/Aug/2025 12:02:37] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-19 12:02:38,562 [INFO] 127.0.0.1 - - [19/Aug/2025 12:02:38] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 12:03:01,060 [INFO] 127.0.0.1 - - [19/Aug/2025 12:03:01] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-19 12:03:04,584 [INFO] 127.0.0.1 - - [19/Aug/2025 12:03:04] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 12:03:18,634 [INFO] 127.0.0.1 - - [19/Aug/2025 12:03:18] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-19 12:03:19,749 [INFO] 127.0.0.1 - - [19/Aug/2025 12:03:19] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-19 12:03:30,094 [INFO] 127.0.0.1 - - [19/Aug/2025 12:03:30] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-19 12:03:34,571 [INFO] 127.0.0.1 - - [19/Aug/2025 12:03:34] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-19 12:03:46,303 [INFO] 127.0.0.1 - - [19/Aug/2025 12:03:46] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-19 12:03:47,471 [INFO] 127.0.0.1 - - [19/Aug/2025 12:03:47] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-19 12:03:54,783 [INFO] 127.0.0.1 - - [19/Aug/2025 12:03:54] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-19 12:03:56,230 [INFO] 127.0.0.1 - - [19/Aug/2025 12:03:56] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-19 12:04:31,775 [INFO] 127.0.0.1 - - [19/Aug/2025 12:04:31] "OPTIONS /api/scan-ports HTTP/1.1" 200 -
+2025-08-19 12:05:22,310 [INFO] 127.0.0.1 - - [19/Aug/2025 12:05:22] "POST /api/scan-ports HTTP/1.1" 200 -
+2025-08-19 12:07:24,423 [INFO] 127.0.0.1 - - [19/Aug/2025 12:07:24] "OPTIONS /api/vulnerability-scan HTTP/1.1" 200 -
+2025-08-19 12:08:14,755 [INFO] 127.0.0.1 - - [19/Aug/2025 12:08:14] "POST /api/vulnerability-scan HTTP/1.1" 200 -
+2025-08-19 12:18:29,260 [INFO] 127.0.0.1 - - [19/Aug/2025 12:18:29] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 12:18:29,263 [INFO] 127.0.0.1 - - [19/Aug/2025 12:18:29] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 12:18:35,006 [INFO] Telegram notification sent for url check: https://amazon.com
+2025-08-19 12:18:35,008 [INFO] 127.0.0.1 - - [19/Aug/2025 12:18:35] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 12:18:42,930 [INFO] 127.0.0.1 - - [19/Aug/2025 12:18:42] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 12:19:31,533 [INFO] 127.0.0.1 - - [19/Aug/2025 12:19:31] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 12:19:31,536 [INFO] 127.0.0.1 - - [19/Aug/2025 12:19:31] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 12:19:38,392 [INFO] Telegram notification sent for url check: https://amzon.com
+2025-08-19 12:19:38,395 [INFO] 127.0.0.1 - - [19/Aug/2025 12:19:38] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 12:19:54,764 [INFO] 127.0.0.1 - - [19/Aug/2025 12:19:54] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 12:21:02,411 [INFO] 127.0.0.1 - - [19/Aug/2025 12:21:02] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-08-19 12:21:04,433 [INFO] Telegram notification sent for ip check: 1.1.1.2
+2025-08-19 12:21:04,434 [INFO] 127.0.0.1 - - [19/Aug/2025 12:21:04] "POST /api/check-ip HTTP/1.1" 200 -
+2025-08-19 12:21:50,674 [INFO] VirusTotal analysis queued for file NDZlMGY2ZmY3MWUzYmJjMWYwMWYwMzA0YmI3MDZkNDU6MTc1NTU4NjMwOQ==, waiting...
+2025-08-19 12:21:56,381 [INFO] VirusTotal analysis queued for file NDZlMGY2ZmY3MWUzYmJjMWYwMWYwMzA0YmI3MDZkNDU6MTc1NTU4NjMwOQ==, waiting...
+2025-08-19 12:22:02,553 [INFO] VirusTotal analysis queued for file NDZlMGY2ZmY3MWUzYmJjMWYwMWYwMzA0YmI3MDZkNDU6MTc1NTU4NjMwOQ==, waiting...
+2025-08-19 12:22:09,633 [INFO] 127.0.0.1 - - [19/Aug/2025 12:22:09] "OPTIONS /api/scan-ports HTTP/1.1" 200 -
+2025-08-19 12:22:10,364 [ERROR] Failed to send Telegram notification: 400 Client Error: Bad Request for url: https://api.telegram.org/bot7631413879:AAH1eDKDIKYGepmKZRplMXnAVyRFljHjEQo/sendMessage
+2025-08-19 12:22:10,366 [INFO] 127.0.0.1 - - [19/Aug/2025 12:22:10] "POST /api/analyze-pcap HTTP/1.1" 200 -
+2025-08-19 12:23:18,033 [INFO] 127.0.0.1 - - [19/Aug/2025 12:23:18] "POST /api/scan-ports HTTP/1.1" 200 -
+2025-08-19 12:24:54,582 [INFO] 127.0.0.1 - - [19/Aug/2025 12:24:54] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-08-19 12:24:56,850 [INFO] Telegram notification sent for ip check: 1.2.1.1
+2025-08-19 12:24:56,852 [INFO] 127.0.0.1 - - [19/Aug/2025 12:24:56] "POST /api/check-ip HTTP/1.1" 200 -
+2025-08-19 12:31:57,660 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/KALE.py', reloading
+2025-08-19 12:31:58,415 [INFO]  * Restarting with stat
+2025-08-19 12:31:59,525 [WARNING]  * Debugger is active!
+2025-08-19 12:31:59,534 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 12:32:08,899 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/KALE.py', reloading
+2025-08-19 12:32:09,192 [INFO]  * Restarting with stat
+2025-08-19 12:32:09,985 [WARNING]  * Debugger is active!
+2025-08-19 12:32:09,995 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 12:32:14,153 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/KALE.py', reloading
+2025-08-19 12:32:14,521 [INFO]  * Restarting with stat
+2025-08-19 12:32:15,511 [WARNING]  * Debugger is active!
+2025-08-19 12:32:15,519 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 12:32:44,574 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/KALE.py', reloading
+2025-08-19 12:32:44,856 [INFO]  * Restarting with stat
+2025-08-19 12:32:45,619 [WARNING]  * Debugger is active!
+2025-08-19 12:32:45,626 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 12:32:49,778 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/KALE.py', reloading
+2025-08-19 12:32:49,896 [INFO]  * Restarting with stat
+2025-08-19 12:32:50,525 [WARNING]  * Debugger is active!
+2025-08-19 12:32:50,531 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 12:33:47,556 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/test_ip_analysis.py', reloading
+2025-08-19 12:33:47,728 [INFO]  * Restarting with stat
+2025-08-19 12:33:48,567 [WARNING]  * Debugger is active!
+2025-08-19 12:33:48,576 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 12:34:14,393 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server/test_ip_analysis.py', reloading
+2025-08-19 12:34:14,579 [INFO]  * Restarting with stat
+2025-08-19 12:34:15,381 [WARNING]  * Debugger is active!
+2025-08-19 12:34:15,389 [INFO]  * Debugger PIN: 121-756-213
+2025-08-19 12:34:28,233 [INFO] 127.0.0.1 - - [19/Aug/2025 12:34:28] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-08-19 12:34:28,259 [INFO] Starting comprehensive IP analysis for: 2.3.3.1
+2025-08-19 12:34:33,870 [ERROR] Failed to send Telegram notification: 400 Client Error: Bad Request for url: https://api.telegram.org/bot7631413879:AAH1eDKDIKYGepmKZRplMXnAVyRFljHjEQo/sendMessage
+2025-08-19 12:34:33,870 [INFO] IP analysis completed successfully for: 2.3.3.1
+2025-08-19 12:34:33,872 [INFO] 127.0.0.1 - - [19/Aug/2025 12:34:33] "POST /api/check-ip HTTP/1.1" 200 -
+2025-08-19 12:47:38,147 [INFO] 127.0.0.1 - - [19/Aug/2025 12:47:38] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-08-19 12:47:38,165 [INFO] Starting comprehensive IP analysis for: 1.1.1.1
+2025-08-19 12:47:44,599 [ERROR] Failed to send Telegram notification: 400 Client Error: Bad Request for url: https://api.telegram.org/bot7631413879:AAH1eDKDIKYGepmKZRplMXnAVyRFljHjEQo/sendMessage
+2025-08-19 12:47:44,600 [INFO] IP analysis completed successfully for: 1.1.1.1
+2025-08-19 12:47:44,607 [INFO] 127.0.0.1 - - [19/Aug/2025 12:47:44] "POST /api/check-ip HTTP/1.1" 200 -
