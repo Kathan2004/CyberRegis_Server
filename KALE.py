@@ -91,7 +91,23 @@ class PrettyJSONResponse:
 class AnalysisReport:
     def __init__(self, api_key):
         self.api_key = api_key
+        if not api_key or len(api_key) < 10:
+            raise ValueError("Invalid VirusTotal API key provided")
         self.headers = {"x-apikey": self.api_key}
+
+    def validate_api_key(self):
+        """Validate VirusTotal API key by making a test request"""
+        try:
+            test_url = "https://www.virustotal.com/api/v3/users/current"
+            response = requests.get(test_url, headers=self.headers, timeout=10)
+            if response.status_code == 200:
+                return True
+            else:
+                logger.warning(f"VirusTotal API key validation failed: {response.status_code}")
+                return False
+        except Exception as e:
+            logger.error(f"Error validating VirusTotal API key: {e}")
+            return False
 
     def analyze_file(self, file_path):
         file_info = {}
@@ -126,16 +142,68 @@ class AnalysisReport:
     def analyze_with_virustotal(self, file_path):
         url = "https://www.virustotal.com/api/v3/files"
         try:
+            # Check if API key is valid
+            if not self.validate_api_key():
+                return self.get_fallback_virustotal_result("Invalid or expired API key")
+            
             with open(file_path, "rb") as file:
                 response = requests.post(url, headers=self.headers, files={"file": file})
                 if response.status_code == 200:
                     file_id = response.json().get("data", {}).get("id")
                     return self.get_virustotal_report(file_id)
+                elif response.status_code == 429:
+                    return self.get_fallback_virustotal_result("Rate limit exceeded - please try again later")
+                elif response.status_code == 401:
+                    return self.get_fallback_virustotal_result("Unauthorized - check your API key")
                 else:
                     raise Exception(f"VirusTotal API error: {response.status_code} - {response.text}")
         except Exception as e:
             logger.error(f"Error during VirusTotal analysis: {e}")
-            return {}
+            return self.get_fallback_virustotal_result(str(e))
+
+    def get_fallback_virustotal_result(self, error_message):
+        """Provide fallback result when VirusTotal analysis fails"""
+        return {
+            "error": f"VirusTotal analysis failed: {error_message}",
+            "risk_assessment": {
+                "risk_score": 0,
+                "risk_level": "UNKNOWN",
+                "malicious_count": 0,
+                "suspicious_count": 0,
+                "harmless_count": 0,
+                "undetected_count": 0,
+                "total_engines": 0,
+                "detection_ratio": "0/0",
+                "status": "FAILED"
+            },
+            "metadata": {
+                "reputation": 0,
+                "analysis_date": None,
+                "file_type": "Unknown",
+                "error_details": error_message
+            }
+        }
+
+    def get_virustotal_summary(self, virustotal_data):
+        """Generate a human-readable summary of VirusTotal analysis"""
+        if not virustotal_data or 'risk_assessment' not in virustotal_data:
+            return "No VirusTotal data available"
+        
+        risk_assessment = virustotal_data['risk_assessment']
+        metadata = virustotal_data.get('metadata', {})
+        
+        summary = f"Risk Score: {risk_assessment.get('risk_score', 0)}/100\n"
+        summary += f"Risk Level: {risk_assessment.get('risk_level', 'UNKNOWN')}\n"
+        summary += f"Detection: {risk_assessment.get('detection_ratio', '0/0')}\n"
+        summary += f"Malicious: {risk_assessment.get('malicious_count', 0)}\n"
+        summary += f"Suspicious: {risk_assessment.get('suspicious_count', 0)}\n"
+        
+        if metadata.get('reputation'):
+            summary += f"Reputation: {metadata.get('reputation')}\n"
+        if metadata.get('file_type'):
+            summary += f"File Type: {metadata.get('file_type')}\n"
+        
+        return summary
 
     def get_virustotal_report(self, file_id):
         url = f"https://www.virustotal.com/api/v3/analyses/{file_id}"
@@ -145,14 +213,91 @@ class AnalysisReport:
                 if response.status_code == 200:
                     report = response.json()
                     if report.get('data', {}).get('attributes', {}).get('status') == 'completed':
-                        return report
-                    time.sleep(5)  # Wait before retrying
+                        return self.process_virustotal_report(report)
+                    elif report.get('data', {}).get('attributes', {}).get('status') == 'queued':
+                        logger.info(f"VirusTotal analysis queued for file {file_id}, waiting...")
+                        time.sleep(5)  # Wait before retrying
+                    else:
+                        logger.warning(f"VirusTotal analysis status: {report.get('data', {}).get('attributes', {}).get('status')}")
+                        time.sleep(5)  # Wait before retrying
                 else:
                     raise Exception(f"Failed to fetch report: {response.status_code} - {response.text}")
-            raise Exception("VirusTotal analysis not completed in time")
+            
+            # If we get here, the analysis didn't complete in time
+            logger.warning(f"VirusTotal analysis for file {file_id} did not complete within timeout period")
+            return self.get_fallback_virustotal_result("Analysis timeout - please check manually on VirusTotal")
+            
         except Exception as e:
             logger.error(f"Error fetching VirusTotal report: {e}")
-            return {}
+            return self.get_fallback_virustotal_result(str(e))
+
+    def process_virustotal_report(self, report):
+        """Process VirusTotal report and calculate risk score"""
+        try:
+            attributes = report.get('data', {}).get('attributes', {})
+            stats = attributes.get('stats', {})
+            
+            # Extract counts
+            malicious = stats.get('malicious', 0)
+            suspicious = stats.get('suspicious', 0)
+            harmless = stats.get('harmless', 0)
+            undetected = stats.get('undetected', 0)
+            total_engines = sum(stats.values()) if stats else 0
+            
+            # Calculate risk score (0-100)
+            if total_engines == 0:
+                risk_score = 0
+            else:
+                # Weight malicious detections more heavily
+                risk_score = min(100, int((malicious * 3 + suspicious * 2) / total_engines * 100))
+            
+            # Determine risk level
+            if risk_score >= 75:
+                risk_level = "HIGH"
+            elif risk_score >= 50:
+                risk_level = "MEDIUM"
+            elif risk_score >= 25:
+                risk_level = "LOW"
+            else:
+                risk_level = "VERY_LOW"
+            
+            # Get additional metadata
+            file_info = attributes.get('last_analysis_stats', {})
+            reputation = attributes.get('reputation', 0)
+            
+            return {
+                "data": report.get('data', {}),
+                "risk_assessment": {
+                    "risk_score": risk_score,
+                    "risk_level": risk_level,
+                    "malicious_count": malicious,
+                    "suspicious_count": suspicious,
+                    "harmless_count": harmless,
+                    "undetected_count": undetected,
+                    "total_engines": total_engines,
+                    "detection_ratio": f"{malicious + suspicious}/{total_engines}" if total_engines > 0 else "0/0"
+                },
+                "metadata": {
+                    "reputation": reputation,
+                    "analysis_date": attributes.get('last_analysis_date'),
+                    "file_type": attributes.get('type_description', 'Unknown')
+                }
+            }
+        except Exception as e:
+            logger.error(f"Error processing VirusTotal report: {e}")
+            return {
+                "error": f"Failed to process VirusTotal report: {str(e)}",
+                "risk_assessment": {
+                    "risk_score": 0,
+                    "risk_level": "UNKNOWN",
+                    "malicious_count": 0,
+                    "suspicious_count": 0,
+                    "harmless_count": 0,
+                    "undetected_count": 0,
+                    "total_engines": 0,
+                    "detection_ratio": "0/0"
+                }
+            }
 
     def analyze_pcap(self, file_path):
         capture = pyshark.FileCapture(file_path)
@@ -203,14 +348,32 @@ def send_telegram_notification(check_type: str, subject: str, result: Dict) -> b
                 for i, rec in enumerate(recommendations[:3], 1):
                     message += f"{i}. {rec}\n"
         elif check_type == "ip":
-            risk_score = result.get("data", {}).get("risk_assessment", {}).get("confidence_score", 0)
-            risk_level = result.get("data", {}).get("risk_assessment", {}).get("risk_level", "Unknown")
-            country = result.get("data", {}).get("ip_details", {}).get("location", {}).get("country", "Unknown")
-            message = f"🖥️ *IP Reputation Check*\n\n"
+            # Enhanced IP analysis with VirusTotal integration
+            ip_data = result.get("data", {})
+            risk_assessment = ip_data.get("risk_assessment", {})
+            ip_details = ip_data.get("ip_details", {})
+            virustotal_data = ip_data.get("virustotal", {})
+            
+            message = f"🖥️ *IP Security Analysis*\n\n"
             message += f"IP Address: `{subject}`\n"
-            message += f"Risk Level: {risk_level.upper()}\n"
-            message += f"Confidence Score: {risk_score}/100\n"
-            message += f"Country: {country}\n"
+            message += f"Risk Level: {risk_assessment.get('risk_level', 'Unknown').upper()}\n"
+            message += f"Confidence Score: {risk_assessment.get('confidence_score', 0)}/100\n"
+            message += f"Total Reports: {risk_assessment.get('total_reports', 0)}\n"
+            message += f"Country: {ip_details.get('location', {}).get('country', 'Unknown')}\n"
+            message += f"ISP: {ip_details.get('isp', 'Unknown')}\n"
+            
+            # VirusTotal information
+            if virustotal_data and 'risk_assessment' in virustotal_data:
+                vt_risk = virustotal_data['risk_assessment']
+                message += f"\n🦠 *VirusTotal:*\n"
+                message += f"Risk Score: {vt_risk.get('risk_score', 0)}/100\n"
+                message += f"Risk Level: {vt_risk.get('risk_level', 'UNKNOWN')}\n"
+                message += f"Detection: {vt_risk.get('detection_ratio', '0/0')}\n"
+            
+            # Categories
+            categories = risk_assessment.get('categories', [])
+            if categories and categories != ['clean']:
+                message += f"\n⚠️ Categories: {', '.join(categories)}\n"
         elif check_type == "chat":
             message = f"💬 *Chat Interaction*\n\n"
             message += f"User Query: `{subject}`\n"
@@ -219,9 +382,20 @@ def send_telegram_notification(check_type: str, subject: str, result: Dict) -> b
         elif check_type == "pcap":
             message = f"📊 *PCAP Analysis*\n\n"
             message += f"File: `{subject}`\n"
-            stats = result.get('data', {}).get('virustotal', {}).get('data', {}).get('attributes', {}).get('stats', {})
-            message += f"Malicious: {stats.get('malicious', 0)}\n"
-            message += f"Suspicious: {stats.get('suspicious', 0)}\n"
+            
+            # Enhanced VirusTotal information
+            virustotal_data = result.get('data', {}).get('virustotal', {})
+            if virustotal_data and 'risk_assessment' in virustotal_data:
+                risk_assessment = virustotal_data['risk_assessment']
+                message += f"🦠 *VirusTotal Analysis:*\n"
+                message += f"Risk Score: {risk_assessment.get('risk_score', 0)}/100\n"
+                message += f"Risk Level: {risk_assessment.get('risk_level', 'UNKNOWN')}\n"
+                message += f"Malicious: {risk_assessment.get('malicious_count', 0)}\n"
+                message += f"Suspicious: {risk_assessment.get('suspicious_count', 0)}\n"
+                message += f"Detection Ratio: {risk_assessment.get('detection_ratio', '0/0')}\n"
+            else:
+                message += f"🦠 *VirusTotal Analysis:* No data available\n"
+            
             message += f"Protocols Analyzed: {len(result.get('data', {}).get('pcap_analysis', {}))}\n"
             message += f"\n🕒 *{result.get('timestamp', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))}*"
         else:
@@ -469,90 +643,428 @@ def check_url_safety(url: str) -> Dict:
             "message": str(e)
         })
 
-def check_ip_reputation(ip: str) -> Dict:
-    if not is_valid_ip(ip):
-        return PrettyJSONResponse.format({
+def analyze_ip_address(ip_address: str) -> Dict:
+    """
+    Comprehensive IP address analysis with VirusTotal integration
+    Returns the exact structure required by the frontend
+    """
+    if not is_valid_ip(ip_address):
+        return {
+            "status": "error",
             "error": "Invalid IP address format",
-            "suggestions": [
-                "Enter a valid IPv4 address (e.g., 192.168.1.1)",
-                "Ensure each segment is between 0 and 255",
-                "Avoid extra spaces or special characters"
-            ]
-        })
-    cache_key = f"ip:{ip}"
-    if cache_key in cache:
-        logger.info(f"Cache hit for IP: {ip}")
-        return cache[cache_key]
+            "message": "Please provide a valid IPv4 address"
+        }
+    
     try:
+        # Get current timestamp in ISO format
+        timestamp = datetime.now().isoformat() + "Z"
+        
+        # Perform all analysis components
+        ip_details = get_ip_geolocation(ip_address)
+        risk_assessment = get_ip_risk_assessment(ip_address)
+        technical_details = get_technical_details(ip_address)
+        virustotal_data = get_virustotal_analysis(ip_address)
+        recommendations = generate_recommendations({
+            "ip_details": ip_details,
+            "risk_assessment": risk_assessment,
+            "virustotal": virustotal_data
+        })
+        
+        # Generate summary
+        virustotal_summary = generate_virustotal_summary(virustotal_data, ip_address)
+        
+        # Construct the exact response structure required
+        result = {
+            "status": "success",
+            "timestamp": timestamp,
+            "data": {
+                "ip_details": ip_details,
+                "risk_assessment": risk_assessment,
+                "technical_details": technical_details,
+                "virustotal": virustotal_data,
+                "virustotal_summary": virustotal_summary,
+                "recommendations": recommendations
+            }
+        }
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Error in comprehensive IP analysis for {ip_address}: {e}")
+        return {
+            "status": "error",
+            "error": "Analysis failed",
+            "message": str(e),
+            "timestamp": datetime.now().isoformat() + "Z"
+        }
+
+def get_ip_geolocation(ip_address: str) -> Dict:
+    """Get IP geolocation information using multiple sources"""
+    try:
+        # Primary source: AbuseIPDB (already integrated)
         url = "https://api.abuseipdb.com/api/v2/check"
-        headers = {
-            "Key": ABUSEIPDB_API_KEY,
-            "Accept": "application/json"
-        }
-        params = {
-            "ipAddress": ip,
-            "maxAgeInDays": 90,
-            "verbose": True
-        }
+        headers = {"Key": ABUSEIPDB_API_KEY, "Accept": "application/json"}
+        params = {"ipAddress": ip_address, "maxAgeInDays": 90, "verbose": True}
+        
         response = requests.get(url, headers=headers, params=params, timeout=10)
         response.raise_for_status()
         data = response.json().get("data", {})
-        risk_level = "Low"
-        if data.get("abuseConfidenceScore", 0) > 75:
-            risk_level = "High"
-        elif data.get("abuseConfidenceScore", 0) > 50:
-            risk_level = "Medium"
-        result = {
-            "ip_details": {
-                "address": data.get("ipAddress"),
-                "location": {
-                    "country": data.get("countryName"),
-                    "country_code": data.get("countryCode"),
-                    "city": data.get("city"),
-                    "region": data.get("region")
-                },
-                "isp": data.get("isp"),
-                "domain": data.get("domain"),
-                "hostname": data.get("hostnames", [])
-            },
-            "risk_assessment": {
-                "confidence_score": data.get("abuseConfidenceScore", 0),
-                "risk_level": risk_level,
-                "total_reports": data.get("totalReports", 0),
-                "last_reported": data.get("lastReportedAt"),
-                "whitelisted": data.get("isWhitelisted", False)
-            },
-            "technical_details": {
-                "usage_type": data.get("usageType"),
-                "asn": data.get("asn"),
-                "as_name": data.get("asnName"),
-                "is_public": data.get("isPublic"),
-                "is_tor": data.get("isTor", False)
-            },
-            "recommendations": []
+        
+        # Fallback geolocation using ipapi.co (free tier)
+        fallback_data = {}
+        try:
+            fallback_response = requests.get(f"http://ip-api.com/json/{ip_address}", timeout=5)
+            if fallback_response.status_code == 200:
+                fallback_data = fallback_response.json()
+        except:
+            pass
+        
+        return {
+            "address": ip_address,
+            "domain": data.get("domain") or fallback_data.get("reverse", ""),
+            "isp": data.get("isp") or fallback_data.get("isp", "Unknown"),
+            "location": {
+                "city": data.get("city") or fallback_data.get("city", "Unknown"),
+                "region": data.get("region") or fallback_data.get("regionName", "Unknown"),
+                "country": data.get("countryName") or fallback_data.get("country", "Unknown"),
+                "country_code": data.get("countryCode") or fallback_data.get("countryCode", "Unknown")
+            }
         }
-        if result["risk_assessment"]["risk_level"] == "High":
-            result["recommendations"].extend([
-                "Block this IP in your firewall",
-                "Monitor network traffic for suspicious activity",
-                "Report to your security team"
+        
+    except Exception as e:
+        logger.error(f"Error getting geolocation for {ip_address}: {e}")
+        return {
+            "address": ip_address,
+            "domain": "Unknown",
+            "isp": "Unknown",
+            "location": {
+                "city": "Unknown",
+                "region": "Unknown",
+                "country": "Unknown",
+                "country_code": "Unknown"
+            }
+        }
+
+def get_ip_risk_assessment(ip_address: str) -> Dict:
+    """Calculate IP risk assessment using multiple threat intelligence sources"""
+    try:
+        # Primary source: AbuseIPDB
+        url = "https://api.abuseipdb.com/api/v2/check"
+        headers = {"Key": ABUSEIPDB_API_KEY, "Accept": "application/json"}
+        params = {"ipAddress": ip_address, "maxAgeInDays": 90, "verbose": True}
+        
+        response = requests.get(url, headers=headers, params=params, timeout=10)
+        response.raise_for_status()
+        data = response.json().get("data", {})
+        
+        # Calculate risk level
+        abuse_score = data.get("abuseConfidenceScore", 0)
+        total_reports = data.get("totalReports", 0)
+        
+        if abuse_score > 75 or total_reports > 50:
+            risk_level = "High"
+        elif abuse_score > 50 or total_reports > 20:
+            risk_level = "Medium"
+        else:
+            risk_level = "Low"
+        
+        # Determine categories based on reports
+        categories = []
+        if abuse_score > 75:
+            categories.extend(["malware", "phishing"])
+        if total_reports > 30:
+            categories.append("botnet")
+        if data.get("isTor", False):
+            categories.append("tor_exit_node")
+        if data.get("isPublic", False) and abuse_score > 25:
+            categories.append("public_proxy")
+        
+        if not categories:
+            categories = ["clean"]
+        
+        return {
+            "risk_level": risk_level,
+            "confidence_score": abuse_score,
+            "total_reports": total_reports,
+            "last_reported": data.get("lastReportedAt") or datetime.now().isoformat() + "Z",
+            "categories": categories
+        }
+        
+    except Exception as e:
+        logger.error(f"Error getting risk assessment for {ip_address}: {e}")
+        return {
+            "risk_level": "Unknown",
+            "confidence_score": 0,
+            "total_reports": 0,
+            "last_reported": datetime.now().isoformat() + "Z",
+            "categories": ["unknown"]
+        }
+
+def get_technical_details(ip_address: str) -> Dict:
+    """Get technical details about the IP address"""
+    try:
+        # Get ASN and technical information
+        url = "https://api.abuseipdb.com/api/v2/check"
+        headers = {"Key": ABUSEIPDB_API_KEY, "Accept": "application/json"}
+        params = {"ipAddress": ip_address, "maxAgeInDays": 90, "verbose": True}
+        
+        response = requests.get(url, headers=headers, params=params, timeout=10)
+        response.raise_for_status()
+        data = response.json().get("data", {})
+        
+        # Check if it's a TOR exit node
+        is_tor = data.get("isTor", False)
+        
+        # Check if it's a public IP
+        is_public = data.get("isPublic", True)  # Most IPs are public
+        
+        # Determine usage type
+        usage_type = data.get("usageType", "Unknown")
+        if not usage_type or usage_type == "Unknown":
+            if is_tor:
+                usage_type = "TOR Exit Node"
+            elif data.get("abuseConfidenceScore", 0) > 75:
+                usage_type = "Malicious"
+            else:
+                usage_type = "ISP"
+        
+        return {
+            "as_name": data.get("asnName", "Unknown"),
+            "asn": data.get("asn", "Unknown"),
+            "is_public": is_public,
+            "is_tor": is_tor,
+            "usage_type": usage_type,
+            "organization": data.get("isp", "Unknown")
+        }
+        
+    except Exception as e:
+        logger.error(f"Error getting technical details for {ip_address}: {e}")
+        return {
+            "as_name": "Unknown",
+            "asn": "Unknown",
+            "is_public": True,
+            "is_tor": False,
+            "usage_type": "Unknown",
+            "organization": "Unknown"
+        }
+
+def get_virustotal_analysis(ip_address: str) -> Dict:
+    """Get VirusTotal analysis for IP address"""
+    try:
+        # Check if API key is valid
+        if not VIRUSTOTAL_API_KEY or len(VIRUSTOTAL_API_KEY) < 10:
+            return get_fallback_virustotal_result("Invalid VirusTotal API key")
+        
+        # VirusTotal IP endpoint
+        url = f"https://www.virustotal.com/api/v3/ip_addresses/{ip_address}"
+        headers = {"x-apikey": VIRUSTOTAL_API_KEY}
+        
+        response = requests.get(url, headers=headers, timeout=15)
+        
+        if response.status_code == 200:
+            data = response.json()
+            return process_virustotal_ip_report(data)
+        elif response.status_code == 429:
+            return get_fallback_virustotal_result("Rate limit exceeded - please try again later")
+        elif response.status_code == 401:
+            return get_fallback_virustotal_result("Unauthorized - check your VirusTotal API key")
+        elif response.status_code == 404:
+            return get_fallback_virustotal_result("IP address not found in VirusTotal database")
+        else:
+            return get_fallback_virustotal_result(f"VirusTotal API error: {response.status_code}")
+            
+    except requests.exceptions.Timeout:
+        return get_fallback_virustotal_result("VirusTotal API timeout")
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Error getting VirusTotal analysis for IP {ip_address}: {e}")
+        return get_fallback_virustotal_result(f"Network error: {str(e)}")
+    except Exception as e:
+        logger.error(f"Unexpected error in VirusTotal IP analysis: {e}")
+        return get_fallback_virustotal_result(f"Unexpected error: {str(e)}")
+
+def process_virustotal_ip_report(report: Dict) -> Dict:
+    """Process VirusTotal IP report and calculate risk score"""
+    try:
+        attributes = report.get('data', {}).get('attributes', {})
+        stats = attributes.get('last_analysis_stats', {})
+        
+        # Extract counts
+        malicious = stats.get('malicious', 0)
+        suspicious = stats.get('suspicious', 0)
+        harmless = stats.get('harmless', 0)
+        undetected = stats.get('undetected', 0)
+        total_engines = sum(stats.values()) if stats else 0
+        
+        # Calculate risk score (0-100)
+        if total_engines == 0:
+            risk_score = 0
+        else:
+            # Weight malicious detections more heavily
+            risk_score = min(100, int((malicious * 3 + suspicious * 2) / total_engines * 100))
+        
+        # Determine risk level
+        if risk_score >= 75:
+            risk_level = "HIGH"
+        elif risk_score >= 50:
+            risk_level = "MEDIUM"
+        elif risk_score >= 25:
+            risk_level = "LOW"
+        else:
+            risk_level = "VERY_LOW"
+        
+        # Get additional metadata
+        reputation = attributes.get('reputation', 0)
+        analysis_date = attributes.get('last_analysis_date')
+        
+        return {
+            "risk_assessment": {
+                "risk_score": risk_score,
+                "risk_level": risk_level,
+                "malicious_count": malicious,
+                "suspicious_count": suspicious,
+                "detection_ratio": f"{malicious + suspicious}/{total_engines}" if total_engines > 0 else "0/0",
+                "total_engines": total_engines
+            },
+            "metadata": {
+                "reputation": reputation,
+                "file_type": "IP Address",
+                "analysis_date": analysis_date
+            },
+            "data": {
+                "attributes": {
+                    "stats": {
+                        "malicious": malicious,
+                        "suspicious": suspicious,
+                        "harmless": harmless,
+                        "total": total_engines
+                    },
+                    "results": attributes.get('last_analysis_results', {})
+                }
+            }
+        }
+        
+    except Exception as e:
+        logger.error(f"Error processing VirusTotal IP report: {e}")
+        return get_fallback_virustotal_result(f"Failed to process VirusTotal report: {str(e)}")
+
+def generate_virustotal_summary(virustotal_data: Dict, ip_address: str) -> str:
+    """Generate human-readable summary of VirusTotal analysis"""
+    try:
+        if not virustotal_data or 'risk_assessment' not in virustotal_data:
+            return f"No VirusTotal data available for IP {ip_address}"
+        
+        risk_assessment = virustotal_data['risk_assessment']
+        malicious_count = risk_assessment.get('malicious_count', 0)
+        total_engines = risk_assessment.get('total_engines', 0)
+        risk_level = risk_assessment.get('risk_level', 'UNKNOWN')
+        
+        if total_engines == 0:
+            return f"IP {ip_address} has not been analyzed by any security engines."
+        
+        if malicious_count == 0:
+            return f"IP {ip_address} has been analyzed by {total_engines} security engines and appears to be clean."
+        else:
+            detection_ratio = risk_assessment.get('detection_ratio', '0/0')
+            return f"IP {ip_address} has been flagged by {detection_ratio} security engines as potentially malicious (Risk Level: {risk_level})."
+            
+    except Exception as e:
+        logger.error(f"Error generating VirusTotal summary: {e}")
+        return f"Unable to generate summary for IP {ip_address}"
+
+def generate_recommendations(data: Dict) -> List[str]:
+    """Generate security recommendations based on analysis results"""
+    recommendations = []
+    
+    try:
+        risk_level = data.get("risk_assessment", {}).get("risk_level", "Unknown")
+        virustotal_risk = data.get("virustotal", {}).get("risk_assessment", {}).get("risk_level", "UNKNOWN")
+        
+        # High risk recommendations
+        if risk_level == "High" or virustotal_risk == "HIGH":
+            recommendations.extend([
+                "Block this IP address immediately in your firewall",
+                "Investigate recent connections from this IP address",
+                "Report this IP to your security team for further analysis",
+                "Monitor network traffic for suspicious activity patterns",
+                "Check if any systems have been compromised"
             ])
-        elif result["risk_assessment"]["risk_level"] == "Medium":
-            result["recommendations"].extend([
-                "Monitor this IP for further activity",
-                "Consider adding to watchlist",
-                "Verify legitimacy if associated with your network"
+        # Medium risk recommendations
+        elif risk_level == "Medium" or virustotal_risk == "MEDIUM":
+            recommendations.extend([
+                "Monitor this IP address for further suspicious activity",
+                "Consider adding this IP to your watchlist",
+                "Verify if this IP is associated with legitimate services you use",
+                "Implement additional monitoring for connections from this IP"
             ])
-        formatted_response = PrettyJSONResponse.format(result)
-        cache[cache_key] = formatted_response
-        send_telegram_notification("ip", ip, formatted_response)
-        return formatted_response
-    except requests.RequestException as e:
-        logger.error(f"Error checking IP {ip}: {e}")
-        return PrettyJSONResponse.format({
-            "error": "API error",
-            "message": str(e)
-        })
+        # Low risk recommendations
+        elif risk_level == "Low" or virustotal_risk == "LOW":
+            recommendations.extend([
+                "Continue monitoring this IP address for any changes in behavior",
+                "Consider this IP as potentially safe but maintain vigilance"
+            ])
+        else:
+            recommendations.append("Unable to determine risk level - proceed with caution")
+        
+        # Add specific recommendations based on categories
+        categories = data.get("risk_assessment", {}).get("categories", [])
+        if "tor_exit_node" in categories:
+            recommendations.append("This IP is a TOR exit node - consider blocking if not needed for legitimate purposes")
+        if "public_proxy" in categories:
+            recommendations.append("This IP appears to be a public proxy - verify legitimacy before allowing access")
+        if "botnet" in categories:
+            recommendations.append("This IP is associated with botnet activity - immediate blocking recommended")
+        
+        # Add VirusTotal specific recommendations
+        if virustotal_risk == "HIGH":
+            recommendations.append("IP flagged by multiple security engines - high confidence in malicious nature")
+        elif virustotal_risk == "MEDIUM":
+            recommendations.append("IP shows suspicious behavior patterns - monitor closely")
+        
+        # Ensure we have at least some recommendations
+        if not recommendations:
+            recommendations = [
+                "Continue monitoring this IP address",
+                "Verify legitimacy if this IP is associated with your network"
+            ]
+        
+        return recommendations[:5]  # Limit to 5 recommendations
+        
+    except Exception as e:
+        logger.error(f"Error generating recommendations: {e}")
+        return [
+            "Unable to generate specific recommendations",
+            "Proceed with caution and monitor for suspicious activity"
+        ]
+
+def get_fallback_virustotal_result(error_message: str) -> Dict:
+    """Provide fallback result when VirusTotal analysis fails"""
+    return {
+        "risk_assessment": {
+            "risk_score": 0,
+            "risk_level": "UNKNOWN",
+            "malicious_count": 0,
+            "suspicious_count": 0,
+            "detection_ratio": "0/0",
+            "total_engines": 0
+        },
+        "metadata": {
+            "reputation": 0,
+            "file_type": "IP Address",
+            "analysis_date": None
+        },
+        "data": {
+            "attributes": {
+                "stats": {
+                    "malicious": 0,
+                    "suspicious": 0,
+                    "harmless": 0,
+                    "total": 0
+                },
+                "results": {}
+            }
+        },
+        "error": error_message
+    }
 
 # PCAP Analysis Endpoint
 @app.route("/api/analyze-pcap", methods=["POST"])
@@ -586,9 +1098,13 @@ def analyze_pcap():
                 "message": file_info["error"]
             })), 500
 
+        # Generate VirusTotal summary
+        virustotal_summary = report.get_virustotal_summary(file_info.get("virustotal", {}))
+        
         result = {
             "metadata": file_info.get("metadata", {}),
             "virustotal": file_info.get("virustotal", {}),
+            "virustotal_summary": virustotal_summary,
             "pcap_analysis": file_info.get("pcap_analysis", {}),
             "chart_base64": file_info.get("chart_base64", "")
         }
@@ -686,17 +1202,56 @@ def api_check_url():
 def api_check_ip():
     try:
         data = request.get_json()
+        if not data:
+            return jsonify({
+                "status": "error",
+                "error": "No data provided",
+                "message": "Please provide IP address data"
+            }), 400
+            
         ip = data.get("ip", "").strip()
         if not ip:
-            return jsonify(PrettyJSONResponse.format({"error": "IP address is required"})), 400
-        result = check_ip_reputation(ip)
+            return jsonify({
+                "status": "error",
+                "error": "IP address required",
+                "message": "Please provide an IP address to analyze"
+            }), 400
+        
+        # Validate IP format
+        if not is_valid_ip(ip):
+            return jsonify({
+                "status": "error",
+                "error": "Invalid IP format",
+                "message": "Please provide a valid IPv4 address (e.g., 192.168.1.1)"
+            }), 400
+        
+        logger.info(f"Starting comprehensive IP analysis for: {ip}")
+        
+        # Perform comprehensive analysis
+        result = analyze_ip_address(ip)
+        
+        # Check if analysis was successful
+        if result.get("status") == "error":
+            logger.error(f"IP analysis failed for {ip}: {result.get('error')}")
+            return jsonify(result), 500
+        
+        # Send Telegram notification
+        try:
+            send_telegram_notification("ip", ip, result)
+        except Exception as telegram_error:
+            logger.warning(f"Failed to send Telegram notification: {telegram_error}")
+        
+        logger.info(f"IP analysis completed successfully for: {ip}")
         return jsonify(result)
+        
     except Exception as e:
         logger.error(f"Error in check-ip endpoint: {e}")
-        return jsonify(PrettyJSONResponse.format({
-            "error": "IP check failed",
-            "message": str(e)
-        })), 500
+        return jsonify({
+            "status": "error",
+            "error": "Internal server error",
+            "message": "IP analysis failed due to server error",
+            "timestamp": datetime.now().isoformat() + "Z"
+        }), 500
 
 # Domain Analysis Endpoint
 @app.route('/api/analyze-domain', methods=['POST'])
