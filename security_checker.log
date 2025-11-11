@@ -1028,3 +1028,895 @@
 2025-08-18 20:55:30,588 [INFO] 127.0.0.1 - - [18/Aug/2025 20:55:30] "POST /api/scan-ports HTTP/1.1" 200 -
 2025-08-18 22:31:17,087 [INFO] 127.0.0.1 - - [18/Aug/2025 22:31:17] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
 2025-08-18 22:31:18,956 [INFO] 127.0.0.1 - - [18/Aug/2025 22:31:18] "POST /api/security-file-content HTTP/1.1" 200 -
+2025-08-19 11:20:13,971 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:4000
+ * Running on http://192.168.1.39:4000
+2025-08-19 11:20:13,971 [INFO] [33mPress CTRL+C to quit[0m
+2025-08-19 11:20:13,972 [INFO]  * Restarting with stat
+2025-08-19 11:20:14,488 [WARNING]  * Debugger is active!
+2025-08-19 11:20:14,496 [INFO]  * Debugger PIN: 122-902-943
+2025-08-19 11:23:46,362 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:4000
+ * Running on http://192.168.1.39:4000
+2025-08-19 11:23:46,363 [INFO] [33mPress CTRL+C to quit[0m
+2025-08-19 11:23:46,364 [INFO]  * Restarting with stat
+2025-08-19 11:23:46,888 [WARNING]  * Debugger is active!
+2025-08-19 11:23:46,894 [INFO]  * Debugger PIN: 122-902-943
+2025-08-19 11:24:01,977 [INFO] 127.0.0.1 - - [19/Aug/2025 11:24:01] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:24:09,873 [INFO] 127.0.0.1 - - [19/Aug/2025 11:24:09] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:25:16,014 [INFO] 127.0.0.1 - - [19/Aug/2025 11:25:16] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:25:21,557 [INFO] 127.0.0.1 - - [19/Aug/2025 11:25:21] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:25:22,036 [INFO] 127.0.0.1 - - [19/Aug/2025 11:25:22] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:25:24,131 [INFO] 127.0.0.1 - - [19/Aug/2025 11:25:24] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:26:18,214 [INFO] 127.0.0.1 - - [19/Aug/2025 11:26:18] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:26:29,069 [INFO] 127.0.0.1 - - [19/Aug/2025 11:26:29] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:26:40,567 [INFO] 127.0.0.1 - - [19/Aug/2025 11:26:40] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:27:03,274 [INFO] 127.0.0.1 - - [19/Aug/2025 11:27:03] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:29:04,581 [INFO] 127.0.0.1 - - [19/Aug/2025 11:29:04] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:29:12,224 [INFO] 127.0.0.1 - - [19/Aug/2025 11:29:12] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:29:27,197 [INFO] 127.0.0.1 - - [19/Aug/2025 11:29:27] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2025-08-19 11:29:27,271 [INFO] 127.0.0.1 - - [19/Aug/2025 11:29:27] "[33mPOST /api/security-file-content HTTP/1.1[0m" 404 -
+2025-08-19 11:29:28,452 [INFO] 127.0.0.1 - - [19/Aug/2025 11:29:28] "[33mPOST /api/security-file-content HTTP/1.1[0m" 404 -
+2025-08-19 11:29:57,190 [INFO] 127.0.0.1 - - [19/Aug/2025 11:29:57] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 11:30:00,145 [INFO] 127.0.0.1 - - [19/Aug/2025 11:30:00] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 13:40:25,916 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:4000
+ * Running on http://192.168.104.11:4000
+2025-08-19 13:40:25,917 [INFO] [33mPress CTRL+C to quit[0m
+2025-08-19 13:40:25,917 [INFO]  * Restarting with stat
+2025-08-19 13:40:26,413 [WARNING]  * Debugger is active!
+2025-08-19 13:40:26,422 [INFO]  * Debugger PIN: 122-902-943
+2025-08-19 13:41:29,233 [INFO] 127.0.0.1 - - [19/Aug/2025 13:41:29] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 13:41:29,236 [INFO] 127.0.0.1 - - [19/Aug/2025 13:41:29] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 13:41:59,040 [INFO] Telegram notification sent for url check: https://niriksh.com
+2025-08-19 13:41:59,050 [INFO] 127.0.0.1 - - [19/Aug/2025 13:41:59] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 13:42:00,902 [INFO] 127.0.0.1 - - [19/Aug/2025 13:42:00] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 13:42:58,964 [INFO] 127.0.0.1 - - [19/Aug/2025 13:42:58] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2025-08-19 13:43:17,624 [INFO] 127.0.0.1 - - [19/Aug/2025 13:43:17] "[35m[1mPOST /api/security-file-content HTTP/1.1[0m" 503 -
+2025-08-19 13:43:32,791 [INFO] 127.0.0.1 - - [19/Aug/2025 13:43:32] "OPTIONS /api/scan-ports HTTP/1.1" 200 -
+2025-08-19 13:43:39,872 [INFO] 127.0.0.1 - - [19/Aug/2025 13:43:39] "POST /api/scan-ports HTTP/1.1" 200 -
+2025-08-19 13:43:47,444 [INFO] 127.0.0.1 - - [19/Aug/2025 13:43:47] "OPTIONS /api/scan-ports HTTP/1.1" 200 -
+2025-08-19 13:43:50,698 [INFO] 127.0.0.1 - - [19/Aug/2025 13:43:50] "POST /api/scan-ports HTTP/1.1" 200 -
+2025-08-19 13:43:59,123 [INFO] 127.0.0.1 - - [19/Aug/2025 13:43:59] "OPTIONS /api/vulnerability-scan HTTP/1.1" 200 -
+2025-08-19 13:44:17,330 [INFO] 127.0.0.1 - - [19/Aug/2025 13:44:17] "POST /api/vulnerability-scan HTTP/1.1" 200 -
+2025-08-19 13:45:47,013 [INFO] 127.0.0.1 - - [19/Aug/2025 13:45:47] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 13:45:47,015 [INFO] 127.0.0.1 - - [19/Aug/2025 13:45:47] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 13:45:59,916 [ERROR] Timeout checking URL: https://jpel.in
+2025-08-19 13:45:59,917 [INFO] 127.0.0.1 - - [19/Aug/2025 13:45:59] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 13:46:11,170 [INFO] 127.0.0.1 - - [19/Aug/2025 13:46:11] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 13:47:02,971 [INFO] 127.0.0.1 - - [19/Aug/2025 13:47:02] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 13:47:02,972 [INFO] 127.0.0.1 - - [19/Aug/2025 13:47:02] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 13:47:45,842 [ERROR] WHOIS lookup failed for jeil.in: timed out
+2025-08-19 13:48:02,747 [ERROR] Failed to send Telegram notification: HTTPSConnectionPool(host='api.telegram.org', port=443): Read timed out. (read timeout=5)
+2025-08-19 13:48:02,751 [INFO] 127.0.0.1 - - [19/Aug/2025 13:48:02] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 13:49:02,973 [INFO] 127.0.0.1 - - [19/Aug/2025 13:49:02] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 13:49:32,474 [INFO] 127.0.0.1 - - [19/Aug/2025 13:49:32] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2025-08-19 13:49:48,978 [INFO] 127.0.0.1 - - [19/Aug/2025 13:49:48] "[33mPOST /api/security-file-content HTTP/1.1[0m" 404 -
+2025-08-19 13:50:04,005 [INFO] 127.0.0.1 - - [19/Aug/2025 13:50:04] "OPTIONS /api/scan-ports HTTP/1.1" 200 -
+2025-08-19 13:50:07,406 [INFO] 127.0.0.1 - - [19/Aug/2025 13:50:07] "POST /api/scan-ports HTTP/1.1" 200 -
+2025-08-19 13:50:24,911 [INFO] 127.0.0.1 - - [19/Aug/2025 13:50:24] "OPTIONS /api/scan-ports HTTP/1.1" 200 -
+2025-08-19 13:50:28,221 [INFO] 127.0.0.1 - - [19/Aug/2025 13:50:28] "POST /api/scan-ports HTTP/1.1" 200 -
+2025-08-19 13:50:50,213 [INFO] 127.0.0.1 - - [19/Aug/2025 13:50:50] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:50:53,179 [INFO] 127.0.0.1 - - [19/Aug/2025 13:50:53] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:51:14,211 [INFO] 127.0.0.1 - - [19/Aug/2025 13:51:14] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:51:40,917 [INFO] 127.0.0.1 - - [19/Aug/2025 13:51:40] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:53:58,489 [INFO] 127.0.0.1 - - [19/Aug/2025 13:53:58] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:54:20,376 [INFO] 127.0.0.1 - - [19/Aug/2025 13:54:20] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:54:23,267 [INFO] 127.0.0.1 - - [19/Aug/2025 13:54:23] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-19 13:54:52,088 [INFO] 127.0.0.1 - - [19/Aug/2025 13:54:52] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-19 13:55:02,599 [INFO] 127.0.0.1 - - [19/Aug/2025 13:55:02] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-19 13:55:31,539 [INFO] 127.0.0.1 - - [19/Aug/2025 13:55:31] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-19 13:56:33,546 [INFO] 127.0.0.1 - - [19/Aug/2025 13:56:33] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-19 13:57:03,720 [INFO] 127.0.0.1 - - [19/Aug/2025 13:57:03] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-19 13:57:19,455 [INFO] 127.0.0.1 - - [19/Aug/2025 13:57:19] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:57:31,131 [INFO] 127.0.0.1 - - [19/Aug/2025 13:57:31] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:57:53,604 [INFO] 127.0.0.1 - - [19/Aug/2025 13:57:53] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:57:53,615 [INFO] 127.0.0.1 - - [19/Aug/2025 13:57:53] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:58:35,456 [INFO] 127.0.0.1 - - [19/Aug/2025 13:58:35] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:58:35,463 [INFO] 127.0.0.1 - - [19/Aug/2025 13:58:35] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:58:42,324 [INFO] 127.0.0.1 - - [19/Aug/2025 13:58:42] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:58:42,331 [INFO] 127.0.0.1 - - [19/Aug/2025 13:58:42] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:58:44,126 [INFO] 127.0.0.1 - - [19/Aug/2025 13:58:44] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:59:27,728 [INFO] 127.0.0.1 - - [19/Aug/2025 13:59:27] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:59:27,738 [INFO] 127.0.0.1 - - [19/Aug/2025 13:59:27] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:59:34,099 [INFO] 127.0.0.1 - - [19/Aug/2025 13:59:34] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:59:34,106 [INFO] 127.0.0.1 - - [19/Aug/2025 13:59:34] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:59:35,061 [INFO] 127.0.0.1 - - [19/Aug/2025 13:59:35] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:59:35,864 [INFO] 127.0.0.1 - - [19/Aug/2025 13:59:35] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:59:36,037 [INFO] 127.0.0.1 - - [19/Aug/2025 13:59:36] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:59:36,204 [INFO] 127.0.0.1 - - [19/Aug/2025 13:59:36] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:59:36,373 [INFO] 127.0.0.1 - - [19/Aug/2025 13:59:36] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 13:59:38,729 [INFO] 127.0.0.1 - - [19/Aug/2025 13:59:38] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 14:00:05,621 [INFO] 127.0.0.1 - - [19/Aug/2025 14:00:05] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-19 14:00:05,635 [INFO] 127.0.0.1 - - [19/Aug/2025 14:00:05] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 14:00:17,143 [INFO] 127.0.0.1 - - [19/Aug/2025 14:00:17] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-19 14:00:48,671 [INFO] 127.0.0.1 - - [19/Aug/2025 14:00:48] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 14:02:56,001 [INFO] 127.0.0.1 - - [19/Aug/2025 14:02:55] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-19 14:03:26,048 [INFO] 127.0.0.1 - - [19/Aug/2025 14:03:26] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 14:05:33,946 [INFO] 127.0.0.1 - - [19/Aug/2025 14:05:33] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-19 14:05:46,649 [INFO] 127.0.0.1 - - [19/Aug/2025 14:05:46] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-19 14:05:57,320 [INFO] 127.0.0.1 - - [19/Aug/2025 14:05:57] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-19 14:06:27,339 [INFO] 127.0.0.1 - - [19/Aug/2025 14:06:27] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-19 14:06:39,733 [INFO] 127.0.0.1 - - [19/Aug/2025 14:06:39] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-19 14:07:09,753 [INFO] 127.0.0.1 - - [19/Aug/2025 14:07:09] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-19 14:07:34,034 [INFO] 127.0.0.1 - - [19/Aug/2025 14:07:34] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-19 14:08:04,053 [INFO] 127.0.0.1 - - [19/Aug/2025 14:08:04] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-19 14:09:40,455 [INFO] Telegram notification sent for pcap check: fuzz-2010-02-21-31103.pcap
+2025-08-19 14:09:40,463 [INFO] 127.0.0.1 - - [19/Aug/2025 14:09:40] "POST /api/analyze-pcap HTTP/1.1" 200 -
+2025-08-19 14:10:16,987 [INFO] 127.0.0.1 - - [19/Aug/2025 14:10:16] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-19 14:10:16,988 [INFO] 127.0.0.1 - - [19/Aug/2025 14:10:16] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 14:10:16,993 [INFO] Cache hit for URL: https://niriksh.com
+2025-08-19 14:10:16,994 [INFO] 127.0.0.1 - - [19/Aug/2025 14:10:16] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-19 14:11:04,230 [INFO] 127.0.0.1 - - [19/Aug/2025 14:11:04] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-19 14:15:16,458 [INFO] 127.0.0.1 - - [19/Aug/2025 14:15:16] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-08-19 14:15:46,006 [INFO] Telegram notification sent for ip check: 1.1.1.1
+2025-08-19 14:15:46,014 [INFO] 127.0.0.1 - - [19/Aug/2025 14:15:46] "POST /api/check-ip HTTP/1.1" 200 -
+2025-08-19 14:29:56,155 [INFO] 127.0.0.1 - - [19/Aug/2025 14:29:56] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-08-19 14:29:56,177 [INFO] Processing chat message: HI
+2025-08-19 14:30:05,122 [ERROR] Failed to send Telegram notification: HTTPSConnectionPool(host='api.telegram.org', port=443): Read timed out. (read timeout=5)
+2025-08-19 14:30:05,124 [INFO] 127.0.0.1 - - [19/Aug/2025 14:30:05] "POST /api/chat HTTP/1.1" 200 -
+2025-08-19 14:30:30,392 [INFO] 127.0.0.1 - - [19/Aug/2025 14:30:30] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-08-19 14:30:30,396 [INFO] Processing chat message: what is IP
+2025-08-19 14:30:49,980 [INFO] Telegram notification sent for chat check: what is IP
+2025-08-19 14:30:49,988 [INFO] 127.0.0.1 - - [19/Aug/2025 14:30:49] "POST /api/chat HTTP/1.1" 200 -
+2025-08-21 12:12:04,063 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:4000
+ * Running on http://172.20.10.2:4000
+2025-08-21 12:12:04,064 [INFO] [33mPress CTRL+C to quit[0m
+2025-08-21 12:12:04,064 [INFO]  * Restarting with stat
+2025-08-21 12:12:04,592 [WARNING]  * Debugger is active!
+2025-08-21 12:12:04,607 [INFO]  * Debugger PIN: 122-902-943
+2025-08-21 12:14:07,571 [INFO] 127.0.0.1 - - [21/Aug/2025 12:14:07] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-21 12:14:07,574 [INFO] 127.0.0.1 - - [21/Aug/2025 12:14:07] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-21 12:14:14,680 [INFO] Telegram notification sent for url check: https://starlinger.com
+2025-08-21 12:14:14,686 [INFO] 127.0.0.1 - - [21/Aug/2025 12:14:14] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-21 12:14:25,008 [INFO] 127.0.0.1 - - [21/Aug/2025 12:14:25] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-21 12:15:28,902 [INFO] 127.0.0.1 - - [21/Aug/2025 12:15:28] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2025-08-21 12:15:30,740 [INFO] 127.0.0.1 - - [21/Aug/2025 12:15:30] "[33mPOST /api/security-file-content HTTP/1.1[0m" 404 -
+2025-08-21 12:16:32,540 [INFO] 127.0.0.1 - - [21/Aug/2025 12:16:32] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2025-08-21 12:16:35,252 [INFO] 127.0.0.1 - - [21/Aug/2025 12:16:35] "POST /api/security-file-content HTTP/1.1" 200 -
+2025-08-21 12:17:15,793 [INFO] 127.0.0.1 - - [21/Aug/2025 12:17:15] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-21 12:17:15,794 [INFO] 127.0.0.1 - - [21/Aug/2025 12:17:15] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-21 12:17:30,268 [INFO] Telegram notification sent for url check: https://niriksh.com
+2025-08-21 12:17:30,276 [INFO] 127.0.0.1 - - [21/Aug/2025 12:17:30] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-21 12:17:35,354 [INFO] 127.0.0.1 - - [21/Aug/2025 12:17:35] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-21 12:17:50,644 [INFO] 127.0.0.1 - - [21/Aug/2025 12:17:50] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2025-08-21 12:17:52,055 [INFO] 127.0.0.1 - - [21/Aug/2025 12:17:52] "POST /api/security-file-content HTTP/1.1" 200 -
+2025-08-21 12:18:11,308 [INFO] 127.0.0.1 - - [21/Aug/2025 12:18:11] "OPTIONS /api/vulnerability-scan HTTP/1.1" 200 -
+2025-08-21 12:19:13,196 [INFO] 127.0.0.1 - - [21/Aug/2025 12:19:13] "POST /api/vulnerability-scan HTTP/1.1" 200 -
+2025-08-21 12:20:05,592 [INFO] 127.0.0.1 - - [21/Aug/2025 12:20:05] "OPTIONS /api/scan-ports HTTP/1.1" 200 -
+2025-08-21 12:20:17,747 [INFO] 127.0.0.1 - - [21/Aug/2025 12:20:17] "OPTIONS /api/vulnerability-scan HTTP/1.1" 200 -
+2025-08-21 12:20:27,365 [INFO] 127.0.0.1 - - [21/Aug/2025 12:20:27] "POST /api/scan-ports HTTP/1.1" 200 -
+2025-08-21 12:20:34,457 [INFO] 127.0.0.1 - - [21/Aug/2025 12:20:34] "POST /api/vulnerability-scan HTTP/1.1" 200 -
+2025-08-21 12:24:24,178 [INFO] 127.0.0.1 - - [21/Aug/2025 12:24:24] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-08-21 12:24:24,444 [INFO] 127.0.0.1 - - [21/Aug/2025 12:24:24] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-08-21 12:24:35,864 [INFO] 127.0.0.1 - - [21/Aug/2025 12:24:35] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-08-21 12:24:36,533 [INFO] 127.0.0.1 - - [21/Aug/2025 12:24:36] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-08-21 12:24:42,878 [INFO] 127.0.0.1 - - [21/Aug/2025 12:24:42] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-08-21 12:24:43,108 [INFO] 127.0.0.1 - - [21/Aug/2025 12:24:43] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-08-21 12:25:01,007 [INFO] 127.0.0.1 - - [21/Aug/2025 12:25:01] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-08-21 12:25:01,823 [INFO] 127.0.0.1 - - [21/Aug/2025 12:25:01] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-08-21 12:25:10,701 [INFO] 127.0.0.1 - - [21/Aug/2025 12:25:10] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-08-21 12:25:11,025 [INFO] 127.0.0.1 - - [21/Aug/2025 12:25:11] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-08-21 12:25:17,118 [INFO] 127.0.0.1 - - [21/Aug/2025 12:25:17] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-08-21 12:25:17,455 [INFO] 127.0.0.1 - - [21/Aug/2025 12:25:17] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-08-21 12:25:24,144 [INFO] 127.0.0.1 - - [21/Aug/2025 12:25:24] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-08-21 12:25:24,459 [INFO] 127.0.0.1 - - [21/Aug/2025 12:25:24] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-08-21 12:25:35,867 [INFO] 127.0.0.1 - - [21/Aug/2025 12:25:35] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-08-21 12:25:36,100 [INFO] 127.0.0.1 - - [21/Aug/2025 12:25:36] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-08-21 12:26:02,518 [INFO] 127.0.0.1 - - [21/Aug/2025 12:26:02] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-21 12:26:03,261 [INFO] 127.0.0.1 - - [21/Aug/2025 12:26:03] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-21 12:26:38,984 [INFO] 127.0.0.1 - - [21/Aug/2025 12:26:38] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-21 12:26:51,537 [INFO] 127.0.0.1 - - [21/Aug/2025 12:26:51] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-21 12:26:56,051 [INFO] 127.0.0.1 - - [21/Aug/2025 12:26:56] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-21 12:26:56,986 [INFO] 127.0.0.1 - - [21/Aug/2025 12:26:56] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-21 12:27:27,028 [INFO] 127.0.0.1 - - [21/Aug/2025 12:27:27] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-21 12:27:28,760 [INFO] 127.0.0.1 - - [21/Aug/2025 12:27:28] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-21 12:27:38,410 [INFO] 127.0.0.1 - - [21/Aug/2025 12:27:38] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-21 12:27:43,303 [INFO] 127.0.0.1 - - [21/Aug/2025 12:27:43] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-21 12:28:06,238 [INFO] 127.0.0.1 - - [21/Aug/2025 12:28:06] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:28:10,145 [INFO] 127.0.0.1 - - [21/Aug/2025 12:28:10] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:28:19,423 [INFO] 127.0.0.1 - - [21/Aug/2025 12:28:19] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:28:21,838 [INFO] 127.0.0.1 - - [21/Aug/2025 12:28:21] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:28:46,576 [INFO] 127.0.0.1 - - [21/Aug/2025 12:28:46] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-21 12:28:47,735 [INFO] 127.0.0.1 - - [21/Aug/2025 12:28:47] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-21 12:29:07,824 [INFO] 127.0.0.1 - - [21/Aug/2025 12:29:07] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:29:16,195 [INFO] 127.0.0.1 - - [21/Aug/2025 12:29:16] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:29:23,517 [INFO] 127.0.0.1 - - [21/Aug/2025 12:29:23] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:29:32,475 [INFO] 127.0.0.1 - - [21/Aug/2025 12:29:32] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:29:57,341 [INFO] 127.0.0.1 - - [21/Aug/2025 12:29:57] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:29:58,863 [INFO] 127.0.0.1 - - [21/Aug/2025 12:29:58] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:30:07,894 [INFO] 127.0.0.1 - - [21/Aug/2025 12:30:07] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:30:10,874 [INFO] 127.0.0.1 - - [21/Aug/2025 12:30:10] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:30:22,563 [INFO] 127.0.0.1 - - [21/Aug/2025 12:30:22] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:30:24,393 [INFO] 127.0.0.1 - - [21/Aug/2025 12:30:24] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:30:33,944 [INFO] 127.0.0.1 - - [21/Aug/2025 12:30:33] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:30:36,374 [INFO] 127.0.0.1 - - [21/Aug/2025 12:30:36] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:30:52,483 [INFO] 127.0.0.1 - - [21/Aug/2025 12:30:52] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:30:53,992 [INFO] 127.0.0.1 - - [21/Aug/2025 12:30:53] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:31:09,330 [INFO] 127.0.0.1 - - [21/Aug/2025 12:31:09] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:31:12,873 [INFO] 127.0.0.1 - - [21/Aug/2025 12:31:12] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:31:25,625 [INFO] 127.0.0.1 - - [21/Aug/2025 12:31:25] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:31:28,600 [INFO] 127.0.0.1 - - [21/Aug/2025 12:31:28] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:31:35,110 [INFO] 127.0.0.1 - - [21/Aug/2025 12:31:35] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:31:51,280 [INFO] 127.0.0.1 - - [21/Aug/2025 12:31:51] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:31:55,633 [INFO] 127.0.0.1 - - [21/Aug/2025 12:31:55] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:32:07,082 [INFO] 127.0.0.1 - - [21/Aug/2025 12:32:07] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:32:09,453 [INFO] 127.0.0.1 - - [21/Aug/2025 12:32:09] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:32:12,133 [INFO] 127.0.0.1 - - [21/Aug/2025 12:32:12] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:32:17,136 [INFO] 127.0.0.1 - - [21/Aug/2025 12:32:17] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:32:25,421 [INFO] 127.0.0.1 - - [21/Aug/2025 12:32:25] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:32:30,409 [INFO] 127.0.0.1 - - [21/Aug/2025 12:32:30] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:32:36,662 [INFO] 127.0.0.1 - - [21/Aug/2025 12:32:36] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:32:42,019 [INFO] 127.0.0.1 - - [21/Aug/2025 12:32:42] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:32:52,300 [INFO] 127.0.0.1 - - [21/Aug/2025 12:32:52] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:32:57,073 [INFO] 127.0.0.1 - - [21/Aug/2025 12:32:57] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:33:17,691 [INFO] 127.0.0.1 - - [21/Aug/2025 12:33:17] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:33:18,276 [INFO] 127.0.0.1 - - [21/Aug/2025 12:33:18] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:33:28,218 [INFO] 127.0.0.1 - - [21/Aug/2025 12:33:28] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:33:30,249 [INFO] 127.0.0.1 - - [21/Aug/2025 12:33:30] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:33:33,495 [INFO] 127.0.0.1 - - [21/Aug/2025 12:33:33] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:33:36,541 [INFO] 127.0.0.1 - - [21/Aug/2025 12:33:36] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:33:47,079 [INFO] 127.0.0.1 - - [21/Aug/2025 12:33:47] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:33:49,649 [INFO] 127.0.0.1 - - [21/Aug/2025 12:33:49] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 12:34:24,238 [INFO] 127.0.0.1 - - [21/Aug/2025 12:34:24] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-21 12:34:24,238 [INFO] 127.0.0.1 - - [21/Aug/2025 12:34:24] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-21 12:34:29,334 [INFO] Telegram notification sent for url check: https://lohiagroup.com
+2025-08-21 12:34:29,339 [INFO] 127.0.0.1 - - [21/Aug/2025 12:34:29] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-21 12:34:35,387 [INFO] 127.0.0.1 - - [21/Aug/2025 12:34:35] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-21 12:34:53,415 [INFO] 127.0.0.1 - - [21/Aug/2025 12:34:53] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-21 12:34:53,416 [INFO] 127.0.0.1 - - [21/Aug/2025 12:34:53] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-21 12:34:55,458 [INFO] Telegram notification sent for url check: https://jpel.in
+2025-08-21 12:34:55,462 [INFO] 127.0.0.1 - - [21/Aug/2025 12:34:55] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-21 12:34:58,737 [INFO] 127.0.0.1 - - [21/Aug/2025 12:34:58] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-21 12:57:15,178 [INFO] 127.0.0.1 - - [21/Aug/2025 12:57:15] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-08-21 12:57:32,257 [ERROR] Error checking IP 1.1.1.1: HTTPSConnectionPool(host='api.abuseipdb.com', port=443): Read timed out. (read timeout=10)
+2025-08-21 12:57:32,260 [INFO] 127.0.0.1 - - [21/Aug/2025 12:57:32] "POST /api/check-ip HTTP/1.1" 200 -
+2025-08-21 12:59:43,014 [INFO] 127.0.0.1 - - [21/Aug/2025 12:59:43] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2025-08-21 12:59:44,558 [INFO] 127.0.0.1 - - [21/Aug/2025 12:59:44] "POST /api/security-file-content HTTP/1.1" 200 -
+2025-08-21 12:59:53,651 [INFO] 127.0.0.1 - - [21/Aug/2025 12:59:53] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2025-08-21 13:00:01,465 [INFO] 127.0.0.1 - - [21/Aug/2025 13:00:01] "POST /api/security-file-content HTTP/1.1" 200 -
+2025-08-21 13:00:56,733 [INFO] 127.0.0.1 - - [21/Aug/2025 13:00:56] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-08-21 13:01:01,608 [INFO] Telegram notification sent for ip check: 8.8.8.8
+2025-08-21 13:01:01,614 [INFO] 127.0.0.1 - - [21/Aug/2025 13:01:01] "POST /api/check-ip HTTP/1.1" 200 -
+2025-08-21 13:03:33,687 [INFO] 127.0.0.1 - - [21/Aug/2025 13:03:33] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-08-21 13:03:45,445 [INFO] Telegram notification sent for ip check: 192.68.3.2
+2025-08-21 13:03:45,453 [INFO] 127.0.0.1 - - [21/Aug/2025 13:03:45] "POST /api/check-ip HTTP/1.1" 200 -
+2025-08-21 13:04:24,710 [INFO] 127.0.0.1 - - [21/Aug/2025 13:04:24] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-08-21 13:04:41,861 [INFO] Telegram notification sent for ip check: 189.47.10.224
+2025-08-21 13:04:41,869 [INFO] 127.0.0.1 - - [21/Aug/2025 13:04:41] "POST /api/check-ip HTTP/1.1" 200 -
+2025-08-21 13:06:31,989 [ERROR] Error fetching VirusTotal report: VirusTotal analysis not completed in time
+2025-08-21 13:06:40,809 [ERROR] Failed to send Telegram notification: HTTPSConnectionPool(host='api.telegram.org', port=443): Read timed out. (read timeout=5)
+2025-08-21 13:06:40,812 [INFO] 127.0.0.1 - - [21/Aug/2025 13:06:40] "POST /api/analyze-pcap HTTP/1.1" 200 -
+2025-08-21 13:10:11,776 [INFO] 127.0.0.1 - - [21/Aug/2025 13:10:11] "OPTIONS /api/scan-ports HTTP/1.1" 200 -
+2025-08-21 13:10:34,388 [INFO] 127.0.0.1 - - [21/Aug/2025 13:10:34] "POST /api/scan-ports HTTP/1.1" 200 -
+2025-08-21 13:15:10,264 [INFO] 127.0.0.1 - - [21/Aug/2025 13:15:10] "OPTIONS /api/vulnerability-scan HTTP/1.1" 200 -
+2025-08-21 13:15:31,915 [INFO] 127.0.0.1 - - [21/Aug/2025 13:15:31] "POST /api/vulnerability-scan HTTP/1.1" 200 -
+2025-08-21 13:17:49,812 [INFO] 127.0.0.1 - - [21/Aug/2025 13:17:49] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-08-21 13:17:49,871 [INFO] Processing chat message: What is IP
+2025-08-21 13:17:57,757 [INFO] Telegram notification sent for chat check: What is IP
+2025-08-21 13:17:57,760 [INFO] 127.0.0.1 - - [21/Aug/2025 13:17:57] "POST /api/chat HTTP/1.1" 200 -
+2025-08-21 13:18:55,916 [INFO] 127.0.0.1 - - [21/Aug/2025 13:18:55] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-08-21 13:18:55,919 [INFO] Processing chat message: what is nmap
+2025-08-21 13:18:57,412 [INFO] error_code=None error_message='Credit limit exceeded. Please navigate to https://api.together.ai/settings/billing to add credit or upgrade your plan.' error_param=None error_type=credit_limit message='Together API error received' stream_error=False
+2025-08-21 13:18:57,412 [ERROR] Error in chat endpoint: Error code: 402 - {"message": "Credit limit exceeded. Please navigate to https://api.together.ai/settings/billing to add credit or upgrade your plan.", "type_": "credit_limit"}
+2025-08-21 13:18:57,413 [INFO] 127.0.0.1 - - [21/Aug/2025 13:18:57] "[35m[1mPOST /api/chat HTTP/1.1[0m" 500 -
+2025-08-21 13:19:16,099 [INFO] 127.0.0.1 - - [21/Aug/2025 13:19:16] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 13:19:46,175 [INFO] 127.0.0.1 - - [21/Aug/2025 13:19:46] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-21 13:20:01,543 [INFO] 127.0.0.1 - - [21/Aug/2025 13:20:01] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-08-21 13:20:31,561 [INFO] 127.0.0.1 - - [21/Aug/2025 13:20:31] "POST /api/email-security HTTP/1.1" 200 -
+2025-08-23 18:48:48,562 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:4000
+ * Running on http://192.168.1.39:4000
+2025-08-23 18:48:48,563 [INFO] [33mPress CTRL+C to quit[0m
+2025-08-23 18:48:48,563 [INFO]  * Restarting with stat
+2025-08-23 18:48:49,174 [WARNING]  * Debugger is active!
+2025-08-23 18:48:49,183 [INFO]  * Debugger PIN: 114-785-185
+2025-08-23 18:51:27,733 [INFO] 127.0.0.1 - - [23/Aug/2025 18:51:27] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-08-23 18:51:29,237 [INFO] Telegram notification sent for ip check: 88.8.8.8
+2025-08-23 18:51:29,245 [INFO] 127.0.0.1 - - [23/Aug/2025 18:51:29] "POST /api/check-ip HTTP/1.1" 200 -
+2025-08-23 18:52:15,801 [INFO] 127.0.0.1 - - [23/Aug/2025 18:52:15] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-08-23 18:52:17,096 [INFO] Telegram notification sent for ip check: 144.48.51.148
+2025-08-23 18:52:17,102 [INFO] 127.0.0.1 - - [23/Aug/2025 18:52:17] "POST /api/check-ip HTTP/1.1" 200 -
+2025-08-23 18:53:22,198 [INFO] Telegram notification sent for pcap check: fuzz-2006-09-29-28586.pcap
+2025-08-23 18:53:22,204 [INFO] 127.0.0.1 - - [23/Aug/2025 18:53:22] "POST /api/analyze-pcap HTTP/1.1" 200 -
+2025-08-23 18:53:36,448 [INFO] 127.0.0.1 - - [23/Aug/2025 18:53:36] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-08-23 18:53:36,452 [INFO] Processing chat message: what is SMTP
+2025-08-23 18:53:37,435 [INFO] error_code=None error_message='Credit limit exceeded. Please navigate to https://api.together.ai/settings/billing to add credit or upgrade your plan.' error_param=None error_type=credit_limit message='Together API error received' stream_error=False
+2025-08-23 18:53:37,436 [ERROR] Error in chat endpoint: Error code: 402 - {"message": "Credit limit exceeded. Please navigate to https://api.together.ai/settings/billing to add credit or upgrade your plan.", "type_": "credit_limit"}
+2025-08-23 18:53:37,437 [INFO] 127.0.0.1 - - [23/Aug/2025 18:53:37] "[35m[1mPOST /api/chat HTTP/1.1[0m" 500 -
+2025-08-23 18:54:12,611 [INFO] 127.0.0.1 - - [23/Aug/2025 18:54:12] "OPTIONS /api/scan-ports HTTP/1.1" 200 -
+2025-08-23 18:54:12,966 [INFO] 127.0.0.1 - - [23/Aug/2025 18:54:12] "POST /api/scan-ports HTTP/1.1" 200 -
+2025-08-23 18:55:08,606 [INFO] 127.0.0.1 - - [23/Aug/2025 18:55:08] "OPTIONS /api/vulnerability-scan HTTP/1.1" 200 -
+2025-08-23 18:55:08,821 [INFO] 127.0.0.1 - - [23/Aug/2025 18:55:08] "POST /api/vulnerability-scan HTTP/1.1" 200 -
+2025-08-23 18:55:10,737 [INFO] 127.0.0.1 - - [23/Aug/2025 18:55:10] "POST /api/vulnerability-scan HTTP/1.1" 200 -
+2025-08-23 18:55:17,830 [INFO] 127.0.0.1 - - [23/Aug/2025 18:55:17] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-08-23 18:55:17,961 [INFO] 127.0.0.1 - - [23/Aug/2025 18:55:17] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-08-23 18:55:23,584 [INFO] 127.0.0.1 - - [23/Aug/2025 18:55:23] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-08-23 18:55:24,057 [INFO] 127.0.0.1 - - [23/Aug/2025 18:55:24] "POST /api/security-headers HTTP/1.1" 200 -
+2025-08-23 18:55:29,568 [INFO] 127.0.0.1 - - [23/Aug/2025 18:55:29] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-23 18:55:29,569 [INFO] 127.0.0.1 - - [23/Aug/2025 18:55:29] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-23 18:55:29,574 [INFO] 127.0.0.1 - - [23/Aug/2025 18:55:29] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-23 18:55:31,964 [INFO] 127.0.0.1 - - [23/Aug/2025 18:55:31] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-23 18:55:45,659 [INFO] 127.0.0.1 - - [23/Aug/2025 18:55:45] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-23 18:55:45,660 [INFO] 127.0.0.1 - - [23/Aug/2025 18:55:45] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-23 18:55:45,664 [INFO] 127.0.0.1 - - [23/Aug/2025 18:55:45] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-23 18:55:47,879 [INFO] 127.0.0.1 - - [23/Aug/2025 18:55:47] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-08-23 18:56:00,125 [INFO] 127.0.0.1 - - [23/Aug/2025 18:56:00] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-08-23 18:56:00,126 [INFO] 127.0.0.1 - - [23/Aug/2025 18:56:00] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-08-23 18:56:00,132 [INFO] 127.0.0.1 - - [23/Aug/2025 18:56:00] "POST /api/check-url HTTP/1.1" 200 -
+2025-08-23 18:56:03,258 [INFO] 127.0.0.1 - - [23/Aug/2025 18:56:03] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-11-05 14:10:43,688 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:4000
+ * Running on http://192.168.1.44:4000
+2025-11-05 14:10:43,689 [INFO] [33mPress CTRL+C to quit[0m
+2025-11-05 14:10:43,691 [INFO]  * Restarting with stat
+2025-11-05 14:10:44,420 [WARNING]  * Debugger is active!
+2025-11-05 14:10:44,430 [INFO]  * Debugger PIN: 122-902-943
+2025-11-05 14:11:41,068 [INFO] 127.0.0.1 - - [05/Nov/2025 14:11:41] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-11-05 14:11:41,070 [INFO] 127.0.0.1 - - [05/Nov/2025 14:11:41] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-11-05 14:11:43,009 [INFO] Telegram notification sent for url check: https://jeil.in
+2025-11-05 14:11:43,016 [INFO] 127.0.0.1 - - [05/Nov/2025 14:11:43] "POST /api/check-url HTTP/1.1" 200 -
+2025-11-05 14:11:46,653 [INFO] 127.0.0.1 - - [05/Nov/2025 14:11:46] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-11-05 14:15:16,059 [INFO] 127.0.0.1 - - [05/Nov/2025 14:15:16] "OPTIONS /api/scan-ports HTTP/1.1" 200 -
+2025-11-05 14:15:32,472 [INFO] 127.0.0.1 - - [05/Nov/2025 14:15:32] "POST /api/scan-ports HTTP/1.1" 200 -
+2025-11-05 14:16:08,667 [INFO] 127.0.0.1 - - [05/Nov/2025 14:16:08] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-05 14:16:09,362 [INFO] 127.0.0.1 - - [05/Nov/2025 14:16:09] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-05 14:16:41,898 [INFO] 127.0.0.1 - - [05/Nov/2025 14:16:41] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-05 14:16:42,015 [INFO] 127.0.0.1 - - [05/Nov/2025 14:16:42] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-05 14:17:19,810 [INFO] 127.0.0.1 - - [05/Nov/2025 14:17:19] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-11-05 14:17:19,915 [INFO] 127.0.0.1 - - [05/Nov/2025 14:17:19] "POST /api/security-headers HTTP/1.1" 200 -
+2025-11-05 14:17:33,903 [INFO] 127.0.0.1 - - [05/Nov/2025 14:17:33] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-11-05 14:17:35,212 [INFO] 127.0.0.1 - - [05/Nov/2025 14:17:35] "POST /api/email-security HTTP/1.1" 200 -
+2025-11-05 14:17:44,890 [INFO] 127.0.0.1 - - [05/Nov/2025 14:17:44] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-05 14:17:44,893 [INFO] Processing chat message: what is tcp/ip
+2025-11-05 14:17:46,502 [INFO] error_code=None error_message='Credit limit exceeded. Please navigate to https://api.together.ai/settings/billing to add credit or upgrade your plan.' error_param=None error_type=credit_limit message='Together API error received' stream_error=False
+2025-11-05 14:17:46,502 [ERROR] Error in chat endpoint: Error code: 402 - {"message": "Credit limit exceeded. Please navigate to https://api.together.ai/settings/billing to add credit or upgrade your plan.", "type_": "credit_limit"}
+2025-11-05 14:17:46,504 [INFO] 127.0.0.1 - - [05/Nov/2025 14:17:46] "[35m[1mPOST /api/chat HTTP/1.1[0m" 500 -
+2025-11-05 14:18:53,242 [INFO] 127.0.0.1 - - [05/Nov/2025 14:18:53] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-05 14:18:53,247 [INFO] Processing chat message: what is TCP/IP
+2025-11-05 14:18:55,209 [INFO] error_code=None error_message='Credit limit exceeded. Please navigate to https://api.together.ai/settings/billing to add credit or upgrade your plan.' error_param=None error_type=credit_limit message='Together API error received' stream_error=False
+2025-11-05 14:18:55,209 [ERROR] Error in chat endpoint: Error code: 402 - {"message": "Credit limit exceeded. Please navigate to https://api.together.ai/settings/billing to add credit or upgrade your plan.", "type_": "credit_limit"}
+2025-11-05 14:18:55,210 [INFO] 127.0.0.1 - - [05/Nov/2025 14:18:55] "[35m[1mPOST /api/chat HTTP/1.1[0m" 500 -
+2025-11-05 15:30:28,243 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:4000
+ * Running on http://192.168.1.44:4000
+2025-11-05 15:30:28,243 [INFO] [33mPress CTRL+C to quit[0m
+2025-11-05 15:30:28,244 [INFO]  * Restarting with stat
+2025-11-05 15:30:28,746 [WARNING]  * Debugger is active!
+2025-11-05 15:30:28,754 [INFO]  * Debugger PIN: 122-902-943
+2025-11-05 15:31:19,547 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:4000
+ * Running on http://192.168.1.44:4000
+2025-11-05 15:31:19,547 [INFO] [33mPress CTRL+C to quit[0m
+2025-11-05 15:31:19,548 [INFO]  * Restarting with stat
+2025-11-05 15:31:20,024 [WARNING]  * Debugger is active!
+2025-11-05 15:31:20,031 [INFO]  * Debugger PIN: 122-902-943
+2025-11-05 15:32:16,816 [INFO] 127.0.0.1 - - [05/Nov/2025 15:32:16] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-11-05 15:32:16,817 [INFO] 127.0.0.1 - - [05/Nov/2025 15:32:16] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-11-05 15:32:19,859 [INFO] Telegram notification sent for url check: https://vercel.com
+2025-11-05 15:32:19,866 [INFO] 127.0.0.1 - - [05/Nov/2025 15:32:19] "POST /api/check-url HTTP/1.1" 200 -
+2025-11-05 15:32:19,885 [INFO] 127.0.0.1 - - [05/Nov/2025 15:32:19] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-11-05 15:33:08,714 [INFO] 127.0.0.1 - - [05/Nov/2025 15:33:08] "OPTIONS /api/scan-ports HTTP/1.1" 200 -
+2025-11-05 15:34:18,542 [INFO] 127.0.0.1 - - [05/Nov/2025 15:34:18] "POST /api/scan-ports HTTP/1.1" 200 -
+2025-11-05 15:37:34,273 [INFO] 127.0.0.1 - - [05/Nov/2025 15:37:34] "OPTIONS /api/vulnerability-scan HTTP/1.1" 200 -
+2025-11-05 15:38:00,005 [INFO] 127.0.0.1 - - [05/Nov/2025 15:38:00] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-05 15:38:00,113 [INFO] 127.0.0.1 - - [05/Nov/2025 15:38:00] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-05 15:39:06,705 [INFO] 127.0.0.1 - - [05/Nov/2025 15:39:06] "POST /api/vulnerability-scan HTTP/1.1" 200 -
+2025-11-05 15:48:22,222 [INFO] 127.0.0.1 - - [05/Nov/2025 15:48:22] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-05 15:48:22,454 [INFO] 127.0.0.1 - - [05/Nov/2025 15:48:22] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-05 15:48:24,874 [INFO] 127.0.0.1 - - [05/Nov/2025 15:48:24] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-05 15:49:53,560 [INFO] 127.0.0.1 - - [05/Nov/2025 15:49:53] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-11-05 15:49:53,618 [INFO] 127.0.0.1 - - [05/Nov/2025 15:49:53] "POST /api/security-headers HTTP/1.1" 200 -
+2025-11-05 15:51:03,168 [INFO] 127.0.0.1 - - [05/Nov/2025 15:51:03] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-11-05 15:51:06,202 [INFO] Telegram notification sent for ip check: 2.57.122.177
+2025-11-05 15:51:06,207 [INFO] 127.0.0.1 - - [05/Nov/2025 15:51:06] "POST /api/check-ip HTTP/1.1" 200 -
+2025-11-05 15:52:52,153 [INFO] 127.0.0.1 - - [05/Nov/2025 15:52:52] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-05 15:52:52,270 [INFO] 127.0.0.1 - - [05/Nov/2025 15:52:52] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-05 15:53:01,841 [INFO] 127.0.0.1 - - [05/Nov/2025 15:53:01] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-05 15:53:02,793 [INFO] 127.0.0.1 - - [05/Nov/2025 15:53:02] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-05 15:53:17,606 [INFO] 127.0.0.1 - - [05/Nov/2025 15:53:17] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-11-05 15:53:19,501 [INFO] 127.0.0.1 - - [05/Nov/2025 15:53:19] "POST /api/security-headers HTTP/1.1" 200 -
+2025-11-05 15:53:42,158 [INFO] 127.0.0.1 - - [05/Nov/2025 15:53:42] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-11-05 15:53:42,387 [INFO] 127.0.0.1 - - [05/Nov/2025 15:53:42] "POST /api/email-security HTTP/1.1" 200 -
+2025-11-05 15:54:19,094 [INFO] 127.0.0.1 - - [05/Nov/2025 15:54:19] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-05 15:54:19,100 [INFO] Processing chat message: what is tcp
+2025-11-05 15:54:20,151 [INFO] error_code=None error_message='Credit limit exceeded. Please navigate to https://api.together.ai/settings/billing to add credit or upgrade your plan.' error_param=None error_type=credit_limit message='Together API error received' stream_error=False
+2025-11-05 15:54:20,151 [ERROR] Error in chat endpoint: Error code: 402 - {"message": "Credit limit exceeded. Please navigate to https://api.together.ai/settings/billing to add credit or upgrade your plan.", "type_": "credit_limit"}
+2025-11-05 15:54:20,153 [INFO] 127.0.0.1 - - [05/Nov/2025 15:54:20] "[35m[1mPOST /api/chat HTTP/1.1[0m" 500 -
+2025-11-11 10:32:07,499 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:4000
+ * Running on http://192.168.1.42:4000
+2025-11-11 10:32:07,499 [INFO] [33mPress CTRL+C to quit[0m
+2025-11-11 10:32:07,500 [INFO]  * Restarting with stat
+2025-11-11 10:32:07,859 [WARNING]  * Debugger is active!
+2025-11-11 10:32:07,868 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 10:33:18,976 [INFO] 127.0.0.1 - - [11/Nov/2025 10:33:18] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-11 10:33:18,984 [INFO] Processing chat message: whAT IS TCP
+2025-11-11 10:33:22,450 [INFO] Telegram notification sent for chat check: whAT IS TCP
+2025-11-11 10:33:22,458 [INFO] 127.0.0.1 - - [11/Nov/2025 10:33:22] "POST /api/chat HTTP/1.1" 200 -
+2025-11-11 10:34:42,324 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/tempCodeRunnerFile.py', reloading
+2025-11-11 10:34:42,443 [INFO]  * Restarting with stat
+2025-11-11 10:34:43,054 [WARNING]  * Debugger is active!
+2025-11-11 10:34:43,092 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 10:34:44,122 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/tempCodeRunnerFile.py', reloading
+2025-11-11 10:34:44,215 [INFO]  * Restarting with stat
+2025-11-11 10:34:44,590 [WARNING]  * Debugger is active!
+2025-11-11 10:34:44,594 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 10:34:48,660 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/tempCodeRunnerFile.py', reloading
+2025-11-11 10:34:48,751 [INFO]  * Restarting with stat
+2025-11-11 10:34:49,121 [WARNING]  * Debugger is active!
+2025-11-11 10:34:49,126 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 10:35:00,781 [INFO] 127.0.0.1 - - [11/Nov/2025 10:35:00] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-11 10:35:00,787 [INFO] Processing chat message: what is modbus
+2025-11-11 10:35:06,328 [INFO] Telegram notification sent for chat check: what is modbus
+2025-11-11 10:35:06,335 [INFO] 127.0.0.1 - - [11/Nov/2025 10:35:06] "POST /api/chat HTTP/1.1" 200 -
+2025-11-11 10:39:12,963 [INFO] 127.0.0.1 - - [11/Nov/2025 10:39:12] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-11 10:39:12,968 [INFO] Processing chat message: what is IP
+2025-11-11 10:39:16,588 [INFO] Telegram notification sent for chat check: what is IP
+2025-11-11 10:39:16,595 [INFO] 127.0.0.1 - - [11/Nov/2025 10:39:16] "POST /api/chat HTTP/1.1" 200 -
+2025-11-11 10:39:31,247 [INFO] 127.0.0.1 - - [11/Nov/2025 10:39:31] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-11 10:39:31,251 [INFO] Processing chat message: hi
+2025-11-11 10:39:33,382 [INFO] Telegram notification sent for chat check: hi
+2025-11-11 10:39:33,390 [INFO] 127.0.0.1 - - [11/Nov/2025 10:39:33] "POST /api/chat HTTP/1.1" 200 -
+2025-11-11 10:42:18,393 [INFO] 127.0.0.1 - - [11/Nov/2025 10:42:18] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-11 10:42:18,400 [INFO] Processing chat message: explain OWASP
+2025-11-11 10:42:21,845 [INFO] Telegram notification sent for chat check: explain OWASP
+2025-11-11 10:42:21,853 [INFO] 127.0.0.1 - - [11/Nov/2025 10:42:21] "POST /api/chat HTTP/1.1" 200 -
+2025-11-11 10:44:15,129 [INFO] 127.0.0.1 - - [11/Nov/2025 10:44:15] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-11 10:44:15,136 [INFO] Processing chat message: what is OSCP
+2025-11-11 10:44:19,072 [INFO] Telegram notification sent for chat check: what is OSCP
+2025-11-11 10:44:19,077 [INFO] 127.0.0.1 - - [11/Nov/2025 10:44:19] "POST /api/chat HTTP/1.1" 200 -
+2025-11-11 10:46:09,743 [INFO] 127.0.0.1 - - [11/Nov/2025 10:46:09] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-11 10:46:09,753 [INFO] Processing chat message: what is udp
+2025-11-11 10:46:12,837 [INFO] Telegram notification sent for chat check: what is udp
+2025-11-11 10:46:12,845 [INFO] 127.0.0.1 - - [11/Nov/2025 10:46:12] "POST /api/chat HTTP/1.1" 200 -
+2025-11-11 10:53:27,999 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/models/response_formatter.py', reloading
+2025-11-11 10:53:28,180 [INFO]  * Restarting with stat
+2025-11-11 10:53:28,920 [WARNING]  * Debugger is active!
+2025-11-11 10:53:28,929 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 10:54:40,752 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/services/url_service.py', reloading
+2025-11-11 10:54:40,843 [INFO]  * Restarting with stat
+2025-11-11 10:54:41,405 [WARNING]  * Debugger is active!
+2025-11-11 10:54:41,414 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 10:54:48,508 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/services/ip_service.py', reloading
+2025-11-11 10:54:48,604 [INFO]  * Restarting with stat
+2025-11-11 10:54:49,092 [WARNING]  * Debugger is active!
+2025-11-11 10:54:49,100 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 10:56:13,166 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/url_routes.py', reloading
+2025-11-11 10:56:13,272 [INFO]  * Restarting with stat
+2025-11-11 10:56:13,884 [WARNING]  * Debugger is active!
+2025-11-11 10:56:13,891 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 10:56:15,917 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/ip_routes.py', reloading
+2025-11-11 10:56:15,998 [INFO]  * Restarting with stat
+2025-11-11 10:56:16,418 [WARNING]  * Debugger is active!
+2025-11-11 10:56:16,426 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 10:56:17,449 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/ip_routes.py', reloading
+2025-11-11 10:56:17,528 [INFO]  * Restarting with stat
+2025-11-11 10:56:17,973 [WARNING]  * Debugger is active!
+2025-11-11 10:56:17,979 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 10:56:20,012 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/chat_routes.py', reloading
+2025-11-11 10:56:20,166 [INFO]  * Restarting with stat
+2025-11-11 10:56:20,583 [WARNING]  * Debugger is active!
+2025-11-11 10:56:20,588 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 10:56:27,679 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/__init__.py', reloading
+2025-11-11 10:56:27,785 [INFO]  * Restarting with stat
+2025-11-11 10:56:28,192 [WARNING]  * Debugger is active!
+2025-11-11 10:56:28,199 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 10:56:49,430 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/url_routes.py', reloading
+2025-11-11 10:56:49,516 [INFO]  * Restarting with stat
+2025-11-11 10:56:50,120 [WARNING]  * Debugger is active!
+2025-11-11 10:56:50,127 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 10:56:51,145 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/ip_routes.py', reloading
+2025-11-11 10:56:51,294 [INFO]  * Restarting with stat
+2025-11-11 10:56:51,703 [WARNING]  * Debugger is active!
+2025-11-11 10:56:51,708 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 10:56:52,730 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/ip_routes.py', reloading
+2025-11-11 10:56:52,838 [INFO]  * Restarting with stat
+2025-11-11 10:56:53,229 [WARNING]  * Debugger is active!
+2025-11-11 10:56:53,235 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 10:56:54,254 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/chat_routes.py', reloading
+2025-11-11 10:56:54,332 [INFO]  * Restarting with stat
+2025-11-11 10:56:54,720 [WARNING]  * Debugger is active!
+2025-11-11 10:56:54,725 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 10:56:57,767 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/__init__.py', reloading
+2025-11-11 10:56:57,865 [INFO]  * Restarting with stat
+2025-11-11 10:56:58,308 [WARNING]  * Debugger is active!
+2025-11-11 10:56:58,320 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 10:57:38,796 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/models/__init__.py', reloading
+2025-11-11 10:57:38,971 [INFO]  * Restarting with stat
+2025-11-11 10:57:39,549 [WARNING]  * Debugger is active!
+2025-11-11 10:57:39,555 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 10:59:24,344 [INFO] 127.0.0.1 - - [11/Nov/2025 10:59:24] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-11-11 10:59:24,346 [INFO] 127.0.0.1 - - [11/Nov/2025 10:59:24] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-11-11 10:59:27,513 [INFO] Telegram notification sent for url check: https://mitshubishi.com
+2025-11-11 10:59:27,517 [INFO] 127.0.0.1 - - [11/Nov/2025 10:59:27] "POST /api/check-url HTTP/1.1" 200 -
+2025-11-11 10:59:32,921 [INFO] 127.0.0.1 - - [11/Nov/2025 10:59:32] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-11-11 11:00:03,267 [INFO] 127.0.0.1 - - [11/Nov/2025 11:00:03] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-11-11 11:00:05,128 [INFO] Telegram notification sent for ip check: 2.2.2.2
+2025-11-11 11:00:05,135 [INFO] 127.0.0.1 - - [11/Nov/2025 11:00:05] "POST /api/check-ip HTTP/1.1" 200 -
+2025-11-11 11:00:50,655 [INFO] 127.0.0.1 - - [11/Nov/2025 11:00:50] "OPTIONS /api/scan-ports HTTP/1.1" 200 -
+2025-11-11 11:00:54,358 [INFO] 127.0.0.1 - - [11/Nov/2025 11:00:54] "POST /api/scan-ports HTTP/1.1" 200 -
+2025-11-11 11:01:12,208 [INFO] 127.0.0.1 - - [11/Nov/2025 11:01:12] "OPTIONS /api/scan-ports HTTP/1.1" 200 -
+2025-11-11 11:01:15,186 [INFO] 127.0.0.1 - - [11/Nov/2025 11:01:15] "OPTIONS /api/vulnerability-scan HTTP/1.1" 200 -
+2025-11-11 11:01:43,491 [INFO] 127.0.0.1 - - [11/Nov/2025 11:01:43] "POST /api/scan-ports HTTP/1.1" 200 -
+2025-11-11 11:01:45,912 [INFO] 127.0.0.1 - - [11/Nov/2025 11:01:45] "POST /api/vulnerability-scan HTTP/1.1" 200 -
+2025-11-11 11:02:22,331 [INFO] 127.0.0.1 - - [11/Nov/2025 11:02:22] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-11 11:02:22,338 [INFO] Processing chat message: Hello
+2025-11-11 11:02:24,282 [INFO] Telegram notification sent for chat check: Hello
+2025-11-11 11:02:24,287 [INFO] 127.0.0.1 - - [11/Nov/2025 11:02:24] "POST /api/chat HTTP/1.1" 200 -
+2025-11-11 11:02:39,859 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/__init__.py', reloading
+2025-11-11 11:02:39,983 [INFO]  * Restarting with stat
+2025-11-11 11:02:40,653 [WARNING]  * Debugger is active!
+2025-11-11 11:02:40,659 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:23:14,753 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/services/telegram_service.py', reloading
+2025-11-11 11:23:15,001 [INFO]  * Restarting with stat
+2025-11-11 11:23:15,721 [WARNING]  * Debugger is active!
+2025-11-11 11:23:15,729 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:23:41,067 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/services/telegram_service.py', reloading
+2025-11-11 11:23:41,158 [INFO]  * Restarting with stat
+2025-11-11 11:23:41,663 [WARNING]  * Debugger is active!
+2025-11-11 11:23:41,670 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:23:42,685 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/url_routes.py', reloading
+2025-11-11 11:23:42,763 [INFO]  * Restarting with stat
+2025-11-11 11:23:43,146 [WARNING]  * Debugger is active!
+2025-11-11 11:23:43,151 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:23:46,191 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/chat_routes.py', reloading
+2025-11-11 11:23:46,380 [INFO]  * Restarting with stat
+2025-11-11 11:23:46,838 [WARNING]  * Debugger is active!
+2025-11-11 11:23:46,844 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:23:56,997 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/health_routes.py', reloading
+2025-11-11 11:23:57,095 [INFO]  * Restarting with stat
+2025-11-11 11:23:57,704 [WARNING]  * Debugger is active!
+2025-11-11 11:23:57,711 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:24:28,116 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/domain_routes.py', reloading
+2025-11-11 11:24:28,219 [INFO]  * Restarting with stat
+2025-11-11 11:24:28,792 [WARNING]  * Debugger is active!
+2025-11-11 11:24:28,798 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:24:38,945 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:24:39,030 [INFO]  * Restarting with stat
+2025-11-11 11:24:39,610 [WARNING]  * Debugger is active!
+2025-11-11 11:24:39,616 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:24:47,719 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:24:47,805 [INFO]  * Restarting with stat
+2025-11-11 11:24:48,304 [WARNING]  * Debugger is active!
+2025-11-11 11:24:48,310 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:24:54,393 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:24:54,488 [INFO]  * Restarting with stat
+2025-11-11 11:24:54,974 [WARNING]  * Debugger is active!
+2025-11-11 11:24:54,980 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:25:02,081 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:25:02,189 [INFO]  * Restarting with stat
+2025-11-11 11:25:02,678 [WARNING]  * Debugger is active!
+2025-11-11 11:25:02,689 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:25:08,771 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:25:08,847 [INFO]  * Restarting with stat
+2025-11-11 11:25:09,247 [WARNING]  * Debugger is active!
+2025-11-11 11:25:09,253 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:25:28,519 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:25:28,742 [INFO]  * Restarting with stat
+2025-11-11 11:25:29,242 [WARNING]  * Debugger is active!
+2025-11-11 11:25:29,248 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:26:21,753 [INFO] 127.0.0.1 - - [11/Nov/2025 11:26:21] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-11-11 11:26:21,756 [INFO] 127.0.0.1 - - [11/Nov/2025 11:26:21] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-11-11 11:26:25,140 [INFO] Telegram notification sent for url check: https://oracle.com
+2025-11-11 11:26:25,145 [INFO] 127.0.0.1 - - [11/Nov/2025 11:26:25] "POST /api/check-url HTTP/1.1" 200 -
+2025-11-11 11:26:35,130 [INFO] 127.0.0.1 - - [11/Nov/2025 11:26:35] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-11-11 11:26:53,071 [INFO] 127.0.0.1 - - [11/Nov/2025 11:26:53] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2025-11-11 11:26:54,847 [INFO] 127.0.0.1 - - [11/Nov/2025 11:26:54] "POST /api/security-file-content HTTP/1.1" 200 -
+2025-11-11 11:27:15,684 [INFO] 127.0.0.1 - - [11/Nov/2025 11:27:15] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-11-11 11:27:16,969 [INFO] Telegram notification sent for ip check: 3.3.3.3
+2025-11-11 11:27:16,976 [INFO] 127.0.0.1 - - [11/Nov/2025 11:27:16] "POST /api/check-ip HTTP/1.1" 200 -
+2025-11-11 11:27:37,357 [INFO] 127.0.0.1 - - [11/Nov/2025 11:27:37] "OPTIONS /api/scan-ports HTTP/1.1" 200 -
+2025-11-11 11:27:40,220 [INFO] 127.0.0.1 - - [11/Nov/2025 11:27:40] "OPTIONS /api/vulnerability-scan HTTP/1.1" 200 -
+2025-11-11 11:27:58,024 [INFO] 127.0.0.1 - - [11/Nov/2025 11:27:58] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:27:58,101 [INFO] 127.0.0.1 - - [11/Nov/2025 11:27:58] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:28:08,521 [INFO] 127.0.0.1 - - [11/Nov/2025 11:28:08] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:28:08,558 [INFO] 127.0.0.1 - - [11/Nov/2025 11:28:08] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:28:13,901 [INFO] 127.0.0.1 - - [11/Nov/2025 11:28:13] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:28:14,530 [INFO] 127.0.0.1 - - [11/Nov/2025 11:28:14] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:28:37,411 [INFO] 127.0.0.1 - - [11/Nov/2025 11:28:37] "POST /api/scan-ports HTTP/1.1" 200 -
+2025-11-11 11:28:38,927 [INFO] 127.0.0.1 - - [11/Nov/2025 11:28:38] "POST /api/vulnerability-scan HTTP/1.1" 200 -
+2025-11-11 11:28:53,211 [INFO] 127.0.0.1 - - [11/Nov/2025 11:28:53] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:28:54,431 [INFO] 127.0.0.1 - - [11/Nov/2025 11:28:54] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:29:59,545 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:29:59,663 [INFO]  * Restarting with stat
+2025-11-11 11:30:00,262 [WARNING]  * Debugger is active!
+2025-11-11 11:30:00,270 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:30:09,389 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:30:09,478 [INFO]  * Restarting with stat
+2025-11-11 11:30:10,059 [WARNING]  * Debugger is active!
+2025-11-11 11:30:10,065 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:30:34,403 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:30:34,481 [INFO]  * Restarting with stat
+2025-11-11 11:30:35,037 [WARNING]  * Debugger is active!
+2025-11-11 11:30:35,043 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:31:05,909 [INFO] 127.0.0.1 - - [11/Nov/2025 11:31:05] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:31:06,335 [INFO] 127.0.0.1 - - [11/Nov/2025 11:31:06] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:31:57,624 [INFO] 127.0.0.1 - - [11/Nov/2025 11:31:57] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:31:57,687 [INFO] 127.0.0.1 - - [11/Nov/2025 11:31:57] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:32:14,862 [INFO] 127.0.0.1 - - [11/Nov/2025 11:32:14] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:32:15,764 [INFO] 127.0.0.1 - - [11/Nov/2025 11:32:15] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:33:09,529 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:33:09,791 [INFO]  * Restarting with stat
+2025-11-11 11:33:10,475 [WARNING]  * Debugger is active!
+2025-11-11 11:33:10,482 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:33:24,658 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:33:24,745 [INFO]  * Restarting with stat
+2025-11-11 11:33:25,281 [WARNING]  * Debugger is active!
+2025-11-11 11:33:25,289 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:33:48,624 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:33:48,720 [INFO]  * Restarting with stat
+2025-11-11 11:33:49,215 [WARNING]  * Debugger is active!
+2025-11-11 11:33:49,220 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:33:53,275 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:33:53,351 [INFO]  * Restarting with stat
+2025-11-11 11:33:53,744 [WARNING]  * Debugger is active!
+2025-11-11 11:33:53,749 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:34:06,932 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:34:07,091 [INFO]  * Restarting with stat
+2025-11-11 11:34:07,655 [WARNING]  * Debugger is active!
+2025-11-11 11:34:07,672 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:34:10,724 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:34:10,810 [INFO]  * Restarting with stat
+2025-11-11 11:34:11,282 [WARNING]  * Debugger is active!
+2025-11-11 11:34:11,288 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:34:18,381 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:34:18,562 [INFO]  * Restarting with stat
+2025-11-11 11:34:19,060 [WARNING]  * Debugger is active!
+2025-11-11 11:34:19,067 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:34:22,108 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:34:22,201 [INFO]  * Restarting with stat
+2025-11-11 11:34:22,572 [WARNING]  * Debugger is active!
+2025-11-11 11:34:22,578 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:34:25,621 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:34:25,694 [INFO]  * Restarting with stat
+2025-11-11 11:34:26,080 [WARNING]  * Debugger is active!
+2025-11-11 11:34:26,086 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:34:29,127 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:34:29,216 [INFO]  * Restarting with stat
+2025-11-11 11:34:29,642 [WARNING]  * Debugger is active!
+2025-11-11 11:34:29,648 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:34:32,689 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:34:32,772 [INFO]  * Restarting with stat
+2025-11-11 11:34:33,165 [WARNING]  * Debugger is active!
+2025-11-11 11:34:33,171 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:34:47,366 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:34:47,554 [INFO]  * Restarting with stat
+2025-11-11 11:34:47,957 [WARNING]  * Debugger is active!
+2025-11-11 11:34:47,962 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:35:02,144 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:35:02,357 [INFO]  * Restarting with stat
+2025-11-11 11:35:02,868 [WARNING]  * Debugger is active!
+2025-11-11 11:35:02,875 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:35:46,788 [INFO] 127.0.0.1 - - [11/Nov/2025 11:35:46] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:35:47,862 [INFO] 127.0.0.1 - - [11/Nov/2025 11:35:47] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:36:05,299 [INFO] 127.0.0.1 - - [11/Nov/2025 11:36:05] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:36:05,356 [INFO] 127.0.0.1 - - [11/Nov/2025 11:36:05] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:36:10,275 [INFO] 127.0.0.1 - - [11/Nov/2025 11:36:10] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:36:10,893 [INFO] 127.0.0.1 - - [11/Nov/2025 11:36:10] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:36:10,901 [INFO] 127.0.0.1 - - [11/Nov/2025 11:36:10] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:36:21,249 [INFO] 127.0.0.1 - - [11/Nov/2025 11:36:21] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:36:21,362 [INFO] 127.0.0.1 - - [11/Nov/2025 11:36:21] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:38:31,410 [INFO] 127.0.0.1 - - [11/Nov/2025 11:38:31] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:38:32,421 [INFO] 127.0.0.1 - - [11/Nov/2025 11:38:32] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:44:22,661 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:44:22,852 [INFO]  * Restarting with stat
+2025-11-11 11:44:23,657 [WARNING]  * Debugger is active!
+2025-11-11 11:44:23,672 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:45:09,179 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:45:09,271 [INFO]  * Restarting with stat
+2025-11-11 11:45:09,896 [WARNING]  * Debugger is active!
+2025-11-11 11:45:09,903 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:45:23,059 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/services/ssl_service.py', reloading
+2025-11-11 11:45:23,153 [INFO]  * Restarting with stat
+2025-11-11 11:45:23,663 [WARNING]  * Debugger is active!
+2025-11-11 11:45:23,670 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:45:39,881 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/services/ssl_service.py', reloading
+2025-11-11 11:45:39,964 [INFO]  * Restarting with stat
+2025-11-11 11:45:40,484 [WARNING]  * Debugger is active!
+2025-11-11 11:45:40,489 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:46:32,150 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:46:32,249 [INFO]  * Restarting with stat
+2025-11-11 11:46:32,748 [WARNING]  * Debugger is active!
+2025-11-11 11:46:32,754 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:46:51,452 [INFO] 127.0.0.1 - - [11/Nov/2025 11:46:51] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:46:52,361 [INFO] 127.0.0.1 - - [11/Nov/2025 11:46:52] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:47:01,769 [INFO] 127.0.0.1 - - [11/Nov/2025 11:47:01] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:47:03,002 [INFO] 127.0.0.1 - - [11/Nov/2025 11:47:03] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:47:13,449 [INFO] 127.0.0.1 - - [11/Nov/2025 11:47:13] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:47:13,484 [INFO] 127.0.0.1 - - [11/Nov/2025 11:47:13] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:47:24,851 [INFO] 127.0.0.1 - - [11/Nov/2025 11:47:24] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:47:25,740 [INFO] 127.0.0.1 - - [11/Nov/2025 11:47:25] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:48:06,031 [INFO] 127.0.0.1 - - [11/Nov/2025 11:48:06] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:48:06,111 [INFO] 127.0.0.1 - - [11/Nov/2025 11:48:06] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:49:31,524 [INFO] 127.0.0.1 - - [11/Nov/2025 11:49:31] "OPTIONS /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:49:32,382 [INFO] 127.0.0.1 - - [11/Nov/2025 11:49:32] "POST /api/ssl-analysis HTTP/1.1" 200 -
+2025-11-11 11:52:10,864 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:52:11,009 [INFO]  * Restarting with stat
+2025-11-11 11:52:11,698 [WARNING]  * Debugger is active!
+2025-11-11 11:52:11,708 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:52:19,803 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:52:19,921 [INFO]  * Restarting with stat
+2025-11-11 11:52:20,424 [WARNING]  * Debugger is active!
+2025-11-11 11:52:20,434 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:52:33,596 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:52:33,687 [INFO]  * Restarting with stat
+2025-11-11 11:52:34,285 [WARNING]  * Debugger is active!
+2025-11-11 11:52:34,292 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:52:40,383 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/health_routes.py', reloading
+2025-11-11 11:52:40,492 [INFO]  * Restarting with stat
+2025-11-11 11:52:41,041 [WARNING]  * Debugger is active!
+2025-11-11 11:52:41,049 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:52:53,383 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/security_routes.py', reloading
+2025-11-11 11:52:53,540 [INFO]  * Restarting with stat
+2025-11-11 11:52:54,104 [WARNING]  * Debugger is active!
+2025-11-11 11:52:54,110 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 11:58:58,306 [INFO] 127.0.0.1 - - [11/Nov/2025 11:58:58] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-11-11 11:58:58,381 [INFO] 127.0.0.1 - - [11/Nov/2025 11:58:58] "POST /api/security-headers HTTP/1.1" 200 -
+2025-11-11 11:59:29,175 [INFO] 127.0.0.1 - - [11/Nov/2025 11:59:29] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-11-11 11:59:30,238 [INFO] 127.0.0.1 - - [11/Nov/2025 11:59:30] "POST /api/security-headers HTTP/1.1" 200 -
+2025-11-11 11:59:35,369 [INFO] 127.0.0.1 - - [11/Nov/2025 11:59:35] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-11-11 11:59:35,542 [INFO] 127.0.0.1 - - [11/Nov/2025 11:59:35] "POST /api/email-security HTTP/1.1" 200 -
+2025-11-11 12:00:05,356 [INFO] 127.0.0.1 - - [11/Nov/2025 12:00:05] "OPTIONS /api/scan-ports HTTP/1.1" 200 -
+2025-11-11 12:00:20,234 [INFO] 127.0.0.1 - - [11/Nov/2025 12:00:20] "POST /api/scan-ports HTTP/1.1" 200 -
+2025-11-11 12:01:57,555 [INFO] 127.0.0.1 - - [11/Nov/2025 12:01:57] "OPTIONS /api/vulnerability-scan HTTP/1.1" 200 -
+2025-11-11 12:02:00,911 [INFO] 127.0.0.1 - - [11/Nov/2025 12:02:00] "POST /api/vulnerability-scan HTTP/1.1" 200 -
+2025-11-11 12:02:47,721 [INFO] 127.0.0.1 - - [11/Nov/2025 12:02:47] "OPTIONS /api/vulnerability-scan HTTP/1.1" 200 -
+2025-11-11 12:03:06,576 [INFO] 127.0.0.1 - - [11/Nov/2025 12:03:06] "POST /api/vulnerability-scan HTTP/1.1" 200 -
+2025-11-11 12:04:08,515 [ERROR] Error fetching VirusTotal report: VirusTotal analysis not completed in time
+2025-11-11 12:04:12,609 [INFO] Telegram notification sent for pcap check: fuzz-2012-04-12-17918.pcap
+2025-11-11 12:04:12,613 [INFO] 127.0.0.1 - - [11/Nov/2025 12:04:12] "POST /api/analyze-pcap HTTP/1.1" 200 -
+2025-11-11 12:04:45,155 [INFO] 127.0.0.1 - - [11/Nov/2025 12:04:45] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-11-11 12:04:46,404 [INFO] Telegram notification sent for ip check: 77.37.47.226
+2025-11-11 12:04:46,411 [INFO] 127.0.0.1 - - [11/Nov/2025 12:04:46] "POST /api/check-ip HTTP/1.1" 200 -
+2025-11-11 12:05:03,924 [INFO] 127.0.0.1 - - [11/Nov/2025 12:05:03] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-11 12:05:03,930 [INFO] Processing chat message: what is melsec protocol
+2025-11-11 12:05:07,108 [INFO] Telegram notification sent for chat check: what is melsec protocol
+2025-11-11 12:05:07,114 [INFO] 127.0.0.1 - - [11/Nov/2025 12:05:07] "POST /api/chat HTTP/1.1" 200 -
+2025-11-11 12:05:24,161 [INFO] 127.0.0.1 - - [11/Nov/2025 12:05:24] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-11 12:05:24,166 [INFO] Processing chat message: give me code for DDoS attack
+2025-11-11 12:05:26,667 [INFO] Telegram notification sent for chat check: give me code for DDoS attack
+2025-11-11 12:05:26,675 [INFO] 127.0.0.1 - - [11/Nov/2025 12:05:26] "POST /api/chat HTTP/1.1" 200 -
+2025-11-11 12:05:43,679 [INFO] 127.0.0.1 - - [11/Nov/2025 12:05:43] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-11 12:05:43,685 [INFO] Processing chat message: what is GDP
+2025-11-11 12:05:45,905 [INFO] Telegram notification sent for chat check: what is GDP
+2025-11-11 12:05:45,912 [INFO] 127.0.0.1 - - [11/Nov/2025 12:05:45] "POST /api/chat HTTP/1.1" 200 -
+2025-11-11 12:08:12,163 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/health_routes.py', reloading
+2025-11-11 12:08:12,292 [INFO]  * Restarting with stat
+2025-11-11 12:08:13,026 [WARNING]  * Debugger is active!
+2025-11-11 12:08:13,033 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 12:08:27,255 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/url_routes.py', reloading
+2025-11-11 12:08:27,363 [INFO]  * Restarting with stat
+2025-11-11 12:08:27,862 [WARNING]  * Debugger is active!
+2025-11-11 12:08:27,870 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 12:08:53,286 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/routes/domain_routes.py', reloading
+2025-11-11 12:08:53,376 [INFO]  * Restarting with stat
+2025-11-11 12:08:53,893 [WARNING]  * Debugger is active!
+2025-11-11 12:08:53,900 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 12:09:43,575 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/services/gemini_service.py', reloading
+2025-11-11 12:09:43,675 [INFO]  * Restarting with stat
+2025-11-11 12:09:44,239 [WARNING]  * Debugger is active!
+2025-11-11 12:09:44,246 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 12:10:02,458 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/services/gemini_service.py', reloading
+2025-11-11 12:10:02,550 [INFO]  * Restarting with stat
+2025-11-11 12:10:03,076 [WARNING]  * Debugger is active!
+2025-11-11 12:10:03,083 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 12:10:19,323 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/services/gemini_service.py', reloading
+2025-11-11 12:10:19,423 [INFO]  * Restarting with stat
+2025-11-11 12:10:19,922 [WARNING]  * Debugger is active!
+2025-11-11 12:10:19,929 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 12:10:40,156 [INFO] 127.0.0.1 - - [11/Nov/2025 12:10:40] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-11 12:10:40,162 [INFO] Processing chat message: what is gap in economics
+2025-11-11 12:10:42,241 [INFO] Telegram notification sent for chat check: what is gap in economics
+2025-11-11 12:10:42,250 [INFO] 127.0.0.1 - - [11/Nov/2025 12:10:42] "POST /api/chat HTTP/1.1" 200 -
+2025-11-11 12:12:37,031 [INFO] 127.0.0.1 - - [11/Nov/2025 12:12:37] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-11 12:12:37,038 [INFO] Processing chat message: Give a DDOS script only for testing of my localhost:3000 as target
+2025-11-11 12:12:41,407 [ERROR] Failed to send Telegram notification: 400 Client Error: Bad Request for url: https://api.telegram.org/bot7631413879:AAH1eDKDIKYGepmKZRplMXnAVyRFljHjEQo/sendMessage
+2025-11-11 12:12:41,412 [INFO] 127.0.0.1 - - [11/Nov/2025 12:12:41] "POST /api/chat HTTP/1.1" 200 -
+2025-11-11 12:13:00,104 [INFO] 127.0.0.1 - - [11/Nov/2025 12:13:00] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-11 12:13:00,109 [INFO] Processing chat message: I want to test how my application handles a sudden spike in traffic"), I can offer more specific and safe testing recommendations.\
+2025-11-11 12:13:05,878 [INFO] Telegram notification sent for chat check: I want to test how my application handles a sudden spike in traffic"), I can offer more specific and safe testing recommendations.\
+2025-11-11 12:13:05,884 [INFO] 127.0.0.1 - - [11/Nov/2025 12:13:05] "POST /api/chat HTTP/1.1" 200 -
+2025-11-11 12:13:26,413 [INFO] 127.0.0.1 - - [11/Nov/2025 12:13:26] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-11 12:13:26,417 [INFO] Processing chat message: give code for a steganography projectt
+2025-11-11 12:13:28,640 [INFO] Telegram notification sent for chat check: give code for a steganography projectt
+2025-11-11 12:13:28,645 [INFO] 127.0.0.1 - - [11/Nov/2025 12:13:28] "POST /api/chat HTTP/1.1" 200 -
+2025-11-11 12:14:26,094 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/services/gemini_service.py', reloading
+2025-11-11 12:14:26,228 [INFO]  * Restarting with stat
+2025-11-11 12:14:27,142 [WARNING]  * Debugger is active!
+2025-11-11 12:14:27,160 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 12:14:33,030 [INFO] 127.0.0.1 - - [11/Nov/2025 12:14:33] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-11 12:14:33,036 [INFO] Processing chat message: give code for steghide
+2025-11-11 12:14:38,916 [INFO] Telegram notification sent for chat check: give code for steghide
+2025-11-11 12:14:38,926 [INFO] 127.0.0.1 - - [11/Nov/2025 12:14:38] "POST /api/chat HTTP/1.1" 200 -
+2025-11-11 12:16:37,190 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/services/gemini_service.py', reloading
+2025-11-11 12:16:37,319 [INFO]  * Restarting with stat
+2025-11-11 12:16:37,967 [WARNING]  * Debugger is active!
+2025-11-11 12:16:37,974 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 12:16:44,061 [INFO]  * Detected change in '/Users/darshandorik/Desktop/CyberRegis_Server/app/services/gemini_service.py', reloading
+2025-11-11 12:16:44,382 [INFO]  * Restarting with stat
+2025-11-11 12:16:44,881 [WARNING]  * Debugger is active!
+2025-11-11 12:16:44,887 [INFO]  * Debugger PIN: 122-902-943
+2025-11-11 12:16:58,267 [INFO] 127.0.0.1 - - [11/Nov/2025 12:16:58] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-11 12:16:58,277 [INFO] Processing chat message: give code fort for steghide
+2025-11-11 12:17:03,435 [INFO] Telegram notification sent for chat check: give code fort for steghide
+2025-11-11 12:17:03,442 [INFO] 127.0.0.1 - - [11/Nov/2025 12:17:03] "POST /api/chat HTTP/1.1" 200 -
+2025-11-11 12:17:29,070 [INFO] 127.0.0.1 - - [11/Nov/2025 12:17:29] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-11 12:17:29,079 [INFO] Processing chat message: give example code snippets
+2025-11-11 12:17:34,096 [INFO] Telegram notification sent for chat check: give example code snippets
+2025-11-11 12:17:34,102 [INFO] 127.0.0.1 - - [11/Nov/2025 12:17:34] "POST /api/chat HTTP/1.1" 200 -
+2025-11-11 12:19:58,876 [INFO] 127.0.0.1 - - [11/Nov/2025 12:19:58] "OPTIONS /api/chat HTTP/1.1" 200 -
+2025-11-11 12:19:58,882 [INFO] Processing chat message: ssl/tls?
+2025-11-11 12:20:04,422 [INFO] Telegram notification sent for chat check: ssl/tls?
+2025-11-11 12:20:04,427 [INFO] 127.0.0.1 - - [11/Nov/2025 12:20:04] "POST /api/chat HTTP/1.1" 200 -
+2025-11-11 12:20:35,823 [INFO] 127.0.0.1 - - [11/Nov/2025 12:20:35] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-11-11 12:20:35,825 [INFO] 127.0.0.1 - - [11/Nov/2025 12:20:35] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-11-11 12:20:39,151 [INFO] Telegram notification sent for url check: https://oracle.com
+2025-11-11 12:20:39,158 [INFO] 127.0.0.1 - - [11/Nov/2025 12:20:39] "POST /api/check-url HTTP/1.1" 200 -
+2025-11-11 12:20:41,590 [INFO] 127.0.0.1 - - [11/Nov/2025 12:20:41] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-11-11 12:20:42,654 [INFO] Telegram notification sent for ip check: 2.2.2.3
+2025-11-11 12:20:42,660 [INFO] 127.0.0.1 - - [11/Nov/2025 12:20:42] "POST /api/check-ip HTTP/1.1" 200 -
+2025-11-11 12:20:49,737 [INFO] 127.0.0.1 - - [11/Nov/2025 12:20:49] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-11-11 12:21:28,714 [INFO] 127.0.0.1 - - [11/Nov/2025 12:21:28] "OPTIONS /api/scan-ports HTTP/1.1" 200 -
+2025-11-11 12:21:31,035 [INFO] 127.0.0.1 - - [11/Nov/2025 12:21:31] "OPTIONS /api/vulnerability-scan HTTP/1.1" 200 -
+2025-11-11 12:21:31,831 [ERROR] Error fetching VirusTotal report: VirusTotal analysis not completed in time
+2025-11-11 12:21:33,605 [INFO] Telegram notification sent for pcap check: fuzz-2016-10-10-21479.pcap
+2025-11-11 12:21:33,609 [INFO] 127.0.0.1 - - [11/Nov/2025 12:21:33] "POST /api/analyze-pcap HTTP/1.1" 200 -
+2025-11-11 12:21:41,608 [INFO] 127.0.0.1 - - [11/Nov/2025 12:21:41] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-11-11 12:21:41,996 [INFO] 127.0.0.1 - - [11/Nov/2025 12:21:41] "POST /api/security-headers HTTP/1.1" 200 -
+2025-11-11 12:21:51,584 [INFO] 127.0.0.1 - - [11/Nov/2025 12:21:51] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-11-11 12:21:52,767 [INFO] 127.0.0.1 - - [11/Nov/2025 12:21:52] "POST /api/security-headers HTTP/1.1" 200 -
+2025-11-11 12:22:01,893 [INFO] 127.0.0.1 - - [11/Nov/2025 12:22:01] "OPTIONS /api/security-headers HTTP/1.1" 200 -
+2025-11-11 12:22:02,033 [INFO] 127.0.0.1 - - [11/Nov/2025 12:22:02] "POST /api/security-headers HTTP/1.1" 200 -
+2025-11-11 12:22:13,468 [INFO] 127.0.0.1 - - [11/Nov/2025 12:22:13] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-11-11 12:22:13,936 [INFO] 127.0.0.1 - - [11/Nov/2025 12:22:13] "POST /api/email-security HTTP/1.1" 200 -
+2025-11-11 12:22:27,205 [INFO] 127.0.0.1 - - [11/Nov/2025 12:22:27] "OPTIONS /api/email-security HTTP/1.1" 200 -
+2025-11-11 12:22:27,696 [INFO] 127.0.0.1 - - [11/Nov/2025 12:22:27] "POST /api/email-security HTTP/1.1" 200 -
+2025-11-11 12:22:31,592 [INFO] 127.0.0.1 - - [11/Nov/2025 12:22:31] "POST /api/scan-ports HTTP/1.1" 200 -
+2025-11-11 12:22:33,417 [INFO] 127.0.0.1 - - [11/Nov/2025 12:22:33] "POST /api/vulnerability-scan HTTP/1.1" 200 -
+2025-11-11 13:11:18,300 [INFO] 127.0.0.1 - - [11/Nov/2025 13:11:18] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2025-11-11 13:11:18,302 [INFO] 127.0.0.1 - - [11/Nov/2025 13:11:18] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2025-11-11 13:11:22,840 [INFO] Telegram notification sent for url check: https://niriksh.com
+2025-11-11 13:11:22,843 [INFO] 127.0.0.1 - - [11/Nov/2025 13:11:22] "POST /api/check-url HTTP/1.1" 200 -
+2025-11-11 13:11:33,623 [INFO] 127.0.0.1 - - [11/Nov/2025 13:11:33] "POST /api/analyze-domain HTTP/1.1" 200 -
+2025-11-11 13:11:38,246 [INFO] 127.0.0.1 - - [11/Nov/2025 13:11:38] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2025-11-11 13:11:38,725 [INFO] 127.0.0.1 - - [11/Nov/2025 13:11:38] "POST /api/security-file-content HTTP/1.1" 200 -
+2025-11-11 13:11:44,358 [INFO] 127.0.0.1 - - [11/Nov/2025 13:11:44] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2025-11-11 13:11:44,848 [INFO] 127.0.0.1 - - [11/Nov/2025 13:11:44] "POST /api/security-file-content HTTP/1.1" 200 -
+2025-11-11 13:13:35,303 [INFO] 127.0.0.1 - - [11/Nov/2025 13:13:35] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-11-11 13:13:36,771 [INFO] Telegram notification sent for ip check: 1.1.1.1
+2025-11-11 13:13:36,776 [INFO] 127.0.0.1 - - [11/Nov/2025 13:13:36] "POST /api/check-ip HTTP/1.1" 200 -
+2025-11-11 13:14:57,768 [INFO] 127.0.0.1 - - [11/Nov/2025 13:14:57] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-11-11 13:14:57,776 [INFO] Cache hit for IP: 1.1.1.1
+2025-11-11 13:14:57,777 [INFO] 127.0.0.1 - - [11/Nov/2025 13:14:57] "POST /api/check-ip HTTP/1.1" 200 -
+2025-11-11 13:16:12,766 [INFO] 127.0.0.1 - - [11/Nov/2025 13:16:12] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-11-11 13:16:12,771 [INFO] Cache hit for IP: 1.1.1.1
+2025-11-11 13:16:12,772 [INFO] 127.0.0.1 - - [11/Nov/2025 13:16:12] "POST /api/check-ip HTTP/1.1" 200 -
+2025-11-11 13:17:26,799 [INFO] 127.0.0.1 - - [11/Nov/2025 13:17:26] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-11-11 13:17:26,807 [INFO] Cache hit for IP: 1.1.1.1
+2025-11-11 13:17:26,808 [INFO] 127.0.0.1 - - [11/Nov/2025 13:17:26] "POST /api/check-ip HTTP/1.1" 200 -
+2025-11-11 13:18:34,192 [INFO] 127.0.0.1 - - [11/Nov/2025 13:18:34] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-11-11 13:18:34,202 [INFO] Cache hit for IP: 1.1.1.1
+2025-11-11 13:18:34,204 [INFO] 127.0.0.1 - - [11/Nov/2025 13:18:34] "POST /api/check-ip HTTP/1.1" 200 -
+2025-11-11 13:21:05,062 [INFO] 127.0.0.1 - - [11/Nov/2025 13:21:05] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-11-11 13:21:05,176 [INFO] Cache hit for IP: 1.1.1.1
+2025-11-11 13:21:05,178 [INFO] 127.0.0.1 - - [11/Nov/2025 13:21:05] "POST /api/check-ip HTTP/1.1" 200 -
+2025-11-11 13:22:13,896 [INFO] 127.0.0.1 - - [11/Nov/2025 13:22:13] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-11-11 13:22:13,904 [INFO] Cache hit for IP: 1.1.1.1
+2025-11-11 13:22:13,904 [INFO] 127.0.0.1 - - [11/Nov/2025 13:22:13] "POST /api/check-ip HTTP/1.1" 200 -
+2025-11-11 13:23:22,408 [INFO] 127.0.0.1 - - [11/Nov/2025 13:23:22] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-11-11 13:23:22,415 [INFO] Cache hit for IP: 1.1.1.1
+2025-11-11 13:23:22,419 [INFO] 127.0.0.1 - - [11/Nov/2025 13:23:22] "POST /api/check-ip HTTP/1.1" 200 -
+2025-11-11 13:24:40,425 [INFO] 127.0.0.1 - - [11/Nov/2025 13:24:40] "OPTIONS /api/check-ip HTTP/1.1" 200 -
+2025-11-11 13:24:40,475 [INFO] Cache hit for IP: 1.1.1.1
+2025-11-11 13:24:40,476 [INFO] 127.0.0.1 - - [11/Nov/2025 13:24:40] "POST /api/check-ip HTTP/1.1" 200 -
