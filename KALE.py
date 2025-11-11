@@ -19,7 +19,6 @@ import whois
 import time
 import socket
 import threading
-from together import Together
 import pyshark
 import matplotlib.pyplot as plt
 import io
@@ -68,11 +67,11 @@ SAFE_BROWSING_KEY = "***REMOVED***"
 ABUSEIPDB_API_KEY = "***REMOVED***"
 TELEGRAM_BOT_TOKEN = "***REMOVED***"
 TELEGRAM_CHAT_ID = "***REMOVED***"
-TOGETHER_API_KEY = "***REMOVED***"
+GEMINI_API_KEY = "***REMOVED***"
 VIRUSTOTAL_API_KEY = "***REMOVED***"
 
-# Initialize Together AI client
-together_client = Together(api_key=TOGETHER_API_KEY)
+# Gemini API Configuration
+GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
 
 # Custom JSON Response Formatter
 class PrettyJSONResponse:
@@ -614,24 +613,59 @@ def api_chat():
         
         logger.info(f"Processing chat message: {message}")
         
-        response = together_client.chat.completions.create(
-            model="meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
-            messages=[
-                {
-                    "role": "system",
-                    "content": "You are CyberRegis Assistant, a cybersecurity expert. Provide accurate, concise, and well-structured answers about cyber threats, scan results, or security best practices. Use simple Markdown for formatting: use bullet points (`-`) for lists, avoid excessive bolding (`**`), and use headings (`##`) sparingly."
-                },
-                {"role": "user", "content": message}
-            ],
-            max_tokens=512,
-            temperature=0.7
-        )
+        # Prepare the prompt with system instructions
+        system_instruction = "You are CyberRegis Assistant, a cybersecurity expert. Provide accurate, concise, and well-structured answers about cyber threats, scan results, or security best practices. Use simple Markdown for formatting: use bullet points (`-`) for lists, avoid excessive bolding (`**`), and use headings (`##`) sparingly."
+        full_prompt = f"{system_instruction}\n\nUser question: {message}"
         
-        ai_response = response.choices[0].message.content.strip()
+        # Call Gemini API
+        headers = {
+            "Content-Type": "application/json",
+            "X-goog-api-key": GEMINI_API_KEY
+        }
+        payload = {
+            "contents": [
+                {
+                    "parts": [
+                        {
+                            "text": full_prompt
+                        }
+                    ]
+                }
+            ],
+            "generationConfig": {
+                "temperature": 0.7,
+                "maxOutputTokens": 512
+            }
+        }
+        
+        response = requests.post(GEMINI_API_URL, headers=headers, json=payload, timeout=30)
+        response.raise_for_status()
+        
+        response_data = response.json()
+        
+        # Extract the response text from Gemini API response
+        if "candidates" in response_data and len(response_data["candidates"]) > 0:
+            ai_response = response_data["candidates"][0]["content"]["parts"][0]["text"].strip()
+        else:
+            raise Exception("No response from Gemini API")
+        
         result = {"response": ai_response}
         formatted_response = PrettyJSONResponse.format(result)
         send_telegram_notification("chat", message, formatted_response)
         return jsonify(formatted_response)
+    except requests.RequestException as e:
+        logger.error(f"Error in chat endpoint (API request): {e}")
+        error_message = str(e)
+        if hasattr(e, 'response') and e.response is not None:
+            try:
+                error_detail = e.response.json()
+                error_message = error_detail.get("error", {}).get("message", str(e))
+            except:
+                error_message = e.response.text if hasattr(e.response, 'text') else str(e)
+        return jsonify(PrettyJSONResponse.format({
+            "error": "Chat processing failed",
+            "message": error_message
+        })), 500
     except Exception as e:
         logger.error(f"Error in chat endpoint: {e}")
         return jsonify(PrettyJSONResponse.format({
