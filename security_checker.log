@@ -1920,3 +1920,44 @@
 2025-11-11 13:24:40,425 [INFO] 127.0.0.1 - - [11/Nov/2025 13:24:40] "OPTIONS /api/check-ip HTTP/1.1" 200 -
 2025-11-11 13:24:40,475 [INFO] Cache hit for IP: 1.1.1.1
 2025-11-11 13:24:40,476 [INFO] 127.0.0.1 - - [11/Nov/2025 13:24:40] "POST /api/check-ip HTTP/1.1" 200 -
+2026-01-08 00:26:04,489 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:4000
+ * Running on http://10.154.150.100:4000
+2026-01-08 00:26:04,489 [INFO] [33mPress CTRL+C to quit[0m
+2026-01-08 00:26:04,490 [INFO]  * Restarting with stat
+2026-01-08 00:26:04,899 [WARNING]  * Debugger is active!
+2026-01-08 00:26:04,914 [INFO]  * Debugger PIN: 839-642-868
+2026-01-08 00:26:40,727 [INFO] 127.0.0.1 - - [08/Jan/2026 00:26:40] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2026-01-08 00:26:40,729 [INFO] 127.0.0.1 - - [08/Jan/2026 00:26:40] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2026-01-08 00:26:48,261 [ERROR] Failed to send Telegram notification: 401 Client Error: Unauthorized for url: https://api.telegram.org/bot7631413879:AAH1eDKDIKYGepmKZRplMXnAVyRFljHjEQo/sendMessage
+2026-01-08 00:26:48,265 [INFO] 127.0.0.1 - - [08/Jan/2026 00:26:48] "POST /api/check-url HTTP/1.1" 200 -
+2026-01-08 00:27:14,096 [INFO] 127.0.0.1 - - [08/Jan/2026 00:27:14] "POST /api/analyze-domain HTTP/1.1" 200 -
+2026-01-08 00:27:18,817 [INFO] 127.0.0.1 - - [08/Jan/2026 00:27:18] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2026-01-08 00:27:22,701 [INFO] 127.0.0.1 - - [08/Jan/2026 00:27:22] "POST /api/security-file-content HTTP/1.1" 200 -
+2026-01-08 00:27:27,748 [INFO] 127.0.0.1 - - [08/Jan/2026 00:27:27] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2026-01-08 00:27:33,662 [INFO] 127.0.0.1 - - [08/Jan/2026 00:27:33] "[33mPOST /api/security-file-content HTTP/1.1[0m" 404 -
+2026-01-08 00:33:34,740 [INFO] 127.0.0.1 - - [08/Jan/2026 00:33:34] "OPTIONS /api/scan-ports HTTP/1.1" 200 -
+2026-01-08 00:35:26,941 [INFO] 127.0.0.1 - - [08/Jan/2026 00:35:26] "POST /api/scan-ports HTTP/1.1" 200 -
+2026-01-08 00:36:40,960 [INFO] 127.0.0.1 - - [08/Jan/2026 00:36:40] "OPTIONS /api/vulnerability-scan HTTP/1.1" 200 -
+2026-01-08 00:38:24,761 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server-1/CyberRegis_Server/KALE.py', reloading
+2026-01-08 00:38:25,479 [INFO]  * Restarting with stat
+2026-01-08 00:38:26,446 [WARNING]  * Debugger is active!
+2026-01-08 00:38:26,471 [INFO]  * Debugger PIN: 839-642-868
+2026-01-08 00:38:47,798 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server-1/CyberRegis_Server/KALE.py', reloading
+2026-01-08 00:38:48,007 [INFO]  * Restarting with stat
+2026-01-08 00:38:48,641 [WARNING]  * Debugger is active!
+2026-01-08 00:38:48,655 [INFO]  * Debugger PIN: 839-642-868
+2026-01-08 00:39:07,926 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server-1/CyberRegis_Server/KALE.py', reloading
+2026-01-08 00:39:08,102 [INFO]  * Restarting with stat
+2026-01-08 00:39:08,716 [WARNING]  * Debugger is active!
+2026-01-08 00:39:08,737 [INFO]  * Debugger PIN: 839-642-868
+2026-01-08 00:39:38,172 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server-1/CyberRegis_Server/KALE.py', reloading
+2026-01-08 00:39:38,337 [INFO]  * Restarting with stat
+2026-01-08 00:39:39,005 [WARNING]  * Debugger is active!
+2026-01-08 00:39:39,029 [INFO]  * Debugger PIN: 839-642-868
+2026-01-08 00:39:54,215 [INFO]  * Detected change in '/Users/kathan/CyberRegis_Server-1/CyberRegis_Server/KALE.py', reloading
+2026-01-08 00:39:54,619 [INFO]  * Restarting with stat
+2026-01-08 00:39:55,952 [WARNING]  * Debugger is active!
+2026-01-08 00:39:55,985 [INFO]  * Debugger PIN: 839-642-868
+2026-01-08 00:39:58,783 [INFO] 127.0.0.1 - - [08/Jan/2026 00:39:58] "OPTIONS /api/vulnerability-scan HTTP/1.1" 200 -

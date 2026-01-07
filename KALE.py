@@ -7,6 +7,7 @@ from flask_limiter.util import get_remote_address
 import json
 import requests
 import os
+import sys
 import re
 import urllib.parse
 from datetime import datetime
@@ -565,7 +566,7 @@ def analyze_pcap():
             })), 400
 
         file = request.files['file']
-        if not file.filename.endswith(('.pcap', '.cap', '.pcapng')):
+        if not file.filename or not file.filename.endswith(('.pcap', '.cap', '.pcapng')):
             return jsonify(PrettyJSONResponse.format({
                 "error": "Invalid file type",
                 "message": "Only .pcap, .cap, or .pcapng files are supported"
@@ -834,11 +835,11 @@ def analyze_domain():
                             ssl_info['days_until_expiry'] = int(value)
                         except:
                             ssl_info['days_until_expiry'] = value
-                ssl_info['valid'] = True if ssl_info else False
+                ssl_info['valid'] = 'true' if ssl_info else 'false'
                 domain_info['ssl_info'] = ssl_info
         except Exception as e:
             print(f"SSL certificate lookup failed: {e}")
-            domain_info['ssl_info'] = {'valid': False}
+            domain_info['ssl_info'] = {'valid': 'false'}
         
         # SSL Labs Grade
         try:
@@ -993,7 +994,12 @@ def analyze_domain():
         if security_features.get('dmarc') == 'Not configured':
             recommendations.append("Configure DMARC policy for email security")
         
-        if domain_info['ssl_info'].get('days_until_expiry', 0) < 30:
+        days_until_expiry = domain_info['ssl_info'].get('days_until_expiry', 0)
+        try:
+            days_until_expiry = int(days_until_expiry)
+        except (ValueError, TypeError):
+            days_until_expiry = 0
+        if days_until_expiry < 30:
             recommendations.append("SSL certificate expires soon - plan for renewal")
         
         if not security_features.get('security_txt', {}).get('present', False):
@@ -1526,7 +1532,7 @@ def system_status():
             },
             "process": {
                 "pid": os.getpid(),
-                "python_version": f"{os.sys.version_info.major}.{os.sys.version_info.minor}.{os.sys.version_info.micro}"
+                "python_version": f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
             }
         }
         
