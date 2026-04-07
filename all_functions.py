@@ -5,133 +5,176 @@ import whois
 import requests
 from datetime import datetime
 import json
+from collections import Counter
 
 class all_functions:
     def __init__(self):
         pass
     
     def perform_whois_lookup(self, domain):
-        """Perform WHOIS lookup for a domain"""
+        """Perform WHOIS lookup using RDAP (HTTPS-based, firewall-friendly)"""
         try:
-            w = whois.whois(domain)
-            results = []
-            
-            if w.get('registrar'):
-                results.append({'Field': 'Registrar', 'Value': w.get('registrar')})
-            if w.get('creation_date'):
-                creation_date = w.get('creation_date')
-                if isinstance(creation_date, list):
-                    results.append({'Field': 'Creation Date', 'Value': str(creation_date[0])})
-                else:
-                    results.append({'Field': 'Creation Date', 'Value': str(creation_date)})
-            if w.get('expiration_date'):
-                expiration_date = w.get('expiration_date')
-                if isinstance(expiration_date, list):
-                    results.append({'Field': 'Expiration Date', 'Value': str(expiration_date[0])})
-                else:
-                    results.append({'Field': 'Expiration Date', 'Value': str(expiration_date)})
-            if w.get('registrant'):
-                results.append({'Field': 'Registrant', 'Value': str(w.get('registrant'))})
-            if w.get('country'):
-                results.append({'Field': 'Country', 'Value': str(w.get('country'))})
-            if w.get('name_servers'):
-                name_servers = w.get('name_servers')
-                if isinstance(name_servers, list):
-                    results.append({'Field': 'Name Servers', 'Value': ', '.join(name_servers)})
-                else:
-                    results.append({'Field': 'Name Servers', 'Value': str(name_servers)})
-            
-            return results
+            # Use RDAP API (HTTPS) - works through corporate firewalls
+            r = requests.get(f'https://rdap.org/domain/{domain}', timeout=10,
+                             headers={'Accept': 'application/json'})
+            if r.status_code == 200:
+                data = r.json()
+                results = []
+                # Registrar
+                for entity in data.get('entities', []):
+                    roles = entity.get('roles', [])
+                    if 'registrar' in roles:
+                        vcard = entity.get('vcardArray', [None, []])[1]
+                        for prop in vcard:
+                            if prop[0] == 'fn':
+                                results.append({'Field': 'Registrar', 'Value': prop[3]})
+                                break
+                # Dates
+                for event in data.get('events', []):
+                    action = event.get('eventAction', '')
+                    date = event.get('eventDate', '')[:10]
+                    if action == 'registration':
+                        results.append({'Field': 'Creation Date', 'Value': date})
+                    elif action == 'expiration':
+                        results.append({'Field': 'Expiration Date', 'Value': date})
+                    elif action == 'last changed':
+                        results.append({'Field': 'Updated Date', 'Value': date})
+                # Name servers
+                ns_list = [ns.get('ldhName', '') for ns in data.get('nameservers', [])]
+                if ns_list:
+                    results.append({'Field': 'Name Servers', 'Value': ', '.join(ns_list)})
+                # Status
+                status = ', '.join(data.get('status', []))
+                if status:
+                    results.append({'Field': 'Status', 'Value': status})
+                return results if results else [{'Field': 'Info', 'Value': 'RDAP data available but minimal'}]
+            raise Exception(f'RDAP returned {r.status_code}')
         except Exception as e:
             return [{'Field': 'Error', 'Value': f'WHOIS lookup failed: {str(e)}'}]
     
-    def get_dns_records(self, domain):
-        """Get DNS records for a domain"""
+    def _doh_query(self, domain, record_type):
+        """DNS-over-HTTPS query via Cloudflare (works through corporate firewalls)"""
         try:
-            results = []
-            
-            # A record
+            r = requests.get(
+                'https://cloudflare-dns.com/dns-query',
+                params={'name': domain, 'type': record_type},
+                headers={'Accept': 'application/dns-json'},
+                timeout=8
+            )
+            if r.status_code == 200:
+                data = r.json()
+                answers = data.get('Answer', [])
+                return [a.get('data', '') for a in answers if a.get('data')]
+        except Exception:
+            pass
+        # Fallback: Google DoH
+        try:
+            r = requests.get(
+                'https://dns.google/resolve',
+                params={'name': domain, 'type': record_type},
+                timeout=8
+            )
+            if r.status_code == 200:
+                data = r.json()
+                answers = data.get('Answer', [])
+                return [a.get('data', '') for a in answers if a.get('data')]
+        except Exception:
+            pass
+        return []
+
+    def get_dns_records(self, domain):
+        """Get DNS records using DNS-over-HTTPS (firewall-friendly)."""
+        results = []
+
+        def _clean_dns_value(record_type, value):
+            text = str(value or '').strip()
+            if not text:
+                return ''
+
+            if record_type in {'TXT', 'SPF'}:
+                return text.strip('"')
+
+            if record_type in {'CNAME', 'NS'}:
+                return text.rstrip('.')
+
+            return text
+
+        record_types = [
+            'A', 'AAAA', 'CNAME', 'MX', 'NS', 'TXT',
+            'SOA', 'CAA', 'SRV', 'NAPTR', 'DNSKEY', 'DS'
+        ]
+
+        for record_type in record_types:
             try:
-                a_records = dns.resolver.resolve(domain, 'A')
-                results.append({'Field': 'A', 'Value': ', '.join([str(r) for r in a_records])})
-            except:
-                results.append({'Field': 'A', 'Value': 'No records found'})
-            
-            # AAAA record
-            try:
-                aaaa_records = dns.resolver.resolve(domain, 'AAAA')
-                results.append({'Field': 'AAAA', 'Value': ', '.join([str(r) for r in aaaa_records])})
-            except:
-                results.append({'Field': 'AAAA', 'Value': 'No records found'})
-            
-            # MX record
-            try:
-                mx_records = dns.resolver.resolve(domain, 'MX')
-                results.append({'Field': 'MX', 'Value': ', '.join([str(r) for r in mx_records])})
-            except:
-                results.append({'Field': 'MX', 'Value': 'No records found'})
-            
-            # NS record
-            try:
-                ns_records = dns.resolver.resolve(domain, 'NS')
-                results.append({'Field': 'NS', 'Value': ', '.join([str(r) for r in ns_records])})
-            except:
-                results.append({'Field': 'NS', 'Value': 'No records found'})
-            
-            return results
-        except Exception as e:
-            return [{'Field': 'Error', 'Value': f'DNS lookup failed: {str(e)}'}]
+                rows = self._doh_query(domain, record_type)
+                if record_type == 'A' and not rows:
+                    try:
+                        rows = [socket.gethostbyname(domain)]
+                    except Exception:
+                        rows = []
+
+                cleaned = []
+                for row in rows:
+                    value = _clean_dns_value(record_type, row)
+                    if value and value not in cleaned:
+                        cleaned.append(value)
+
+                if cleaned:
+                    results.append({'Field': record_type, 'Value': ', '.join(cleaned)})
+            except Exception:
+                continue
+
+        return results or [{'Field': 'Error', 'Value': 'DNS lookup failed'}]
     
     def get_txt_records(self, domain):
-        """Get TXT records for a domain"""
+        """Get TXT records using DNS-over-HTTPS"""
         try:
-            txt_records = dns.resolver.resolve(domain, 'TXT')
-            results = []
-            for record in txt_records:
-                results.append({'Field': 'TXT Records', 'Value': str(record)})
-            return results
+            txt = self._doh_query(domain, 'TXT')
+            if txt:
+                return [{'Field': 'TXT Records', 'Value': t.strip('"')} for t in txt]
+            return [{'Field': 'TXT Records', 'Value': 'No TXT records found'}]
         except Exception as e:
             return [{'Field': 'TXT Records', 'Value': 'No TXT records found'}]
     
     def get_ssl_chain_details(self, domain):
         """Get SSL certificate details for a domain"""
         try:
-            # Try with default context first, fall back to unverified for corporate proxies
             try:
                 context = ssl.create_default_context()
                 sock = socket.create_connection((domain, 443), timeout=10)
                 ssock = context.wrap_socket(sock, server_hostname=domain)
-            except ssl.SSLCertVerificationError:
-                # Corporate proxy or self-signed cert - use unverified context
+            except (ssl.SSLCertVerificationError, ssl.SSLError, OSError):
                 context = ssl._create_unverified_context()
                 sock = socket.create_connection((domain, 443), timeout=10)
                 ssock = context.wrap_socket(sock, server_hostname=domain)
             with ssock:
-                cert = ssock.getpeercert()
-                
+                cert_raw = ssock.getpeercert()
+                cert = cert_raw if isinstance(cert_raw, dict) else {}
                 results = []
-                if 'issuer' in cert:
-                    issuer = dict(x[0] for x in cert['issuer']) if cert.get('issuer') else {}
-                    results.append({'Field': 'Issuer', 'Value': issuer.get(b'commonName', 'Unknown').decode() if isinstance(issuer.get(b'commonName', 'Unknown'), bytes) else issuer.get(b'commonName', 'Unknown')})
-                
-                if 'subject' in cert:
-                    subject = dict(x[0] for x in cert['subject']) if cert.get('subject') else {}
-                    results.append({'Field': 'Subject', 'Value': subject.get(b'commonName', 'Unknown').decode() if isinstance(subject.get(b'commonName', 'Unknown'), bytes) else subject.get(b'commonName', 'Unknown')})
-                
-                if 'notBefore' in cert:
-                    results.append({'Field': 'Valid From', 'Value': cert['notBefore']})
-                
-                if 'notAfter' in cert and cert['notAfter']:
-                    results.append({'Field': 'Valid Until', 'Value': str(cert['notAfter'])})
-                    
-                    # Calculate days until expiry
+                # Issuer - cert tuples use string keys like ('commonName', '...')
+                issuer = cert.get('issuer')
+                if issuer:
+                    issuer_dict = {k: v for tup in issuer for k, v in tup}
+                    cn = issuer_dict.get('commonName') or issuer_dict.get('organizationName', 'Unknown')
+                    results.append({'Field': 'Issuer', 'Value': cn})
+                # Subject
+                subject = cert.get('subject')
+                if subject:
+                    subject_dict = {k: v for tup in subject for k, v in tup}
+                    cn = subject_dict.get('commonName') or subject_dict.get('organizationName', 'Unknown')
+                    results.append({'Field': 'Subject', 'Value': cn})
+                not_before = cert.get('notBefore')
+                if isinstance(not_before, str):
+                    results.append({'Field': 'Valid From', 'Value': not_before})
+                not_after = cert.get('notAfter')
+                if isinstance(not_after, str):
+                    results.append({'Field': 'Valid Until', 'Value': not_after})
                     try:
-                        expiry_date = datetime.strptime(cert['notAfter'], '%b %d %H:%M:%S %Y %Z')
-                        days_until_expiry = (expiry_date - datetime.now()).days
-                        results.append({'Field': 'Days Until Expiry', 'Value': str(days_until_expiry)})
-                    except (ValueError, TypeError):
-                        results.append({'Field': 'Days Until Expiry', 'Value': 'Unable to calculate'})
-                
+                        expiry = datetime.strptime(not_after, '%b %d %H:%M:%S %Y %Z')
+                        days = (expiry - datetime.now()).days
+                        results.append({'Field': 'Days Until Expiry', 'Value': str(days)})
+                    except Exception:
+                        pass
                 return results
         except Exception as e:
             return [{'Field': 'Error', 'Value': f'SSL lookup failed: {str(e)}'}]
@@ -145,25 +188,23 @@ class all_functions:
             return [{'Field': 'Grade', 'Value': 'N/A'}]
     
     def check_dnssec(self, domain):
-        """Check if DNSSEC is enabled for a domain"""
+        """Check if DNSSEC is enabled using DNS-over-HTTPS"""
         try:
-            # Check for DNSKEY records
-            try:
-                dns.resolver.resolve(domain, 'DNSKEY')
+            keys = self._doh_query(domain, 'DNSKEY')
+            if keys:
                 return [{'Field': 'DNSSEC', 'Value': 'DNSSEC keys found'}]
-            except:
-                return [{'Field': 'DNSSEC', 'Value': 'No DNSSEC keys found'}]
+            return [{'Field': 'DNSSEC', 'Value': 'No DNSSEC keys found'}]
         except Exception as e:
-            return [{'Field': 'DNSSEC', 'Value': f'DNSSEC check failed: {str(e)}'}]
+            return [{'Field': 'DNSSEC', 'Value': 'No DNSSEC keys found'}]
     
     def get_dmarc_record(self, domain):
-        """Get DMARC record for a domain"""
+        """Get DMARC record using DNS-over-HTTPS"""
         try:
-            dmarc_domain = f'_dmarc.{domain}'
-            txt_records = dns.resolver.resolve(dmarc_domain, 'TXT')
-            for record in txt_records:
-                if 'v=DMARC1' in str(record):
-                    return [{'Field': 'DMARC Record', 'Value': str(record)}]
+            records = self._doh_query(f'_dmarc.{domain}', 'TXT')
+            for rec in records:
+                rec_clean = rec.strip('"')
+                if 'v=DMARC1' in rec_clean:
+                    return [{'Field': 'DMARC Record', 'Value': rec_clean}]
             return [{'Field': 'DMARC Record', 'Value': 'No DMARC record found'}]
         except Exception as e:
             return [{'Field': 'DMARC Record', 'Value': 'No DMARC record found'}]
@@ -242,20 +283,33 @@ class all_functions:
             return [{'Field': 'Error', 'Value': f'Subdomain enumeration failed: {str(e)}'}]
     
     def get_ip_info_from_a_record(self, domain):
-        """Get IP information from A record"""
+        """Get IP geolocation using socket DNS + ip-api.com (firewall-friendly)"""
         try:
-            a_records = dns.resolver.resolve(domain, 'A')
-            ip = str(a_records[0])
-            
-            # This is a simplified version - in production you'd use actual IP geolocation
-            results = [
-                {'Field': 'IP Address', 'Value': ip},
-                {'Field': 'Country', 'Value': 'Unknown'},
-                {'Field': 'City', 'Value': 'Unknown'},
-                {'Field': 'ISP', 'Value': 'Unknown'},
-                {'Field': 'Organization', 'Value': 'Unknown'}
-            ]
-            
+            # Use socket (system DNS) or DoH to get IP
+            try:
+                ip = socket.gethostbyname(domain)
+            except Exception:
+                a = self._doh_query(domain, 'A')
+                ip = a[0] if a else None
+            if not ip:
+                return [{'Field': 'Error', 'Value': 'Could not resolve IP'}]
+            results = [{'Field': 'IP Address', 'Value': ip}]
+            # Use ip-api.com for geolocation (works through corporate firewalls)
+            try:
+                r = requests.get(f'http://ip-api.com/json/{ip}', timeout=8)
+                if r.status_code == 200:
+                    geo = r.json()
+                    if geo.get('status') == 'success':
+                        results += [
+                            {'Field': 'Country', 'Value': geo.get('country', 'Unknown')},
+                            {'Field': 'Region', 'Value': geo.get('regionName', 'Unknown')},
+                            {'Field': 'City', 'Value': geo.get('city', 'Unknown')},
+                            {'Field': 'ISP', 'Value': geo.get('isp', 'Unknown')},
+                            {'Field': 'Organization', 'Value': geo.get('org', 'Unknown')},
+                            {'Field': 'Timezone', 'Value': geo.get('timezone', 'Unknown')},
+                        ]
+            except Exception:
+                pass
             return results
         except Exception as e:
             return [{'Field': 'Error', 'Value': f'IP info lookup failed: {str(e)}'}]
@@ -408,21 +462,29 @@ class all_functions:
                             
                             # Create mock vulnerability data based on service
                             if service_name:
-                                vulnerability = {
+                                profile = self.get_service_security_profile(service_name, port)
+                                vulnerabilities.append({
                                     "service": f"{product} {service_name}" if product else service_name,
-                                    "version": version,
+                                    "version": version or "Unknown",
                                     "port": port,
-                                    "potential_issues": self.get_common_vulnerabilities(service_name, version),
-                                    "severity": "Medium",  # Default severity
-                                    "recommendation": f"Ensure {service_name} is updated to latest version"
-                                }
-                                vulnerabilities.append(vulnerability)
+                                    "potential_issues": profile.get("issues", []),
+                                    "severity": profile.get("severity", "medium").capitalize(),
+                                    "recommendation": profile.get("recommendation", f"Ensure {service_name} is updated and securely configured"),
+                                    "confidence": "high" if version else "medium",
+                                    "cve_examples": profile.get("cve_examples", []),
+                                    "remediation_priority": profile.get("priority", 3),
+                                    "risk_score": profile.get("risk_score", 50),
+                                })
                 
+                vulnerabilities = sorted(vulnerabilities, key=lambda x: x.get("risk_score", 0), reverse=True)
+                severity_counts = Counter(v.get("severity", "Medium").lower() for v in vulnerabilities)
                 return {
                     "status": "success",
                     "target": target,
                     "vulnerabilities": vulnerabilities,
                     "total_found": len(vulnerabilities),
+                    "severity_breakdown": dict(severity_counts),
+                    "max_risk_score": vulnerabilities[0].get("risk_score", 0) if vulnerabilities else 0,
                     "scan_type": "TCP Connect (non-privileged)",
                     "timestamp": datetime.now().isoformat()
                 }
@@ -460,22 +522,30 @@ class all_functions:
             # Assess vulnerabilities based on open ports
             for port in open_ports:
                 service_name = socket.getservbyport(port, 'tcp') if port in [80, 443, 22, 21, 23, 25, 53, 110, 143, 993, 995] else 'unknown'
-                
+                profile = self.get_service_security_profile(service_name, port)
                 vulnerability = {
                     "service": service_name,
                     "version": "Unknown (basic scan)",
                     "port": port,
-                    "potential_issues": self.get_common_vulnerabilities(service_name, "unknown"),
-                    "severity": "Medium",
-                    "recommendation": f"Ensure {service_name} service on port {port} is properly configured and updated"
+                    "potential_issues": profile.get("issues", []),
+                    "severity": profile.get("severity", "medium").capitalize(),
+                    "recommendation": profile.get("recommendation", f"Ensure {service_name} service on port {port} is properly configured and updated"),
+                    "confidence": "low",
+                    "cve_examples": profile.get("cve_examples", []),
+                    "remediation_priority": profile.get("priority", 3),
+                    "risk_score": profile.get("risk_score", 45),
                 }
                 vulnerabilities.append(vulnerability)
-            
+
+            vulnerabilities = sorted(vulnerabilities, key=lambda x: x.get("risk_score", 0), reverse=True)
+            severity_counts = Counter(v.get("severity", "Medium").lower() for v in vulnerabilities)
             return {
                 "status": "success",
                 "target": target,
                 "vulnerabilities": vulnerabilities,
                 "total_found": len(vulnerabilities),
+                "severity_breakdown": dict(severity_counts),
+                "max_risk_score": vulnerabilities[0].get("risk_score", 0) if vulnerabilities else 0,
                 "scan_type": "Port-based Assessment (fallback)",
                 "note": "Basic vulnerability assessment completed. For enhanced service detection, ensure python-nmap is installed.",
                 "timestamp": datetime.now().isoformat()
@@ -500,6 +570,114 @@ class all_functions:
         }
         
         return common_vulns.get(service, ['Unknown service vulnerabilities'])
+
+    def get_service_security_profile(self, service, port):
+        """Return actionable service risk profile for vulnerability reporting."""
+        service = (service or "unknown").lower()
+        profiles = {
+            "ssh": {
+                "issues": ["Weak encryption algorithms", "Credential brute-force", "Version disclosure"],
+                "severity": "medium",
+                "recommendation": "Disable password auth, enforce key-based login, and restrict source IPs.",
+                "cve_examples": ["CVE-2018-15473", "CVE-2023-38408"],
+                "priority": 2,
+                "risk_score": 60,
+            },
+            "http": {
+                "issues": ["Missing security headers", "Outdated web components", "Potential information disclosure"],
+                "severity": "medium",
+                "recommendation": "Enable secure headers, patch web stack, and run web vulnerability scan.",
+                "cve_examples": ["CVE-2021-41773", "CVE-2023-25690"],
+                "priority": 2,
+                "risk_score": 62,
+            },
+            "https": {
+                "issues": ["Weak TLS configuration", "Certificate or protocol hardening gaps"],
+                "severity": "medium",
+                "recommendation": "Enforce TLS 1.2+, disable weak ciphers, and validate certificate chain.",
+                "cve_examples": ["CVE-2014-0160", "CVE-2022-0778"],
+                "priority": 2,
+                "risk_score": 58,
+            },
+            "ftp": {
+                "issues": ["Cleartext credentials", "Anonymous access risk", "Legacy protocol exposure"],
+                "severity": "high",
+                "recommendation": "Disable FTP or migrate to SFTP/FTPS and restrict external exposure.",
+                "cve_examples": ["CVE-2015-3306", "CVE-2021-41653"],
+                "priority": 1,
+                "risk_score": 80,
+            },
+            "telnet": {
+                "issues": ["Cleartext remote administration", "Credential theft risk"],
+                "severity": "high",
+                "recommendation": "Disable Telnet and replace with SSH immediately.",
+                "cve_examples": ["CVE-2020-10188"],
+                "priority": 1,
+                "risk_score": 88,
+            },
+            "smtp": {
+                "issues": ["Open relay misconfiguration", "User enumeration", "Spoofing risk"],
+                "severity": "medium",
+                "recommendation": "Harden relay settings and enforce SPF, DKIM, and DMARC.",
+                "cve_examples": ["CVE-2023-51764"],
+                "priority": 2,
+                "risk_score": 66,
+            },
+            "rdp": {
+                "issues": ["Remote access brute-force", "Credential stuffing", "Lateral movement path"],
+                "severity": "high",
+                "recommendation": "Restrict RDP exposure, enforce MFA/VPN, and monitor failed logins.",
+                "cve_examples": ["CVE-2019-0708", "CVE-2020-0609"],
+                "priority": 1,
+                "risk_score": 85,
+            },
+            "mysql": {
+                "issues": ["Database exposure", "Weak auth policy", "Privilege abuse risk"],
+                "severity": "high",
+                "recommendation": "Bind DB to private interfaces and enforce strong authentication.",
+                "cve_examples": ["CVE-2022-21472"],
+                "priority": 1,
+                "risk_score": 78,
+            },
+            "postgresql": {
+                "issues": ["Database exposure", "Weak authentication controls"],
+                "severity": "high",
+                "recommendation": "Restrict network access, rotate credentials, and audit role permissions.",
+                "cve_examples": ["CVE-2023-39417"],
+                "priority": 1,
+                "risk_score": 76,
+            },
+            "redis": {
+                "issues": ["Unauthenticated Redis exposure", "Data exfiltration risk"],
+                "severity": "critical",
+                "recommendation": "Disable public access, enable auth/ACLs, and bind to localhost/private subnet.",
+                "cve_examples": ["CVE-2022-0543"],
+                "priority": 1,
+                "risk_score": 92,
+            },
+            "mongodb": {
+                "issues": ["Unauthenticated MongoDB exposure", "Sensitive data leakage"],
+                "severity": "critical",
+                "recommendation": "Enable authentication and network ACLs; do not expose MongoDB publicly.",
+                "cve_examples": ["CVE-2019-2386"],
+                "priority": 1,
+                "risk_score": 90,
+            },
+        }
+
+        profile = profiles.get(service, {
+            "issues": ["Service exposure detected", "Potential misconfiguration risk"],
+            "severity": "medium",
+            "recommendation": f"Review service hardening and access controls for {service} on port {port}.",
+            "cve_examples": [],
+            "priority": 3,
+            "risk_score": 50,
+        })
+
+        if port in (23, 3389, 445, 6379, 27017):
+            profile = {**profile, "severity": "high" if profile["severity"] != "critical" else "critical", "risk_score": max(profile.get("risk_score", 50), 80), "priority": 1}
+
+        return profile
 
     def ssl_detailed_analysis(self, domain):
         """Enhanced SSL/TLS analysis"""
@@ -550,40 +728,97 @@ class all_functions:
         try:
             if not url.startswith('http'):
                 url = f"https://{url}"
-                
+
             response = requests.get(url, timeout=10, verify=False, allow_redirects=True)
             headers = response.headers
-            
-            security_headers = {
+
+            header_catalog = {
                 "Content-Security-Policy": {
-                    "present": "Content-Security-Policy" in headers,
-                    "value": headers.get("Content-Security-Policy", ""),
-                    "score": 10 if "Content-Security-Policy" in headers else 0
+                    "score": 12,
+                    "severity_if_missing": "high",
+                    "recommendation": "Define CSP to restrict script/style/frame sources.",
+                    "critical": True,
                 },
                 "Strict-Transport-Security": {
-                    "present": "Strict-Transport-Security" in headers,
-                    "value": headers.get("Strict-Transport-Security", ""),
-                    "score": 10 if "Strict-Transport-Security" in headers else 0
+                    "score": 10,
+                    "severity_if_missing": "high",
+                    "recommendation": "Enable HSTS with long max-age and includeSubDomains.",
+                    "critical": True,
                 },
                 "X-Frame-Options": {
-                    "present": "X-Frame-Options" in headers,
-                    "value": headers.get("X-Frame-Options", ""),
-                    "score": 5 if "X-Frame-Options" in headers else 0
+                    "score": 6,
+                    "severity_if_missing": "medium",
+                    "recommendation": "Set to DENY or SAMEORIGIN to mitigate clickjacking.",
+                    "critical": True,
                 },
                 "X-Content-Type-Options": {
-                    "present": "X-Content-Type-Options" in headers,
-                    "value": headers.get("X-Content-Type-Options", ""),
-                    "score": 5 if "X-Content-Type-Options" in headers else 0
+                    "score": 6,
+                    "severity_if_missing": "medium",
+                    "recommendation": "Set to nosniff to prevent MIME confusion attacks.",
+                    "critical": True,
                 },
                 "Referrer-Policy": {
-                    "present": "Referrer-Policy" in headers,
-                    "value": headers.get("Referrer-Policy", ""),
-                    "score": 5 if "Referrer-Policy" in headers else 0
-                }
+                    "score": 4,
+                    "severity_if_missing": "low",
+                    "recommendation": "Set strict-origin-when-cross-origin or stricter.",
+                    "critical": False,
+                },
+                "Permissions-Policy": {
+                    "score": 4,
+                    "severity_if_missing": "low",
+                    "recommendation": "Restrict powerful browser features to least privilege.",
+                    "critical": False,
+                },
+                "Cross-Origin-Opener-Policy": {
+                    "score": 4,
+                    "severity_if_missing": "low",
+                    "recommendation": "Set same-origin to isolate browsing context group.",
+                    "critical": False,
+                },
+                "Cross-Origin-Resource-Policy": {
+                    "score": 4,
+                    "severity_if_missing": "low",
+                    "recommendation": "Set same-site or same-origin based on resource sharing needs.",
+                    "critical": False,
+                },
             }
-            
-            total_score = sum([header["score"] for header in security_headers.values()])
-            max_score = 35
+
+            security_headers = {}
+            total_score = 0
+            max_score = 0
+            missing_headers = []
+            critical_missing = []
+
+            for name, spec in header_catalog.items():
+                present = name in headers
+                value = headers.get(name, "")
+                score = spec["score"] if present else 0
+                total_score += score
+                max_score += spec["score"]
+                item = {
+                    "present": present,
+                    "value": value,
+                    "score": score,
+                    "max_score": spec["score"],
+                    "severity_if_missing": spec["severity_if_missing"],
+                    "recommendation": spec["recommendation"],
+                }
+                security_headers[name] = item
+                if not present:
+                    missing_headers.append(name)
+                    if spec.get("critical"):
+                        critical_missing.append(name)
+
+            strengths = [k for k, v in security_headers.items() if v.get("present")]
+            remediation = [
+                {
+                    "header": name,
+                    "severity": security_headers[name].get("severity_if_missing"),
+                    "recommendation": security_headers[name].get("recommendation"),
+                }
+                for name in missing_headers
+            ]
+            remediation.sort(key=lambda r: {"high": 0, "medium": 1, "low": 2}.get(str(r.get("severity", "")).lower(), 3))
             
             return {
                 "status": "success",
@@ -592,6 +827,20 @@ class all_functions:
                 "security_score": total_score,
                 "max_score": max_score,
                 "grade": self.get_security_grade(total_score, max_score),
+                "response_info": {
+                    "final_url": response.url,
+                    "status_code": response.status_code,
+                    "redirect_count": len(response.history),
+                    "server": headers.get("Server"),
+                    "powered_by": headers.get("X-Powered-By"),
+                },
+                "missing_headers": missing_headers,
+                "critical_missing_headers": critical_missing,
+                "hardening_summary": {
+                    "strengths": strengths,
+                    "gaps": missing_headers,
+                    "prioritized_remediation": remediation[:6],
+                },
                 "timestamp": datetime.now().isoformat()
             }
             

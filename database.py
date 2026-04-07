@@ -125,8 +125,8 @@ def init_db():
 #  Scan History
 # ──────────────────────────────────────────────────────
 
-def save_scan(scan_type: str, target: str, result: Dict, risk_level: str = None,
-              score: float = None, summary: str = None, duration_ms: int = None) -> int:
+def save_scan(scan_type: str, target: str, result: Dict, risk_level: Optional[str] = None,
+              score: Optional[float] = None, summary: Optional[str] = None, duration_ms: Optional[int] = None) -> int:
     conn = _connect()
     cur = conn.cursor()
     cur.execute("""
@@ -139,7 +139,7 @@ def save_scan(scan_type: str, target: str, result: Dict, risk_level: str = None,
     return scan_id
 
 
-def get_scan_history(scan_type: str = None, target: str = None,
+def get_scan_history(scan_type: Optional[str] = None, target: Optional[str] = None,
                      limit: int = 50, offset: int = 0) -> List[Dict]:
     conn = _connect()
     query = "SELECT * FROM scan_history WHERE 1=1"

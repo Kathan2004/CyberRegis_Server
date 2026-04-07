@@ -4,14 +4,18 @@ IOC management, CVE lookup, MITRE ATT&CK mapping, threat feed aggregation.
 """
 import time
 import logging
+import socket
+from urllib.parse import urlparse
 from urllib.parse import quote
 from flask import Blueprint, request
 from api.responses import success_response, error_response, paginated_response
 from api.validators import validate_cve_id, validate_ip, validate_domain
 import database as db
+from services.shodan_service import ShodanService
 
 logger = logging.getLogger(__name__)
 threat_intel_bp = Blueprint("threat_intel", __name__)
+shodan = ShodanService()
 
 
 def _append_lookup_link(links: list[dict], seen: set[str], label: str, url: str | None) -> None:
@@ -74,6 +78,173 @@ def _build_ioc_reference(ioc: dict) -> str | None:
     return links[0]["url"] if links else None
 
 
+def _shodan_enrich_ioc(ioc_type: str, value: str) -> dict:
+    if not shodan.enabled:
+        return {"enabled": False}
+
+    ioc_type = (ioc_type or "").strip().lower()
+    value = (value or "").strip()
+    if not ioc_type or not value:
+        return {"enabled": True, "error": "ioc_type and value are required"}
+
+    try:
+        if ioc_type == "ip":
+            valid, err = validate_ip(value)
+            if not valid:
+                return {"enabled": True, "error": err or "Invalid IP"}
+            host = shodan.host(value, minify=True)
+            if not host.get("ok"):
+                return {"enabled": True, "error": host.get("error")}
+            data = host.get("data", {})
+            return {
+                "enabled": True,
+                "ioc_type": "ip",
+                "host": {
+                    "ip": data.get("ip_str") or value,
+                    "org": data.get("org"),
+                    "isp": data.get("isp"),
+                    "asn": data.get("asn"),
+                    "ports": data.get("ports", []),
+                    "last_update": data.get("last_update"),
+                    "vulns": sorted(list((data.get("vulns") or {}).keys()))[:20] if isinstance(data.get("vulns"), dict) else [],
+                },
+            }
+
+        if ioc_type in ("domain", "url"):
+            domain = value
+            if ioc_type == "url":
+                domain = (urlparse(value).hostname or "").strip()
+            valid, err = validate_domain(domain)
+            if not valid:
+                return {"enabled": True, "error": err or "Invalid domain"}
+
+            dns_data = shodan.dns_domain(domain)
+            resolve_data = shodan.dns_resolve(domain)
+            resolved_ip = None
+            if resolve_data.get("ok"):
+                resolved = resolve_data.get("data", {})
+                if isinstance(resolved, dict):
+                    resolved_ip = resolved.get(domain)
+
+            host_data = shodan.host(resolved_ip, minify=True) if resolved_ip else {"ok": False, "error": "No resolved IP"}
+
+            out = {
+                "enabled": True,
+                "ioc_type": ioc_type,
+                "domain": domain,
+                "resolved_ip": resolved_ip,
+                "dns": dns_data.get("data") if dns_data.get("ok") else {"error": dns_data.get("error")},
+                "resolve": resolve_data.get("data") if resolve_data.get("ok") else {"error": resolve_data.get("error")},
+            }
+            if host_data.get("ok"):
+                host = host_data.get("data", {})
+                out["host"] = {
+                    "ip": host.get("ip_str") or resolved_ip,
+                    "org": host.get("org"),
+                    "isp": host.get("isp"),
+                    "asn": host.get("asn"),
+                    "ports": host.get("ports", []),
+                    "vulns": sorted(list((host.get("vulns") or {}).keys()))[:20] if isinstance(host.get("vulns"), dict) else [],
+                    "last_update": host.get("last_update"),
+                }
+            else:
+                out["host"] = {"error": host_data.get("error")}
+            return out
+
+        # For hash/email/custom IOCs, expose Shodan query matches
+        query_data = shodan.host_search(query=value, page=1, minify=True)
+        if not query_data.get("ok"):
+            return {"enabled": True, "error": query_data.get("error")}
+        payload = query_data.get("data", {})
+        return {
+            "enabled": True,
+            "ioc_type": ioc_type,
+            "query": value,
+            "total": payload.get("total", 0),
+            "matches": payload.get("matches", [])[:10],
+        }
+    except Exception as e:
+        return {"enabled": True, "error": str(e)}
+
+
+def _score_shodan_correlation(ioc_type: str, value: str) -> dict:
+    enriched = _shodan_enrich_ioc(ioc_type, value)
+    if not enriched.get("enabled"):
+        return {
+            "enabled": False,
+            "status": "not_configured",
+            "confidence_boost": 0,
+            "risk_level": "unknown",
+            "evidence": [],
+        }
+
+    if enriched.get("error"):
+        return {
+            "enabled": True,
+            "status": "error",
+            "error": enriched.get("error"),
+            "confidence_boost": 0,
+            "risk_level": "unknown",
+            "evidence": [],
+        }
+
+    host = enriched.get("host", {}) if isinstance(enriched.get("host", {}), dict) else {}
+    ports = host.get("ports", []) if isinstance(host.get("ports", []), list) else []
+    vulns = host.get("vulns", []) if isinstance(host.get("vulns", []), list) else []
+
+    score = 0
+    evidence = []
+
+    if enriched.get("resolved_ip") or host.get("ip"):
+        score += 10
+        evidence.append("Host resolved in Shodan")
+    if ports:
+        score += min(35, len(ports) * 4)
+        evidence.append(f"Open ports observed: {len(ports)}")
+    if vulns:
+        score += min(45, len(vulns) * 10)
+        evidence.append(f"Indexed vulnerabilities: {len(vulns)}")
+    if host.get("org"):
+        score += 5
+        evidence.append("Organization attribution available")
+    if host.get("last_update"):
+        score += 5
+        evidence.append("Recent Shodan telemetry present")
+
+    score = min(score, 100)
+    if score >= 75:
+        risk_level = "high"
+    elif score >= 45:
+        risk_level = "medium"
+    elif score > 0:
+        risk_level = "low"
+    else:
+        risk_level = "unknown"
+
+    return {
+        "enabled": True,
+        "status": "ok",
+        "ioc_type": ioc_type,
+        "value": value,
+        "confidence_boost": score,
+        "risk_level": risk_level,
+        "evidence": evidence,
+        "host": {
+            "ip": host.get("ip"),
+            "asn": host.get("asn"),
+            "org": host.get("org"),
+            "ports": ports[:15],
+            "vulns": vulns[:15],
+        },
+    }
+
+
+def _extract_ioc_type_value(item: dict) -> tuple[str, str]:
+    ioc_type = (item.get("ioc_type") or "").strip().lower()
+    value = (item.get("value") or item.get("indicator") or "").strip()
+    return ioc_type, value
+
+
 # ──────────────────────────────────────────────────────
 #  IOC Management
 # ──────────────────────────────────────────────────────
@@ -81,13 +252,15 @@ def _build_ioc_reference(ioc: dict) -> str | None:
 @threat_intel_bp.route("/api/iocs", methods=["GET"])
 def list_iocs():
     """List indicators of compromise with filtering."""
-    ioc_type = request.args.get("type")
-    severity = request.args.get("severity")
-    source = request.args.get("source")
-    search = request.args.get("q")
+    ioc_type = request.args.get("type", "")
+    severity = request.args.get("severity", "")
+    source = request.args.get("source", "")
+    search = request.args.get("q", "")
     limit = min(int(request.args.get("limit", 100)), 500)
     offset = int(request.args.get("offset", 0))
     auto_refresh = request.args.get("auto_refresh", "true").lower() != "false"
+    include_shodan = request.args.get("include_shodan", "false").lower() == "true"
+    max_shodan = min(max(int(request.args.get("max_shodan", 20)), 1), 50)
 
     iocs = db.get_iocs(ioc_type=ioc_type, severity=severity, source=source,
                        search=search, limit=limit, offset=offset)
@@ -104,14 +277,25 @@ def list_iocs():
 
     stats = db.get_ioc_stats()
 
+    shodan_cache: dict[str, dict] = {}
+    shodan_used = 0
     for ioc in iocs:
         ioc["lookup_links"] = _build_live_lookup_links(ioc)
         ioc["reference_url"] = _build_ioc_reference(ioc)
 
+        if include_shodan and shodan_used < max_shodan:
+            ioc_type, ioc_value = _extract_ioc_type_value(ioc)
+            if ioc_type in ("ip", "domain", "url") and ioc_value:
+                cache_key = f"{ioc_type}:{ioc_value}"
+                if cache_key not in shodan_cache:
+                    shodan_cache[cache_key] = _score_shodan_correlation(ioc_type, ioc_value)
+                    shodan_used += 1
+                ioc["shodan_correlation"] = shodan_cache[cache_key]
+
     return success_response({
         "iocs": iocs,
         "stats": stats,
-    }, meta={"limit": limit, "offset": offset, "total": stats.get("total", 0)})
+    }, meta={"limit": limit, "offset": offset, "total": stats.get("total", 0), "shodan_enriched": shodan_used if include_shodan else 0})
 
 
 @threat_intel_bp.route("/api/iocs", methods=["POST"])
@@ -129,11 +313,11 @@ def create_ioc():
     ioc_id = db.add_ioc(
         ioc_type=ioc_type,
         value=value,
-        threat_type=data.get("threat_type"),
+        threat_type=str(data.get("threat_type") or "unknown"),
         severity=data.get("severity", "medium"),
         source=data.get("source", "manual"),
         tags=data.get("tags", []),
-        description=data.get("description"),
+        description=str(data.get("description") or ""),
         mitre_ids=data.get("mitre_ids", []),
     )
 
@@ -157,8 +341,32 @@ def check_ioc():
 
     match = db.check_ioc(value)
     if match:
-        return success_response({"match": True, "ioc": match})
+        ioc_type = (match.get("ioc_type") or "").strip().lower()
+        ioc_value = (match.get("value") or value).strip()
+        return success_response({
+            "match": True,
+            "ioc": match,
+            "shodan": _shodan_enrich_ioc(ioc_type, ioc_value),
+        })
     return success_response({"match": False, "ioc": None})
+
+
+@threat_intel_bp.route("/api/threat-intel/shodan-enrich", methods=["POST"])
+def shodan_enrich_ioc():
+    """On-demand Shodan enrichment for IOC values."""
+    data = request.get_json(silent=True) or {}
+    ioc_type = (data.get("ioc_type") or "").strip().lower()
+    value = (data.get("value") or "").strip()
+
+    if ioc_type not in ("ip", "domain", "url", "hash", "email"):
+        return error_response("ioc_type must be one of: ip, domain, url, hash, email", 400)
+    if not value:
+        return error_response("value is required", 400)
+
+    enriched = _shodan_enrich_ioc(ioc_type, value)
+    if not enriched.get("enabled"):
+        return error_response("Shodan is not configured", 503)
+    return success_response({"ioc_type": ioc_type, "value": value, "shodan": enriched})
 
 
 # ──────────────────────────────────────────────────────
@@ -168,10 +376,12 @@ def check_ioc():
 @threat_intel_bp.route("/api/threat-feeds", methods=["GET"])
 def list_threat_feeds():
     """List aggregated threat feed entries."""
-    feed_name = request.args.get("feed")
+    feed_name = request.args.get("feed", "")
     limit = min(int(request.args.get("limit", 100)), 500)
     offset = max(int(request.args.get("offset", 0)), 0)
     auto_refresh = request.args.get("auto_refresh", "true").lower() != "false"
+    include_shodan = request.args.get("include_shodan", "false").lower() == "true"
+    max_shodan = min(max(int(request.args.get("max_shodan", 20)), 1), 50)
 
     entries = db.get_threat_feed_entries(feed_name=feed_name, limit=limit, offset=offset)
     total = db.count_threat_feed_entries(feed_name=feed_name)
@@ -186,12 +396,29 @@ def list_threat_feeds():
         except Exception as e:
             logger.warning(f"Threat feed bootstrap refresh failed: {e}")
 
+    shodan_cache: dict[str, dict] = {}
+    shodan_used = 0
     for entry in entries:
         entry["lookup_links"] = _build_live_lookup_links(entry)
 
+        if include_shodan and shodan_used < max_shodan:
+            ioc_type, ioc_value = _extract_ioc_type_value(entry)
+            if ioc_type in ("ip", "domain", "url") and ioc_value:
+                cache_key = f"{ioc_type}:{ioc_value}"
+                if cache_key not in shodan_cache:
+                    shodan_cache[cache_key] = _score_shodan_correlation(ioc_type, ioc_value)
+                    shodan_used += 1
+                entry["shodan_correlation"] = shodan_cache[cache_key]
+
     return success_response(
         {"entries": entries, "total": total},
-        meta={"limit": limit, "offset": offset, "total": total, "has_more": offset + len(entries) < total}
+        meta={
+            "limit": limit,
+            "offset": offset,
+            "total": total,
+            "has_more": offset + len(entries) < total,
+            "shodan_enriched": shodan_used if include_shodan else 0,
+        }
     )
 
 
@@ -228,13 +455,27 @@ def search_threat_feeds():
     can show a useful default view instead of an empty state.
     """
     query = request.args.get("q", "").strip()
+    include_shodan = request.args.get("include_shodan", "false").lower() == "true"
+    max_shodan = min(max(int(request.args.get("max_shodan", 15)), 1), 50)
 
     results = db.search_threat_feeds(query)
+    shodan_cache: dict[str, dict] = {}
+    shodan_used = 0
     for item in results:
         item["lookup_links"] = _build_live_lookup_links(item)
         if not item.get("reference"):
             item["reference"] = _build_ioc_reference(item)
-    return success_response({"results": results, "total": len(results), "query": query})
+
+        if include_shodan and shodan_used < max_shodan:
+            ioc_type, ioc_value = _extract_ioc_type_value(item)
+            if ioc_type in ("ip", "domain", "url") and ioc_value:
+                cache_key = f"{ioc_type}:{ioc_value}"
+                if cache_key not in shodan_cache:
+                    shodan_cache[cache_key] = _score_shodan_correlation(ioc_type, ioc_value)
+                    shodan_used += 1
+                item["shodan_correlation"] = shodan_cache[cache_key]
+
+    return success_response({"results": results, "total": len(results), "query": query}, meta={"shodan_enriched": shodan_used if include_shodan else 0})
 
 
 # ──────────────────────────────────────────────────────
@@ -247,7 +488,7 @@ def lookup_cve(cve_id):
     cve_id = cve_id.strip().upper()
     valid, err = validate_cve_id(cve_id)
     if not valid:
-        return error_response(err, 400)
+        return error_response(err or "Invalid CVE", 400)
 
     # Check cache first
     cached = db.get_cached_cve(cve_id)
@@ -313,8 +554,8 @@ def get_intel_catalog():
 @threat_intel_bp.route("/api/mitre/techniques", methods=["GET"])
 def list_mitre_techniques():
     """List MITRE ATT&CK techniques with optional filtering."""
-    tactic = request.args.get("tactic")
-    search = request.args.get("q")
+    tactic = request.args.get("tactic", "")
+    search = request.args.get("q", "")
     try:
         from services.mitre_service import get_techniques
         techniques = get_techniques(tactic=tactic, search=search)
