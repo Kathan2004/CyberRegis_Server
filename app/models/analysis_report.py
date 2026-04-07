@@ -5,8 +5,8 @@ import os
 import time
 import io
 import base64
+import dpkt
 import requests
-import pyshark
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -94,16 +94,41 @@ class AnalysisReport:
             return {}
 
     def analyze_pcap(self, file_path: str) -> dict:
-        """Analyze PCAP file"""
-        capture = pyshark.FileCapture(file_path)
-        protocol_counts = {}
-
-        for packet in capture:
-            protocol = packet.highest_layer
-            protocol_counts[protocol] = protocol_counts.get(protocol, 0) + 1
-
-        capture.close()
-        return protocol_counts
+        """Analyze PCAP file using dpkt (no TShark required)"""
+        counts = {}
+        try:
+            with open(file_path, 'rb') as f:
+                try:
+                    pcap = dpkt.pcap.Reader(f)
+                except Exception:
+                    f.seek(0)
+                    pcap = dpkt.pcapng.Reader(f)
+                for _ts, buf in pcap:
+                    try:
+                        eth = dpkt.ethernet.Ethernet(buf)
+                        inner = eth.data
+                        if isinstance(inner, dpkt.ip.IP):
+                            if isinstance(inner.data, dpkt.tcp.TCP):
+                                proto = 'TCP'
+                            elif isinstance(inner.data, dpkt.udp.UDP):
+                                proto = 'UDP'
+                            elif isinstance(inner.data, dpkt.icmp.ICMP):
+                                proto = 'ICMP'
+                            else:
+                                proto = f'IP/{inner.p}'
+                        elif isinstance(inner, dpkt.ip6.IP6):
+                            proto = 'IPv6'
+                        elif isinstance(inner, dpkt.arp.ARP):
+                            proto = 'ARP'
+                        else:
+                            proto = type(inner).__name__.upper() or 'OTHER'
+                        counts[proto] = counts.get(proto, 0) + 1
+                    except Exception:
+                        counts['UNKNOWN'] = counts.get('UNKNOWN', 0) + 1
+        except Exception as e:
+            from app.utils.logger import setup_logger
+            setup_logger().error(f'PCAP parse error: {e}')
+        return counts
 
     def generate_pcap_chart(self, protocol_counts: dict, file_path: str) -> str:
         """Generate PCAP analysis chart"""

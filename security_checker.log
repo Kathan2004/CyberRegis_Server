@@ -1961,3 +1961,205 @@
 2026-01-08 00:39:55,952 [WARNING]  * Debugger is active!
 2026-01-08 00:39:55,985 [INFO]  * Debugger PIN: 839-642-868
 2026-01-08 00:39:58,783 [INFO] 127.0.0.1 - - [08/Jan/2026 00:39:58] "OPTIONS /api/vulnerability-scan HTTP/1.1" 200 -
+2026-04-07 11:20:20,962 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.42.12.28:5000
+2026-04-07 11:20:20,963 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-07 11:20:20,968 [INFO]  * Restarting with stat
+2026-04-07 11:20:23,086 [WARNING]  * Debugger is active!
+2026-04-07 11:20:23,091 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 11:20:55,147 [INFO] 127.0.0.1 - - [07/Apr/2026 11:20:55] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2026-04-07 11:20:55,157 [INFO] 127.0.0.1 - - [07/Apr/2026 11:20:55] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:20:56,405 [ERROR] Error checking URL https://bajajfinservhealth.in: HTTPSConnectionPool(host='safebrowsing.googleapis.com', port=443): Max retries exceeded with url: /v4/threatMatches:find?key=AIzaSyD8D-zbxJiKQC9l9WvIzrkuLpPu-AUhq_8 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1077)')))
+2026-04-07 11:20:56,407 [INFO] 127.0.0.1 - - [07/Apr/2026 11:20:56] "POST /api/check-url HTTP/1.1" 200 -
+2026-04-07 11:20:57,244 [INFO] 127.0.0.1 - - [07/Apr/2026 11:20:57] "GET /api/health HTTP/1.1" 200 -
+2026-04-07 11:21:02,496 [INFO] 127.0.0.1 - - [07/Apr/2026 11:21:02] "POST /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:21:21,237 [INFO] 127.0.0.1 - - [07/Apr/2026 11:21:21] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2026-04-07 11:21:23,718 [INFO] 127.0.0.1 - - [07/Apr/2026 11:21:23] "[33mPOST /api/security-file-content HTTP/1.1[0m" 404 -
+2026-04-07 11:27:14,581 [INFO] 127.0.0.1 - - [07/Apr/2026 11:27:14] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2026-04-07 11:27:14,588 [INFO] 127.0.0.1 - - [07/Apr/2026 11:27:14] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:27:15,796 [ERROR] Error checking URL https://bajajfinservhealth.in: HTTPSConnectionPool(host='safebrowsing.googleapis.com', port=443): Max retries exceeded with url: /v4/threatMatches:find?key=AIzaSyD8D-zbxJiKQC9l9WvIzrkuLpPu-AUhq_8 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1077)')))
+2026-04-07 11:27:15,802 [INFO] 127.0.0.1 - - [07/Apr/2026 11:27:15] "POST /api/check-url HTTP/1.1" 200 -
+2026-04-07 11:27:20,932 [INFO] 127.0.0.1 - - [07/Apr/2026 11:27:20] "POST /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:27:28,178 [INFO] 127.0.0.1 - - [07/Apr/2026 11:27:28] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2026-04-07 11:27:28,462 [INFO] 127.0.0.1 - - [07/Apr/2026 11:27:28] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:27:29,518 [ERROR] Error checking URL https://bajajfinservhealth.in: HTTPSConnectionPool(host='safebrowsing.googleapis.com', port=443): Max retries exceeded with url: /v4/threatMatches:find?key=AIzaSyD8D-zbxJiKQC9l9WvIzrkuLpPu-AUhq_8 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1077)')))
+2026-04-07 11:27:29,538 [INFO] 127.0.0.1 - - [07/Apr/2026 11:27:29] "POST /api/check-url HTTP/1.1" 200 -
+2026-04-07 11:27:34,736 [INFO] 127.0.0.1 - - [07/Apr/2026 11:27:34] "POST /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:27:49,581 [INFO]  * Detected change in 'D:\\OneDrive - Bajaj Finserv Health Limited\\Desktop\\CyberRegis_Server\\KALE.py', reloading
+2026-04-07 11:27:51,583 [INFO]  * Restarting with stat
+2026-04-07 11:27:56,096 [WARNING]  * Debugger is active!
+2026-04-07 11:27:56,104 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 11:28:03,739 [INFO] 127.0.0.1 - - [07/Apr/2026 11:28:03] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2026-04-07 11:28:03,743 [INFO] 127.0.0.1 - - [07/Apr/2026 11:28:03] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:28:04,861 [ERROR] Error checking URL https://niriksh.com: HTTPSConnectionPool(host='safebrowsing.googleapis.com', port=443): Max retries exceeded with url: /v4/threatMatches:find?key=AIzaSyD8D-zbxJiKQC9l9WvIzrkuLpPu-AUhq_8 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1077)')))
+2026-04-07 11:28:04,863 [INFO] 127.0.0.1 - - [07/Apr/2026 11:28:04] "POST /api/check-url HTTP/1.1" 200 -
+2026-04-07 11:28:14,841 [INFO] 127.0.0.1 - - [07/Apr/2026 11:28:14] "POST /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:29:24,620 [INFO] 127.0.0.1 - - [07/Apr/2026 11:29:24] "GET /api/health HTTP/1.1" 200 -
+2026-04-07 11:29:50,936 [INFO] 127.0.0.1 - - [07/Apr/2026 11:29:50] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2026-04-07 11:29:50,939 [INFO] 127.0.0.1 - - [07/Apr/2026 11:29:50] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:29:52,008 [ERROR] Error checking URL https://example.com: HTTPSConnectionPool(host='safebrowsing.googleapis.com', port=443): Max retries exceeded with url: /v4/threatMatches:find?key=AIzaSyD8D-zbxJiKQC9l9WvIzrkuLpPu-AUhq_8 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1077)')))
+2026-04-07 11:29:52,009 [INFO] 127.0.0.1 - - [07/Apr/2026 11:29:52] "POST /api/check-url HTTP/1.1" 200 -
+2026-04-07 11:29:53,966 [INFO] 127.0.0.1 - - [07/Apr/2026 11:29:53] "POST /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:30:29,605 [INFO] 127.0.0.1 - - [07/Apr/2026 11:30:29] "GET /api/health HTTP/1.1" 200 -
+2026-04-07 11:30:52,182 [ERROR] Error checking URL https://google.com: HTTPSConnectionPool(host='safebrowsing.googleapis.com', port=443): Max retries exceeded with url: /v4/threatMatches:find?key=AIzaSyD8D-zbxJiKQC9l9WvIzrkuLpPu-AUhq_8 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1077)')))
+2026-04-07 11:30:52,184 [INFO] 127.0.0.1 - - [07/Apr/2026 11:30:52] "POST /api/check-url HTTP/1.1" 200 -
+2026-04-07 11:31:03,644 [INFO] 127.0.0.1 - - [07/Apr/2026 11:31:03] "POST /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:31:37,925 [INFO]  * Detected change in 'D:\\OneDrive - Bajaj Finserv Health Limited\\Desktop\\CyberRegis_Server\\KALE.py', reloading
+2026-04-07 11:31:39,064 [INFO]  * Restarting with stat
+2026-04-07 11:31:44,965 [WARNING]  * Debugger is active!
+2026-04-07 11:31:44,976 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 11:31:55,558 [INFO]  * Detected change in 'D:\\OneDrive - Bajaj Finserv Health Limited\\Desktop\\CyberRegis_Server\\KALE.py', reloading
+2026-04-07 11:31:56,021 [INFO]  * Restarting with stat
+2026-04-07 11:31:59,674 [WARNING]  * Debugger is active!
+2026-04-07 11:31:59,678 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 11:32:08,050 [INFO]  * Detected change in 'D:\\OneDrive - Bajaj Finserv Health Limited\\Desktop\\CyberRegis_Server\\KALE.py', reloading
+2026-04-07 11:32:08,451 [INFO]  * Restarting with stat
+2026-04-07 11:32:12,080 [WARNING]  * Debugger is active!
+2026-04-07 11:32:12,089 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 11:32:26,075 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.42.12.28:5000
+2026-04-07 11:32:26,076 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-07 11:32:26,078 [INFO]  * Restarting with stat
+2026-04-07 11:32:27,536 [WARNING]  * Debugger is active!
+2026-04-07 11:32:27,539 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 11:32:56,211 [INFO] 127.0.0.1 - - [07/Apr/2026 11:32:56] "GET /api/health HTTP/1.1" 200 -
+2026-04-07 11:33:03,047 [INFO] 127.0.0.1 - - [07/Apr/2026 11:33:03] "GET /api/health HTTP/1.1" 200 -
+2026-04-07 11:33:25,989 [INFO] 127.0.0.1 - - [07/Apr/2026 11:33:25] "GET /api/health HTTP/1.1" 200 -
+2026-04-07 11:33:36,395 [INFO] 127.0.0.1 - - [07/Apr/2026 11:33:36] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2026-04-07 11:33:36,398 [INFO] 127.0.0.1 - - [07/Apr/2026 11:33:36] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:33:37,537 [ERROR] Error checking URL https://example.com: HTTPSConnectionPool(host='safebrowsing.googleapis.com', port=443): Max retries exceeded with url: /v4/threatMatches:find?key=AIzaSyD8D-zbxJiKQC9l9WvIzrkuLpPu-AUhq_8 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1077)')))
+2026-04-07 11:33:37,538 [INFO] 127.0.0.1 - - [07/Apr/2026 11:33:37] "POST /api/check-url HTTP/1.1" 200 -
+2026-04-07 11:33:41,236 [INFO] 127.0.0.1 - - [07/Apr/2026 11:33:41] "POST /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:34:15,080 [INFO] 127.0.0.1 - - [07/Apr/2026 11:34:15] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2026-04-07 11:34:15,474 [INFO] 127.0.0.1 - - [07/Apr/2026 11:34:15] "[33mPOST /api/security-file-content HTTP/1.1[0m" 404 -
+2026-04-07 11:35:01,969 [INFO]  * Detected change in 'D:\\OneDrive - Bajaj Finserv Health Limited\\Desktop\\CyberRegis_Server\\KALE.py', reloading
+2026-04-07 11:35:02,505 [INFO]  * Restarting with stat
+2026-04-07 11:35:07,188 [WARNING]  * Debugger is active!
+2026-04-07 11:35:07,198 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 11:35:21,692 [INFO]  * Detected change in 'D:\\OneDrive - Bajaj Finserv Health Limited\\Desktop\\CyberRegis_Server\\all_functions.py', reloading
+2026-04-07 11:35:22,325 [INFO]  * Restarting with stat
+2026-04-07 11:35:26,258 [WARNING]  * Debugger is active!
+2026-04-07 11:35:26,268 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 11:35:33,584 [INFO]  * Detected change in 'D:\\OneDrive - Bajaj Finserv Health Limited\\Desktop\\CyberRegis_Server\\all_functions.py', reloading
+2026-04-07 11:35:34,046 [INFO]  * Restarting with stat
+2026-04-07 11:35:37,946 [WARNING]  * Debugger is active!
+2026-04-07 11:35:37,956 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 11:35:48,246 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.42.12.28:5000
+2026-04-07 11:35:48,246 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-07 11:35:48,248 [INFO]  * Restarting with stat
+2026-04-07 11:35:50,861 [WARNING]  * Debugger is active!
+2026-04-07 11:35:50,866 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 11:36:24,581 [ERROR] Error checking URL https://google.com: HTTPSConnectionPool(host='safebrowsing.googleapis.com', port=443): Max retries exceeded with url: /v4/threatMatches:find?key=AIzaSyD8D-zbxJiKQC9l9WvIzrkuLpPu-AUhq_8 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1077)')))
+2026-04-07 11:36:24,590 [INFO] 127.0.0.1 - - [07/Apr/2026 11:36:24] "POST /api/check-url HTTP/1.1" 200 -
+2026-04-07 11:36:31,746 [ERROR] Error checking URL https://google.com: HTTPSConnectionPool(host='safebrowsing.googleapis.com', port=443): Max retries exceeded with url: /v4/threatMatches:find?key=AIzaSyD8D-zbxJiKQC9l9WvIzrkuLpPu-AUhq_8 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1077)')))
+2026-04-07 11:36:31,747 [INFO] 127.0.0.1 - - [07/Apr/2026 11:36:31] "POST /api/check-url HTTP/1.1" 200 -
+2026-04-07 11:36:38,806 [ERROR] Error checking URL https://google.com: HTTPSConnectionPool(host='safebrowsing.googleapis.com', port=443): Max retries exceeded with url: /v4/threatMatches:find?key=AIzaSyD8D-zbxJiKQC9l9WvIzrkuLpPu-AUhq_8 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1077)')))
+2026-04-07 11:36:38,807 [INFO] 127.0.0.1 - - [07/Apr/2026 11:36:38] "POST /api/check-url HTTP/1.1" 200 -
+2026-04-07 11:37:23,587 [INFO]  * Detected change in 'D:\\OneDrive - Bajaj Finserv Health Limited\\Desktop\\CyberRegis_Server\\KALE.py', reloading
+2026-04-07 11:37:23,919 [INFO]  * Restarting with stat
+2026-04-07 11:37:26,736 [WARNING]  * Debugger is active!
+2026-04-07 11:37:26,743 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 11:37:42,150 [INFO]  * Detected change in 'D:\\OneDrive - Bajaj Finserv Health Limited\\Desktop\\CyberRegis_Server\\KALE.py', reloading
+2026-04-07 11:37:42,401 [INFO]  * Restarting with stat
+2026-04-07 11:38:00,224 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.42.12.28:5000
+2026-04-07 11:38:00,224 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-07 11:38:00,226 [INFO]  * Restarting with stat
+2026-04-07 11:38:02,119 [WARNING]  * Debugger is active!
+2026-04-07 11:38:02,122 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 11:38:44,007 [ERROR] Failed to send Telegram notification: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot7631413879:AAH1eDKDIKYGepmKZRplMXnAVyRFljHjEQo/sendMessage (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000023D2E2D3990>: Failed to resolve 'api.telegram.org' ([Errno 11001] getaddrinfo failed)"))
+2026-04-07 11:38:44,019 [INFO] 127.0.0.1 - - [07/Apr/2026 11:38:44] "POST /api/check-url HTTP/1.1" 200 -
+2026-04-07 11:39:53,204 [INFO] 127.0.0.1 - - [07/Apr/2026 11:39:53] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2026-04-07 11:39:53,207 [INFO] 127.0.0.1 - - [07/Apr/2026 11:39:53] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:39:56,438 [INFO] 127.0.0.1 - - [07/Apr/2026 11:39:56] "POST /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:40:06,737 [ERROR] Failed to send Telegram notification: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot7631413879:AAH1eDKDIKYGepmKZRplMXnAVyRFljHjEQo/sendMessage (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000023D300F1F50>: Failed to resolve 'api.telegram.org' ([Errno 11001] getaddrinfo failed)"))
+2026-04-07 11:40:06,738 [INFO] 127.0.0.1 - - [07/Apr/2026 11:40:06] "POST /api/check-url HTTP/1.1" 200 -
+2026-04-07 11:40:55,364 [INFO] 127.0.0.1 - - [07/Apr/2026 11:40:55] "OPTIONS /api/security-file-content HTTP/1.1" 200 -
+2026-04-07 11:40:55,688 [INFO] 127.0.0.1 - - [07/Apr/2026 11:40:55] "[33mPOST /api/security-file-content HTTP/1.1[0m" 404 -
+2026-04-07 11:43:14,673 [INFO]  * Detected change in 'D:\\OneDrive - Bajaj Finserv Health Limited\\Desktop\\CyberRegis_Server\\all_functions.py', reloading
+2026-04-07 11:43:15,043 [INFO]  * Restarting with stat
+2026-04-07 11:43:17,427 [WARNING]  * Debugger is active!
+2026-04-07 11:43:17,434 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 11:43:28,909 [INFO]  * Detected change in 'D:\\OneDrive - Bajaj Finserv Health Limited\\Desktop\\CyberRegis_Server\\all_functions.py', reloading
+2026-04-07 11:43:29,378 [INFO]  * Restarting with stat
+2026-04-07 11:43:32,943 [WARNING]  * Debugger is active!
+2026-04-07 11:43:32,946 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 11:43:37,089 [INFO]  * Detected change in 'D:\\OneDrive - Bajaj Finserv Health Limited\\Desktop\\CyberRegis_Server\\KALE.py', reloading
+2026-04-07 11:43:37,371 [INFO]  * Restarting with stat
+2026-04-07 11:43:40,486 [WARNING]  * Debugger is active!
+2026-04-07 11:43:40,494 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 11:43:48,841 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.42.12.28:5000
+2026-04-07 11:43:48,842 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-07 11:43:48,843 [INFO]  * Restarting with stat
+2026-04-07 11:43:51,466 [WARNING]  * Debugger is active!
+2026-04-07 11:43:51,474 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 11:44:26,742 [INFO] 127.0.0.1 - - [07/Apr/2026 11:44:26] "POST /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:45:20,723 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.42.12.28:5000
+2026-04-07 11:45:20,724 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-07 11:45:20,729 [INFO]  * Restarting with stat
+2026-04-07 11:45:23,652 [WARNING]  * Debugger is active!
+2026-04-07 11:45:23,659 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 11:45:45,844 [INFO] 127.0.0.1 - - [07/Apr/2026 11:45:45] "POST /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:47:49,589 [INFO]  * Detected change in 'D:\\OneDrive - Bajaj Finserv Health Limited\\Desktop\\CyberRegis_Server\\KALE.py', reloading
+2026-04-07 11:47:50,135 [INFO]  * Restarting with stat
+2026-04-07 11:47:53,275 [WARNING]  * Debugger is active!
+2026-04-07 11:47:53,279 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 11:48:01,589 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.42.12.28:5000
+2026-04-07 11:48:01,589 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-07 11:48:01,591 [INFO]  * Restarting with stat
+2026-04-07 11:48:03,794 [WARNING]  * Debugger is active!
+2026-04-07 11:48:03,800 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 11:48:19,927 [INFO] 127.0.0.1 - - [07/Apr/2026 11:48:19] "POST /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:48:57,407 [INFO] 127.0.0.1 - - [07/Apr/2026 11:48:57] "POST /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:52:03,229 [INFO] 127.0.0.1 - - [07/Apr/2026 11:52:03] "POST /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:52:13,004 [INFO] 127.0.0.1 - - [07/Apr/2026 11:52:13] "POST /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:52:21,052 [INFO] 127.0.0.1 - - [07/Apr/2026 11:52:21] "POST /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:52:32,753 [INFO] 127.0.0.1 - - [07/Apr/2026 11:52:32] "POST /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:52:44,584 [INFO] 127.0.0.1 - - [07/Apr/2026 11:52:44] "POST /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:52:57,122 [INFO] 127.0.0.1 - - [07/Apr/2026 11:52:57] "POST /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:53:09,895 [INFO] 127.0.0.1 - - [07/Apr/2026 11:53:09] "POST /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:53:45,389 [INFO] 127.0.0.1 - - [07/Apr/2026 11:53:45] "OPTIONS /api/check-url HTTP/1.1" 200 -
+2026-04-07 11:53:45,392 [INFO] 127.0.0.1 - - [07/Apr/2026 11:53:45] "OPTIONS /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:53:52,101 [INFO] 127.0.0.1 - - [07/Apr/2026 11:53:52] "POST /api/analyze-domain HTTP/1.1" 200 -
+2026-04-07 11:53:58,526 [ERROR] Failed to send Telegram notification: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot7631413879:AAH1eDKDIKYGepmKZRplMXnAVyRFljHjEQo/sendMessage (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000002010A4508D0>: Failed to resolve 'api.telegram.org' ([Errno 11001] getaddrinfo failed)"))
+2026-04-07 11:53:58,527 [INFO] 127.0.0.1 - - [07/Apr/2026 11:53:58] "POST /api/check-url HTTP/1.1" 200 -
+2026-04-07 13:02:56,499 [INFO]  * Detected change in 'D:\\OneDrive - Bajaj Finserv Health Limited\\Desktop\\CyberRegis_Server\\config.py', reloading
+2026-04-07 13:02:58,067 [INFO]  * Restarting with stat
+2026-04-07 13:03:09,890 [WARNING]  * Debugger is active!
+2026-04-07 13:03:09,895 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 13:03:24,237 [INFO]  * Detected change in 'D:\\OneDrive - Bajaj Finserv Health Limited\\Desktop\\CyberRegis_Server\\api\\__init__.py', reloading
+2026-04-07 13:03:24,517 [INFO]  * Restarting with stat
+2026-04-07 13:03:27,392 [WARNING]  * Debugger is active!
+2026-04-07 13:03:27,401 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 13:05:52,740 [INFO]  * Detected change in 'D:\\OneDrive - Bajaj Finserv Health Limited\\Desktop\\CyberRegis_Server\\api\\ip_routes.py', reloading
+2026-04-07 13:05:53,092 [INFO]  * Restarting with stat
+2026-04-07 13:05:55,741 [WARNING]  * Debugger is active!
+2026-04-07 13:05:55,744 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 13:07:37,447 [INFO]  * Detected change in 'D:\\OneDrive - Bajaj Finserv Health Limited\\Desktop\\CyberRegis_Server\\api\\url_routes.py', reloading
+2026-04-07 13:07:37,800 [INFO]  * Restarting with stat
+2026-04-07 13:07:40,316 [WARNING]  * Debugger is active!
+2026-04-07 13:07:40,319 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 13:09:21,948 [INFO]  * Detected change in 'D:\\OneDrive - Bajaj Finserv Health Limited\\Desktop\\CyberRegis_Server\\services\\__init__.py', reloading
+2026-04-07 13:09:22,231 [INFO]  * Restarting with stat
+2026-04-07 13:09:24,534 [WARNING]  * Debugger is active!
+2026-04-07 13:09:24,537 [INFO]  * Debugger PIN: 109-620-013
+2026-04-07 13:10:22,517 [INFO]  * Detected change in 'D:\\OneDrive - Bajaj Finserv Health Limited\\Desktop\\CyberRegis_Server\\KALE.py', reloading
+2026-04-07 13:10:22,735 [INFO]  * Restarting with stat

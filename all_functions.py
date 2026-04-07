@@ -16,27 +16,30 @@ class all_functions:
             w = whois.whois(domain)
             results = []
             
-            if w.registrar:
-                results.append({'Field': 'Registrar', 'Value': w.registrar})
-            if w.creation_date:
-                if isinstance(w.creation_date, list):
-                    results.append({'Field': 'Creation Date', 'Value': str(w.creation_date[0])})
+            if w.get('registrar'):
+                results.append({'Field': 'Registrar', 'Value': w.get('registrar')})
+            if w.get('creation_date'):
+                creation_date = w.get('creation_date')
+                if isinstance(creation_date, list):
+                    results.append({'Field': 'Creation Date', 'Value': str(creation_date[0])})
                 else:
-                    results.append({'Field': 'Creation Date', 'Value': str(w.creation_date)})
-            if w.expiration_date:
-                if isinstance(w.expiration_date, list):
-                    results.append({'Field': 'Expiration Date', 'Value': str(w.expiration_date[0])})
+                    results.append({'Field': 'Creation Date', 'Value': str(creation_date)})
+            if w.get('expiration_date'):
+                expiration_date = w.get('expiration_date')
+                if isinstance(expiration_date, list):
+                    results.append({'Field': 'Expiration Date', 'Value': str(expiration_date[0])})
                 else:
-                    results.append({'Field': 'Expiration Date', 'Value': str(w.expiration_date)})
-            if w.registrant:
-                results.append({'Field': 'Registrant', 'Value': str(w.registrant)})
-            if w.country:
-                results.append({'Field': 'Country', 'Value': str(w.country)})
-            if w.name_servers:
-                if isinstance(w.name_servers, list):
-                    results.append({'Field': 'Name Servers', 'Value': ', '.join(w.name_servers)})
+                    results.append({'Field': 'Expiration Date', 'Value': str(expiration_date)})
+            if w.get('registrant'):
+                results.append({'Field': 'Registrant', 'Value': str(w.get('registrant'))})
+            if w.get('country'):
+                results.append({'Field': 'Country', 'Value': str(w.get('country'))})
+            if w.get('name_servers'):
+                name_servers = w.get('name_servers')
+                if isinstance(name_servers, list):
+                    results.append({'Field': 'Name Servers', 'Value': ', '.join(name_servers)})
                 else:
-                    results.append({'Field': 'Name Servers', 'Value': str(w.name_servers)})
+                    results.append({'Field': 'Name Servers', 'Value': str(name_servers)})
             
             return results
         except Exception as e:
@@ -93,32 +96,43 @@ class all_functions:
     def get_ssl_chain_details(self, domain):
         """Get SSL certificate details for a domain"""
         try:
-            context = ssl.create_default_context()
-            with socket.create_connection((domain, 443)) as sock:
-                with context.wrap_socket(sock, server_hostname=domain) as ssock:
-                    cert = ssock.getpeercert()
+            # Try with default context first, fall back to unverified for corporate proxies
+            try:
+                context = ssl.create_default_context()
+                sock = socket.create_connection((domain, 443), timeout=10)
+                ssock = context.wrap_socket(sock, server_hostname=domain)
+            except ssl.SSLCertVerificationError:
+                # Corporate proxy or self-signed cert - use unverified context
+                context = ssl._create_unverified_context()
+                sock = socket.create_connection((domain, 443), timeout=10)
+                ssock = context.wrap_socket(sock, server_hostname=domain)
+            with ssock:
+                cert = ssock.getpeercert()
+                
+                results = []
+                if 'issuer' in cert:
+                    issuer = dict(x[0] for x in cert['issuer']) if cert.get('issuer') else {}
+                    results.append({'Field': 'Issuer', 'Value': issuer.get(b'commonName', 'Unknown').decode() if isinstance(issuer.get(b'commonName', 'Unknown'), bytes) else issuer.get(b'commonName', 'Unknown')})
+                
+                if 'subject' in cert:
+                    subject = dict(x[0] for x in cert['subject']) if cert.get('subject') else {}
+                    results.append({'Field': 'Subject', 'Value': subject.get(b'commonName', 'Unknown').decode() if isinstance(subject.get(b'commonName', 'Unknown'), bytes) else subject.get(b'commonName', 'Unknown')})
+                
+                if 'notBefore' in cert:
+                    results.append({'Field': 'Valid From', 'Value': cert['notBefore']})
+                
+                if 'notAfter' in cert and cert['notAfter']:
+                    results.append({'Field': 'Valid Until', 'Value': str(cert['notAfter'])})
                     
-                    results = []
-                    if 'issuer' in cert:
-                        issuer = dict(x[0] for x in cert['issuer'])
-                        results.append({'Field': 'Issuer', 'Value': issuer.get('commonName', 'Unknown')})
-                    
-                    if 'subject' in cert:
-                        subject = dict(x[0] for x in cert['subject'])
-                        results.append({'Field': 'Subject', 'Value': subject.get('commonName', 'Unknown')})
-                    
-                    if 'notBefore' in cert:
-                        results.append({'Field': 'Valid From', 'Value': cert['notBefore']})
-                    
-                    if 'notAfter' in cert:
-                        results.append({'Field': 'Valid Until', 'Value': cert['notAfter']})
-                        
-                        # Calculate days until expiry
+                    # Calculate days until expiry
+                    try:
                         expiry_date = datetime.strptime(cert['notAfter'], '%b %d %H:%M:%S %Y %Z')
                         days_until_expiry = (expiry_date - datetime.now()).days
                         results.append({'Field': 'Days Until Expiry', 'Value': str(days_until_expiry)})
-                    
-                    return results
+                    except (ValueError, TypeError):
+                        results.append({'Field': 'Days Until Expiry', 'Value': 'Unable to calculate'})
+                
+                return results
         except Exception as e:
             return [{'Field': 'Error', 'Value': f'SSL lookup failed: {str(e)}'}]
     
@@ -167,6 +181,13 @@ class all_functions:
         try:
             response = requests.get(f'http://{domain}/robots.txt', timeout=5)
             if response.status_code == 200:
+                content_type = response.headers.get('content-type', '').lower()
+                text = response.text.strip()
+                # Verify it's actually a robots.txt (text/plain) and not an HTML error page
+                if 'text/html' in content_type and not any(
+                    kw in text.lower() for kw in ['user-agent:', 'disallow:', 'allow:', 'sitemap:']
+                ):
+                    return [{'Field': 'robots.txt', 'Value': 'Not Found'}]
                 return [{'Field': 'robots.txt', 'Value': 'Found'}]
             else:
                 return [{'Field': 'robots.txt', 'Value': 'Not Found'}]
@@ -186,6 +207,13 @@ class all_functions:
                 try:
                     response = requests.get(location, timeout=5)
                     if response.status_code == 200:
+                        content_type = response.headers.get('content-type', '').lower()
+                        text = response.text.strip()
+                        # Verify it's not an HTML error page masquerading as 200
+                        if 'text/html' in content_type and not any(
+                            kw in text.lower() for kw in ['contact:', 'expires:', 'encryption:', 'policy:']
+                        ):
+                            continue
                         return [{'Field': 'security.txt', 'Value': 'Found'}]
                 except:
                     continue
@@ -300,8 +328,8 @@ class all_functions:
         try:
             print(f"Using fallback port scanner for {target}")
             
-            # Common ports to scan
-            common_ports = [21, 22, 23, 25, 53, 80, 110, 143, 443, 993, 995, 1433, 3306, 3389, 5432, 5900, 6379, 8080, 8443, 27017]
+            # Common ports to scan (includes 3000 & 5000 for local dev)
+            common_ports = [21, 22, 23, 25, 53, 80, 110, 143, 443, 993, 995, 1433, 3000, 3306, 3389, 5000, 5432, 5900, 6379, 8080, 8443, 27017]
             ports_data = []
             
             for port in common_ports:
@@ -488,15 +516,21 @@ class all_functions:
             
             # Try to get more SSL details
             try:
-                context = ssl.create_default_context()
-                with socket.create_connection((domain, 443), timeout=10) as sock:
-                    with context.wrap_socket(sock, server_hostname=domain) as ssock:
-                        cipher = ssock.cipher()
-                        ssl_analysis["cipher_info"] = {
-                            "cipher_suite": cipher[0] if cipher else "Unknown",
-                            "tls_version": cipher[1] if cipher else "Unknown",
-                            "key_length": cipher[2] if cipher else "Unknown"
-                        }
+                try:
+                    context = ssl.create_default_context()
+                    sock = socket.create_connection((domain, 443), timeout=10)
+                    ssock = context.wrap_socket(sock, server_hostname=domain)
+                except ssl.SSLCertVerificationError:
+                    context = ssl._create_unverified_context()
+                    sock = socket.create_connection((domain, 443), timeout=10)
+                    ssock = context.wrap_socket(sock, server_hostname=domain)
+                with ssock:
+                    cipher = ssock.cipher()
+                    ssl_analysis["cipher_info"] = {
+                        "cipher_suite": cipher[0] if cipher else "Unknown",
+                        "tls_version": cipher[1] if cipher else "Unknown",
+                        "key_length": cipher[2] if cipher else "Unknown"
+                    }
             except Exception as e:
                 ssl_analysis["cipher_info"] = {"error": str(e)}
             
@@ -578,78 +612,111 @@ class all_functions:
         else: return "F"
 
     def email_security_deep_scan(self, domain):
-        """Enhanced email security analysis"""
+        """Enhanced email security analysis."""
         try:
             email_security = {
                 "domain": domain,
                 "spf": {"present": False, "score": 0},
                 "dmarc": {"present": False, "score": 0},
-                "dkim": {"present": False, "score": 0}
+                "dkim": {"present": False, "score": 0, "status": "not_detected"}
             }
-            
+
             # SPF Check
             try:
                 txt_records = dns.resolver.resolve(domain, 'TXT')
                 for record in txt_records:
-                    record_text = str(record).strip('"')
-                    if record_text.startswith('v=spf1'):
+                    record_text = str(record).replace('"', '').strip()
+                    if record_text.lower().startswith('v=spf1'):
                         email_security["spf"] = {
                             "present": True,
                             "record": record_text,
                             "score": 10
                         }
                         break
-            except:
+            except Exception:
                 pass
-            
+
             # DMARC Check
             try:
                 dmarc_domain = f"_dmarc.{domain}"
                 dmarc_records = dns.resolver.resolve(dmarc_domain, 'TXT')
                 for record in dmarc_records:
-                    record_text = str(record).strip('"')
-                    if record_text.startswith('v=DMARC1'):
+                    record_text = str(record).replace('"', '').strip()
+                    if record_text.lower().startswith('v=dmarc1'):
                         email_security["dmarc"] = {
                             "present": True,
                             "record": record_text,
                             "score": 15
                         }
                         break
-            except:
+            except Exception:
                 pass
-            
-            # DKIM Check (common selectors)
-            common_selectors = ['default', 'google', 'selector1', 'selector2']
+
+            # DKIM Check
+            # First, check the domain policy record at _domainkey.<domain>
+            try:
+                policy_domain = f"_domainkey.{domain}"
+                policy_records = dns.resolver.resolve(policy_domain, 'TXT')
+                for record in policy_records:
+                    record_text = str(record).replace('"', '').strip().lower()
+                    if 'dkim' in record_text or record_text.startswith('o='):
+                        email_security["dkim"] = {
+                            "present": True,
+                            "selector": "_domainkey policy",
+                            "score": 6,
+                            "status": "policy_detected"
+                        }
+                        break
+            except Exception:
+                pass
+
+            # Then, attempt common selectors for an actual signing key
+            common_selectors = [
+                'default', 'google', 'selector1', 'selector2', 'k1', 'mail',
+                'smtp', 'mandrill', 'amazonses', 'zoho', 'protonmail'
+            ]
             for selector in common_selectors:
+                if email_security["dkim"].get("present") and email_security["dkim"].get("status") == "key_detected":
+                    break
                 try:
                     dkim_domain = f"{selector}._domainkey.{domain}"
                     dkim_records = dns.resolver.resolve(dkim_domain, 'TXT')
-                    if dkim_records:
-                        email_security["dkim"] = {
-                            "present": True,
-                            "selector": selector,
-                            "score": 10
-                        }
-                        break
-                except:
+                    for record in dkim_records:
+                        record_text = str(record).replace('"', '').strip().lower()
+                        if 'v=dkim1' in record_text or 'k=rsa' in record_text or 'k=ed25519' in record_text or 'p=' in record_text:
+                            email_security["dkim"] = {
+                                "present": True,
+                                "selector": selector,
+                                "score": 10,
+                                "status": "key_detected"
+                            }
+                            break
+                except Exception:
                     continue
-            
+
+            # If we only found no key and no policy, mark explicitly as unknown/undetected
+            if not email_security["dkim"].get("present"):
+                email_security["dkim"]["status"] = "not_detected"
+
             # Calculate total score
-            total_score = sum([section.get("score", 0) for section in email_security.values() 
-                              if isinstance(section, dict) and "score" in section])
-            
+            total_score = sum([
+                section.get("score", 0)
+                for section in email_security.values()
+                if isinstance(section, dict) and "score" in section
+            ])
+
             email_security.update({
                 "total_score": total_score,
                 "max_score": 35,
                 "grade": self.get_security_grade(total_score, 35),
                 "timestamp": datetime.now().isoformat()
             })
-            
+
             return {
                 "status": "success",
                 "email_security": email_security
             }
-            
+
         except Exception as e:
             return {
                 "status": "error",
