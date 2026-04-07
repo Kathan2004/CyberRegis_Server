@@ -26,24 +26,28 @@ def check_ip():
         ip_address = data.get("ip", "").strip()
         valid, err = validate_ip(ip_address)
         if not valid:
-            return error_response(err, 400)
+            return error_response(err or "Invalid IP address", 400)
 
         # Collect all intelligence in one AbuseIPDB call
         abuse_data = _get_abuseipdb_data(ip_address)
         vt_data = _get_virustotal_ip(ip_address)
         geo_data = _get_geolocation(ip_address, abuse_data)
+        shodan_data = _get_shodan_host(ip_address)
+        abuse_reports = _extract_abuse_reports(abuse_data.get("reports", []))
+        resolved_asn, resolved_as_name = _resolve_asn_details(abuse_data, vt_data, geo_data, shodan_data)
 
         # Build risk assessment from combined sources
         risk_assessment = _assess_risk(abuse_data, vt_data)
 
         # Technical details
         technical_details = {
-            "as_name": abuse_data.get("asnName", "Unknown"),
-            "asn": abuse_data.get("asn", "Unknown"),
+            "as_name": resolved_as_name,
+            "asn": resolved_asn,
             "is_public": abuse_data.get("isPublic", True),
             "is_tor": abuse_data.get("isTor", False),
             "usage_type": abuse_data.get("usageType") or "ISP",
-            "organization": abuse_data.get("isp", "Unknown"),
+            "organization": abuse_data.get("isp") or geo_data.get("organization") or "Unknown",
+            "hostnames": abuse_data.get("hostnames") or [],
         }
 
         # Recommendations
@@ -70,9 +74,27 @@ def check_ip():
                 "isp": geo_data.get("isp", "Unknown"),
                 "location": geo_data.get("location", {}),
             },
+            "abuseipdb": {
+                "abuse_confidence_score": abuse_data.get("abuseConfidenceScore", 0),
+                "total_reports": abuse_data.get("totalReports", 0),
+                "num_distinct_users": abuse_data.get("numDistinctUsers", 0),
+                "last_reported_at": abuse_data.get("lastReportedAt"),
+                "country_code": abuse_data.get("countryCode"),
+                "usage_type": abuse_data.get("usageType") or "Unknown",
+                "isp": abuse_data.get("isp") or "Unknown",
+                "domain": abuse_data.get("domain") or "",
+                "hostnames": abuse_data.get("hostnames") or [],
+                "is_public": abuse_data.get("isPublic", True),
+                "is_tor": abuse_data.get("isTor", False),
+                "is_whitelisted": abuse_data.get("isWhitelisted", False),
+                "asn": abuse_data.get("asn", "Unknown"),
+                "asn_name": abuse_data.get("asnName") or resolved_as_name,
+                "reports": abuse_reports,
+            },
             "risk_assessment": risk_assessment,
             "technical_details": technical_details,
             "virustotal": vt_data,
+            "shodan": shodan_data,
             "virustotal_summary": vt_summary,
             "recommendations": recommendations,
             "scan_duration_ms": duration_ms,
@@ -88,8 +110,8 @@ def check_ip():
         # Persist
         try:
             db.save_scan("ip", ip_address, result,
-                         risk_level=risk_assessment.get("risk_level"),
-                         score=risk_assessment.get("confidence_score"),
+                         risk_level=str(risk_assessment.get("risk_level", "Unknown")),
+                         score=float(risk_assessment.get("confidence_score", 0) or 0),
                          summary=vt_summary, duration_ms=duration_ms)
         except Exception as e:
             logger.warning(f"Failed to save scan: {e}")
@@ -145,6 +167,7 @@ def _get_virustotal_ip(ip: str) -> dict:
             undetected = stats.get("undetected", 0)
             total = sum(stats.values()) if stats else 0
             risk_score = min(100, int((malicious * 3 + suspicious * 2) / total * 100)) if total else 0
+            comments = _get_virustotal_comments(ip)
 
             if risk_score >= 75:
                 risk_level = "HIGH"
@@ -168,14 +191,24 @@ def _get_virustotal_ip(ip: str) -> dict:
                     "reputation": attrs.get("reputation", 0),
                     "file_type": "IP Address",
                     "analysis_date": attrs.get("last_analysis_date"),
+                    "as_owner": attrs.get("as_owner"),
+                    "asn": attrs.get("asn"),
+                    "network": attrs.get("network"),
+                    "country": attrs.get("country"),
+                    "continent": attrs.get("continent"),
+                    "jarm": attrs.get("jarm"),
+                    "total_votes": attrs.get("total_votes", {}),
+                    "tags": attrs.get("tags", []),
+                    "last_modification_date": attrs.get("last_modification_date"),
                 },
                 "data": {
                     "attributes": {
                         "stats": {"malicious": malicious, "suspicious": suspicious,
-                                  "harmless": harmless, "total": total},
+                                  "harmless": harmless, "undetected": undetected, "total": total},
                         "results": attrs.get("last_analysis_results", {}),
                     }
                 },
+                "community_comments": comments,
             }
         return _vt_fallback(f"HTTP {resp.status_code}")
     except Exception as e:
@@ -187,11 +220,58 @@ def _vt_fallback(error_msg: str) -> dict:
         "risk_assessment": {"risk_score": 0, "risk_level": "UNKNOWN",
                             "malicious_count": 0, "suspicious_count": 0,
                             "detection_ratio": "0/0", "total_engines": 0},
-        "metadata": {"reputation": 0, "file_type": "IP Address", "analysis_date": None},
+        "metadata": {"reputation": 0, "file_type": "IP Address", "analysis_date": None,
+                     "as_owner": None, "asn": None, "network": None, "country": None,
+                     "continent": None, "jarm": None, "total_votes": {}, "tags": [],
+                     "last_modification_date": None},
         "data": {"attributes": {"stats": {"malicious": 0, "suspicious": 0,
-                                           "harmless": 0, "total": 0}, "results": {}}},
+                                           "harmless": 0, "undetected": 0, "total": 0}, "results": {}}},
+        "community_comments": [],
         "error": error_msg,
     }
+
+
+def _get_virustotal_comments(ip: str) -> list:
+    if not cfg.VIRUSTOTAL_API_KEY:
+        return []
+    try:
+        resp = requests.get(
+            f"https://www.virustotal.com/api/v3/ip_addresses/{ip}/comments",
+            headers={"x-apikey": cfg.VIRUSTOTAL_API_KEY},
+            params={"limit": 5},
+            timeout=12,
+        )
+        if resp.status_code != 200:
+            return []
+        rows = []
+        for item in resp.json().get("data", []):
+            attrs = item.get("attributes", {})
+            rows.append({
+                "id": item.get("id"),
+                "author": attrs.get("user") or "anonymous",
+                "date": attrs.get("date"),
+                "text": attrs.get("text") or "",
+            })
+        return rows
+    except Exception:
+        return []
+
+
+def _extract_abuse_reports(reports: list) -> list:
+    cleaned = []
+    if not isinstance(reports, list):
+        return cleaned
+    for report in reports[:10]:
+        if not isinstance(report, dict):
+            continue
+        cleaned.append({
+            "reported_at": report.get("reportedAt"),
+            "comment": report.get("comment") or "",
+            "categories": report.get("categories") or [],
+            "reporter_country_code": report.get("reporterCountryCode"),
+            "reporter_country_name": report.get("reporterCountryName"),
+        })
+    return cleaned
 
 
 def _get_geolocation(ip: str, abuse_data: dict) -> dict:
@@ -206,6 +286,10 @@ def _get_geolocation(ip: str, abuse_data: dict) -> dict:
 
     return {
         "isp": abuse_data.get("isp") or fallback.get("isp", "Unknown"),
+        "organization": abuse_data.get("isp") or fallback.get("org", "Unknown"),
+        "as_raw": fallback.get("as"),
+        "as_number": _normalize_asn(_extract_asn_number(fallback.get("as"))),
+        "as_name": _extract_as_name(fallback.get("as")) or fallback.get("org"),
         "location": {
             "city": abuse_data.get("city") or fallback.get("city", "Unknown"),
             "region": abuse_data.get("region") or fallback.get("regionName", "Unknown"),
@@ -213,6 +297,114 @@ def _get_geolocation(ip: str, abuse_data: dict) -> dict:
             "country_code": abuse_data.get("countryCode") or fallback.get("countryCode", "Unknown"),
         },
     }
+
+
+def _resolve_asn_details(abuse_data: dict, vt_data: dict, geo_data: dict, shodan_data: dict) -> tuple[str, str]:
+    vt_meta = vt_data.get("metadata", {}) if isinstance(vt_data, dict) else {}
+    shodan = shodan_data if isinstance(shodan_data, dict) else {}
+
+    abuse_asn = _normalize_asn(abuse_data.get("asn"))
+    vt_asn = _normalize_asn(vt_meta.get("asn"))
+    geo_asn = _normalize_asn(geo_data.get("as_number"))
+    shodan_asn = _normalize_asn(shodan.get("asn"))
+
+    asn = abuse_asn or vt_asn or shodan_asn or geo_asn or "Unknown"
+
+    abuse_name = _clean_text(abuse_data.get("asnName"))
+    vt_name = _clean_text(vt_meta.get("as_owner"))
+    shodan_name = _clean_text(shodan.get("org"))
+    geo_name = _clean_text(geo_data.get("as_name"))
+
+    as_name = abuse_name or vt_name or shodan_name or geo_name or "Unknown"
+    return asn, as_name
+
+
+def _get_shodan_host(ip: str) -> dict:
+    if not getattr(cfg, "SHODAN_API_KEY", ""):
+        return {"enabled": False}
+    try:
+        resp = requests.get(
+            f"https://api.shodan.io/shodan/host/{ip}",
+            params={"key": cfg.SHODAN_API_KEY},
+            timeout=12,
+        )
+        if resp.status_code != 200:
+            return {"enabled": True, "error": f"HTTP {resp.status_code}"}
+
+        data = resp.json()
+        vulns = data.get("vulns", {})
+        vuln_list = sorted(list(vulns.keys())) if isinstance(vulns, dict) else []
+        ports = data.get("ports", []) if isinstance(data.get("ports", []), list) else []
+        hostnames = data.get("hostnames", []) if isinstance(data.get("hostnames", []), list) else []
+
+        return {
+            "enabled": True,
+            "ip": data.get("ip_str") or ip,
+            "org": data.get("org"),
+            "isp": data.get("isp"),
+            "asn": data.get("asn"),
+            "country": data.get("country_name"),
+            "city": data.get("city"),
+            "os": data.get("os"),
+            "ports": ports[:25],
+            "open_ports_count": len(ports),
+            "hostnames": hostnames[:10],
+            "tags": data.get("tags", []) if isinstance(data.get("tags", []), list) else [],
+            "vulnerabilities": vuln_list[:20],
+            "last_update": data.get("last_update"),
+        }
+    except Exception as e:
+        return {"enabled": True, "error": str(e)}
+
+
+def _clean_text(value) -> str:
+    if value is None:
+        return ""
+    text = str(value).strip()
+    if not text or text.lower() in {"none", "null", "unknown", "n/a"}:
+        return ""
+    return text
+
+
+def _normalize_asn(value) -> str:
+    if value is None:
+        return ""
+    text = str(value).strip()
+    if not text:
+        return ""
+    if text.upper().startswith("AS"):
+        suffix = text[2:].strip()
+        return f"AS{suffix}" if suffix else ""
+    if text.isdigit():
+        return f"AS{text}"
+    return text
+
+
+def _extract_asn_number(as_field) -> str:
+    text = _clean_text(as_field)
+    if not text:
+        return ""
+    upper = text.upper()
+    if upper.startswith("AS"):
+        rest = text[2:].strip()
+        parts = rest.split(maxsplit=1)
+        candidate = parts[0] if parts else ""
+        return candidate if candidate.isdigit() else ""
+    parts = text.split(maxsplit=1)
+    return parts[0] if parts and parts[0].isdigit() else ""
+
+
+def _extract_as_name(as_field) -> str:
+    text = _clean_text(as_field)
+    if not text:
+        return ""
+    upper = text.upper()
+    if upper.startswith("AS"):
+        rest = text[2:].strip()
+        parts = rest.split(maxsplit=1)
+        return parts[1].strip() if len(parts) > 1 else ""
+    parts = text.split(maxsplit=1)
+    return parts[1].strip() if len(parts) > 1 else text
 
 
 def _assess_risk(abuse: dict, vt: dict) -> dict:

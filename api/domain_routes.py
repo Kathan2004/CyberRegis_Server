@@ -12,9 +12,11 @@ from api.validators import validate_domain, sanitize_domain
 from all_functions import all_functions
 import database as db
 import logging
+from services.shodan_service import ShodanService
 
 logger = logging.getLogger(__name__)
 domain_bp = Blueprint("domain", __name__)
+shodan = ShodanService()
 
 
 @domain_bp.route("/api/analyze-domain", methods=["POST"])
@@ -27,7 +29,7 @@ def analyze_domain():
         domain = sanitize_domain(raw_domain) if raw_domain else ""
         valid, err = validate_domain(domain)
         if not valid:
-            return error_response(err, 400)
+            return error_response(err or "Invalid domain", 400)
 
         recon = all_functions()
 
@@ -35,6 +37,8 @@ def analyze_domain():
             "domain": domain,
             "whois": {},
             "dns_records": {},
+            "dns_matrix": {},
+            "shodan": {"enabled": shodan.enabled},
             "ssl_info": {},
             "security_features": {},
             "subdomains": [],
@@ -78,6 +82,19 @@ def analyze_domain():
                     if value and "No records found" not in value and "Error" not in value:
                         dns_records[record_type] = value.split(", ")
                 domain_info["dns_records"] = dns_records
+
+                queried_types = [
+                    "A", "AAAA", "CNAME", "MX", "NS", "TXT",
+                    "SOA", "CAA", "SRV", "NAPTR", "DNSKEY", "DS"
+                ]
+                present_types = [k for k, v in dns_records.items() if isinstance(v, list) and len(v) > 0]
+                missing_types = [t for t in queried_types if t not in present_types]
+                domain_info["dns_matrix"] = {
+                    "queried_types": queried_types,
+                    "present_types": present_types,
+                    "missing_types": missing_types,
+                    "coverage_percent": int((len(present_types) / len(queried_types)) * 100) if queried_types else 0,
+                }
         except Exception as e:
             logger.warning(f"DNS lookup failed for {domain}: {e}")
 
@@ -98,7 +115,7 @@ def analyze_domain():
         try:
             ssl_data = recon.get_ssl_chain_details(domain)
             if ssl_data and isinstance(ssl_data, list):
-                ssl_info = {}
+                ssl_info: dict[str, object] = {}
                 for item in ssl_data:
                     field = item.get("Field", "").lower()
                     value = item.get("Value", "")
@@ -127,7 +144,9 @@ def analyze_domain():
             if ssl_labs_data and isinstance(ssl_labs_data, list):
                 for item in ssl_labs_data:
                     if item.get("Field") == "Grade":
-                        domain_info["ssl_info"]["grade"] = item.get("Value", "N/A")
+                        ssl_bucket = domain_info.get("ssl_info")
+                        if isinstance(ssl_bucket, dict):
+                            ssl_bucket["grade"] = str(item.get("Value", "N/A"))
                         break
         except Exception:
             pass
@@ -161,7 +180,17 @@ def analyze_domain():
         except Exception:
             security_features["dmarc"] = "Not configured"
 
-        # WAF Detection
+        # SPF
+        try:
+            txt_records = domain_info.get("dns_records", {}).get("TXT", [])
+            # Fallback: query TXT directly if not yet populated
+            if not txt_records:
+                txt_data = recon.get_txt_records(domain)
+                txt_records = [item.get("Value", "") for item in txt_data if item.get("Field") == "TXT Records"]
+            spf_record = next((t for t in txt_records if "v=spf1" in t.lower()), None)
+            security_features["spf"] = spf_record or "Not configured"
+        except Exception:
+            security_features["spf"] = "Not configured"
         try:
             waf_data = recon.detect_waf(domain)
             waf_detected = "None"
@@ -244,15 +273,56 @@ def analyze_domain():
                         geo_info["ip"] = value
                     elif "country" in field:
                         geo_info["country"] = value
+                    elif "region" in field:
+                        geo_info["region"] = value
                     elif "city" in field:
                         geo_info["city"] = value
                     elif "isp" in field:
                         geo_info["isp"] = value
                     elif "organization" in field:
                         geo_info["organization"] = value
+                    elif "timezone" in field:
+                        geo_info["timezone"] = value
                 domain_info["geolocation"] = geo_info
         except Exception:
             pass
+
+        # ── Shodan Enrichment (optional) ───────────────
+        if shodan.enabled:
+            try:
+                dns_result = shodan.dns_domain(domain)
+                if dns_result.get("ok"):
+                    domain_info["shodan"]["dns"] = dns_result.get("data", {})
+                else:
+                    domain_info["shodan"]["dns_error"] = dns_result.get("error")
+
+                resolve_result = shodan.dns_resolve(domain)
+                resolved_ip = None
+                if resolve_result.get("ok"):
+                    resolved = resolve_result.get("data", {})
+                    if isinstance(resolved, dict):
+                        resolved_ip = resolved.get(domain)
+                    domain_info["shodan"]["resolve"] = resolved
+                else:
+                    domain_info["shodan"]["resolve_error"] = resolve_result.get("error")
+
+                if resolved_ip:
+                    host_result = shodan.host(resolved_ip, minify=True)
+                    if host_result.get("ok"):
+                        host = host_result.get("data", {})
+                        domain_info["shodan"]["host"] = {
+                            "ip": host.get("ip_str") or resolved_ip,
+                            "org": host.get("org"),
+                            "isp": host.get("isp"),
+                            "asn": host.get("asn"),
+                            "ports": host.get("ports", []),
+                            "last_update": host.get("last_update"),
+                            "vulns": sorted(list((host.get("vulns") or {}).keys()))[:20] if isinstance(host.get("vulns"), dict) else [],
+                        }
+                    else:
+                        domain_info["shodan"]["host_error"] = host_result.get("error")
+            except Exception as e:
+                domain_info["shodan"]["error"] = str(e)
 
         # ── Recommendations ──────────────────────────────
         if not security_features.get("dnssec", False):
@@ -267,9 +337,11 @@ def analyze_domain():
                 "text": "Configure DMARC policy for email security",
                 "mitre": "T1566"
             })
-        days_until_expiry = domain_info["ssl_info"].get("days_until_expiry", 0)
+        ssl_candidate = domain_info.get("ssl_info")
+        ssl_bucket = ssl_candidate if isinstance(ssl_candidate, dict) else {}
+        days_until_expiry = ssl_bucket.get("days_until_expiry", 0)
         try:
-            days_until_expiry = int(days_until_expiry)
+            days_until_expiry = int(str(days_until_expiry))
         except (ValueError, TypeError):
             days_until_expiry = 0
         if 0 < days_until_expiry < 30:
@@ -336,7 +408,7 @@ def get_security_file_content():
             return error_response("file_type must be 'robots' or 'security'", 400)
         valid, err = validate_domain(domain)
         if not valid:
-            return error_response(err, 400)
+            return error_response(err or "Invalid domain", 400)
 
         if file_type == "robots":
             urls = [f"http://{domain}/robots.txt"]
@@ -454,6 +526,26 @@ def _calculate_domain_risk(domain_info: dict, security_features: dict) -> dict:
     else:
         score -= 12
         factors.append("DNS records missing")
+
+    dns_matrix = domain_info.get("dns_matrix", {})
+    missing_types = dns_matrix.get("missing_types", []) if isinstance(dns_matrix, dict) else []
+    if "MX" in missing_types:
+        score -= 3
+        factors.append("No MX record published")
+    if "CAA" in missing_types:
+        score -= 2
+        factors.append("No CAA record (certificate issuance not restricted)")
+    if "DNSKEY" in missing_types and "DS" in missing_types and not security_features.get("dnssec"):
+        score -= 2
+    coverage = dns_matrix.get("coverage_percent", 0) if isinstance(dns_matrix, dict) else 0
+    try:
+        coverage = int(coverage)
+    except (ValueError, TypeError):
+        coverage = 0
+    if coverage >= 60:
+        score += 2
+    elif coverage <= 20:
+        score -= 3
 
     score = max(0, min(score, 100))
 

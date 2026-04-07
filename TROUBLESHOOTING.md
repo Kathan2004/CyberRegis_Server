@@ -89,6 +89,29 @@ POST /api/email-security
 {"domain": "example.com"}
 ```
 
+### Endpoint Response Contracts (Important)
+
+For smoke tests and frontend mapping, use these exact JSON paths:
+
+- `POST /api/ssl-analysis`
+  - Status: `response.status`
+  - Duration: `response.data.scan_duration_ms`
+  - Payload: `response.data.ssl_analysis`
+  - Domain: `response.data.ssl_analysis.domain`
+  - Basic cert rows: `response.data.ssl_analysis.basic_info`
+  - Cipher info: `response.data.ssl_analysis.cipher_info`
+
+- `POST /api/email-security`
+  - Status: `response.status`
+  - Duration: `response.data.scan_duration_ms`
+  - Payload: `response.data.email_security`
+  - Domain: `response.data.email_security.domain`
+  - Grade: `response.data.email_security.grade`
+  - Score: `response.data.email_security.total_score`
+
+Common mismatch to avoid:
+- Do **not** read top-level `response.data.domain`, `response.data.grade`, or `response.data.security_grade` for these two endpoints; those fields are nested under `ssl_analysis` / `email_security`.
+
 ## Frontend React Hydration Fix
 
 ### Issue: Time Mismatch

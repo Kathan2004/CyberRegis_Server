@@ -4,6 +4,7 @@ SSL/TLS, security headers, and email security scanning.
 """
 import time
 import logging
+from typing import Any, Dict
 from flask import Blueprint, request
 from api.responses import success_response, error_response
 from api.validators import validate_domain, validate_url, sanitize_domain
@@ -23,10 +24,10 @@ def ssl_analysis():
         domain = sanitize_domain(data.get("domain", ""))
         valid, err = validate_domain(domain)
         if not valid:
-            return error_response(err, 400)
+            return error_response(err or "Invalid domain", 400)
 
         recon = all_functions()
-        result = recon.ssl_detailed_analysis(domain)
+        result: Dict[str, Any] = recon.ssl_detailed_analysis(domain)
         duration_ms = int((time.time() - start) * 1000)
         result["scan_duration_ms"] = duration_ms
 
@@ -56,18 +57,21 @@ def security_headers():
             url = f"https://{url}"
         valid, err = validate_url(url)
         if not valid:
-            return error_response(err, 400)
+            return error_response(err or "Invalid URL", 400)
 
         recon = all_functions()
-        result = recon.security_headers_scan(url)
+        result: Dict[str, Any] = recon.security_headers_scan(url)
         duration_ms = int((time.time() - start) * 1000)
         result["scan_duration_ms"] = duration_ms
+        grade = str(result.get("grade") or "")
+        score_value = result.get("security_score")
+        score = float(score_value) if isinstance(score_value, (int, float)) else None
 
         try:
             db.save_scan("headers", url, result,
-                         risk_level=result.get("grade"),
-                         score=result.get("security_score"),
-                         summary=f"Headers grade: {result.get('grade')}",
+                         risk_level=grade,
+                         score=score,
+                         summary=f"Headers grade: {grade}",
                          duration_ms=duration_ms)
         except Exception:
             pass
@@ -87,19 +91,24 @@ def email_security():
         domain = sanitize_domain(data.get("domain", ""))
         valid, err = validate_domain(domain)
         if not valid:
-            return error_response(err, 400)
+            return error_response(err or "Invalid domain", 400)
 
         recon = all_functions()
-        result = recon.email_security_deep_scan(domain)
+        result: Dict[str, Any] = recon.email_security_deep_scan(domain)
         duration_ms = int((time.time() - start) * 1000)
         result["scan_duration_ms"] = duration_ms
 
         try:
             es = result.get("email_security", {})
+            if not isinstance(es, dict):
+                es = {}
+            grade = str(es.get("grade") or "")
+            total_score = es.get("total_score")
+            score = float(total_score) if isinstance(total_score, (int, float)) else None
             db.save_scan("email", domain, result,
-                         risk_level=es.get("grade"),
-                         score=es.get("total_score"),
-                         summary=f"Email security grade: {es.get('grade')}",
+                         risk_level=grade,
+                         score=score,
+                         summary=f"Email security grade: {grade}",
                          duration_ms=duration_ms)
         except Exception:
             pass
