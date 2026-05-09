@@ -11,3 +11,4 @@ dnspython
 python-nmap
 psutil
 python-dotenv
+cryptography

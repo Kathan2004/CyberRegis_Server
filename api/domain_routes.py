@@ -132,7 +132,9 @@ def analyze_domain():
                             ssl_info["days_until_expiry"] = int(value)
                         except (ValueError, TypeError):
                             ssl_info["days_until_expiry"] = value
-                ssl_info["valid"] = bool(ssl_info)
+                    elif "error" in field:
+                        ssl_info["error"] = value
+                ssl_info["valid"] = bool(ssl_info) and "error" not in ssl_info
                 domain_info["ssl_info"] = ssl_info
         except Exception as e:
             logger.warning(f"SSL lookup failed: {e}")
@@ -518,7 +520,7 @@ def _calculate_domain_risk(domain_info: dict, security_features: dict) -> dict:
     if domain_info.get("whois", {}).get("registrar"):
         score += 6
     else:
-        score -= 5
+        score -= 2
         factors.append("WHOIS data missing or incomplete")
 
     if domain_info.get("dns_records"):
@@ -549,11 +551,11 @@ def _calculate_domain_risk(domain_info: dict, security_features: dict) -> dict:
 
     score = max(0, min(score, 100))
 
-    if score >= 80:
+    if score >= 70:
         level = "low"
-    elif score >= 55:
+    elif score >= 45:
         level = "medium"
-    elif score >= 30:
+    elif score >= 20:
         level = "high"
     else:
         level = "critical"
