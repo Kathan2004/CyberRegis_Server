@@ -50,6 +50,48 @@ class all_functions:
                 return results if results else [{'Field': 'Info', 'Value': 'RDAP data available but minimal'}]
             raise Exception(f'RDAP returned {r.status_code}')
         except Exception as e:
+            # Fallback: try rdap.verisign.com for .com/.net domains
+            try:
+                tld = domain.rsplit('.', 1)[-1].lower()
+                fallback_urls = []
+                if tld in ('com', 'net'):
+                    fallback_urls.append(f'https://rdap.verisign.com/{tld}/v1/domain/{domain}')
+                fallback_urls.append(f'https://rdap.iana.org/domain/{domain}')
+                for url in fallback_urls:
+                    try:
+                        r2 = requests.get(url, timeout=10, headers={'Accept': 'application/json'})
+                        if r2.status_code == 200:
+                            data = r2.json()
+                            results = []
+                            for entity in data.get('entities', []):
+                                roles = entity.get('roles', [])
+                                if 'registrar' in roles:
+                                    vcard = entity.get('vcardArray', [None, []])[1]
+                                    for prop in vcard:
+                                        if prop[0] == 'fn':
+                                            results.append({'Field': 'Registrar', 'Value': prop[3]})
+                                            break
+                            for event in data.get('events', []):
+                                action = event.get('eventAction', '')
+                                date = event.get('eventDate', '')[:10]
+                                if action == 'registration':
+                                    results.append({'Field': 'Creation Date', 'Value': date})
+                                elif action == 'expiration':
+                                    results.append({'Field': 'Expiration Date', 'Value': date})
+                                elif action == 'last changed':
+                                    results.append({'Field': 'Updated Date', 'Value': date})
+                            ns_list = [ns.get('ldhName', '') for ns in data.get('nameservers', [])]
+                            if ns_list:
+                                results.append({'Field': 'Name Servers', 'Value': ', '.join(ns_list)})
+                            status = ', '.join(data.get('status', []))
+                            if status:
+                                results.append({'Field': 'Status', 'Value': status})
+                            if results:
+                                return results
+                    except Exception:
+                        continue
+            except Exception:
+                pass
             return [{'Field': 'Error', 'Value': f'WHOIS lookup failed: {str(e)}'}]
     
     def _doh_query(self, domain, record_type):
@@ -139,43 +181,81 @@ class all_functions:
     def get_ssl_chain_details(self, domain):
         """Get SSL certificate details for a domain"""
         try:
+            cert = {}
             try:
                 context = ssl.create_default_context()
                 sock = socket.create_connection((domain, 443), timeout=10)
                 ssock = context.wrap_socket(sock, server_hostname=domain)
+                with ssock:
+                    cert_raw = ssock.getpeercert()
+                    cert = cert_raw if isinstance(cert_raw, dict) else {}
             except (ssl.SSLCertVerificationError, ssl.SSLError, OSError):
+                # Fallback: use unverified context but get DER cert for parsing
                 context = ssl._create_unverified_context()
                 sock = socket.create_connection((domain, 443), timeout=10)
                 ssock = context.wrap_socket(sock, server_hostname=domain)
-            with ssock:
-                cert_raw = ssock.getpeercert()
-                cert = cert_raw if isinstance(cert_raw, dict) else {}
-                results = []
-                # Issuer - cert tuples use string keys like ('commonName', '...')
-                issuer = cert.get('issuer')
-                if issuer:
-                    issuer_dict = {k: v for tup in issuer for k, v in tup}
-                    cn = issuer_dict.get('commonName') or issuer_dict.get('organizationName', 'Unknown')
-                    results.append({'Field': 'Issuer', 'Value': cn})
-                # Subject
-                subject = cert.get('subject')
-                if subject:
-                    subject_dict = {k: v for tup in subject for k, v in tup}
-                    cn = subject_dict.get('commonName') or subject_dict.get('organizationName', 'Unknown')
-                    results.append({'Field': 'Subject', 'Value': cn})
-                not_before = cert.get('notBefore')
-                if isinstance(not_before, str):
-                    results.append({'Field': 'Valid From', 'Value': not_before})
-                not_after = cert.get('notAfter')
-                if isinstance(not_after, str):
-                    results.append({'Field': 'Valid Until', 'Value': not_after})
-                    try:
-                        expiry = datetime.strptime(not_after, '%b %d %H:%M:%S %Y %Z')
-                        days = (expiry - datetime.now()).days
-                        results.append({'Field': 'Days Until Expiry', 'Value': str(days)})
-                    except Exception:
-                        pass
-                return results
+                with ssock:
+                    # getpeercert(binary_form=True) works even without verification
+                    der = ssock.getpeercert(binary_form=True)
+                    if der:
+                        try:
+                            import cryptography.x509
+                            import cryptography.hazmat.backends
+                            x509 = cryptography.x509.load_der_x509_certificate(
+                                der, cryptography.hazmat.backends.default_backend()
+                            )
+                            not_after = x509.not_valid_after_utc.replace(tzinfo=None) if hasattr(x509.not_valid_after_utc, 'replace') else x509.not_valid_after
+                            not_before = x509.not_valid_before_utc.replace(tzinfo=None) if hasattr(x509.not_valid_before_utc, 'replace') else x509.not_valid_before
+                            try:
+                                issuer_cn = x509.issuer.get_attributes_for_oid(
+                                    cryptography.x509.oid.NameOID.COMMON_NAME)[0].value
+                            except Exception:
+                                try:
+                                    issuer_cn = x509.issuer.get_attributes_for_oid(
+                                        cryptography.x509.oid.NameOID.ORGANIZATION_NAME)[0].value
+                                except Exception:
+                                    issuer_cn = "Unknown"
+                            try:
+                                subject_cn = x509.subject.get_attributes_for_oid(
+                                    cryptography.x509.oid.NameOID.COMMON_NAME)[0].value
+                            except Exception:
+                                subject_cn = domain
+                            days = (not_after - datetime.now()).days
+                            return [
+                                {'Field': 'Issuer', 'Value': issuer_cn},
+                                {'Field': 'Subject', 'Value': subject_cn},
+                                {'Field': 'Valid From', 'Value': str(not_before)},
+                                {'Field': 'Valid Until', 'Value': str(not_after)},
+                                {'Field': 'Days Until Expiry', 'Value': str(days)},
+                            ]
+                        except ImportError:
+                            pass  # cryptography not installed, fall through to cert dict parsing
+
+            # Parse standard cert dict (from verified context)
+            results = []
+            issuer = cert.get('issuer')
+            if issuer:
+                issuer_dict = {k: v for tup in issuer for k, v in tup}
+                cn = issuer_dict.get('commonName') or issuer_dict.get('organizationName', 'Unknown')
+                results.append({'Field': 'Issuer', 'Value': cn})
+            subject = cert.get('subject')
+            if subject:
+                subject_dict = {k: v for tup in subject for k, v in tup}
+                cn = subject_dict.get('commonName') or subject_dict.get('organizationName', 'Unknown')
+                results.append({'Field': 'Subject', 'Value': cn})
+            not_before = cert.get('notBefore')
+            if isinstance(not_before, str):
+                results.append({'Field': 'Valid From', 'Value': not_before})
+            not_after = cert.get('notAfter')
+            if isinstance(not_after, str):
+                results.append({'Field': 'Valid Until', 'Value': not_after})
+                try:
+                    expiry = datetime.strptime(not_after, '%b %d %H:%M:%S %Y %Z')
+                    days = (expiry - datetime.now()).days
+                    results.append({'Field': 'Days Until Expiry', 'Value': str(days)})
+                except Exception:
+                    pass
+            return results if results else [{'Field': 'Error', 'Value': 'SSL cert data unavailable'}]
         except Exception as e:
             return [{'Field': 'Error', 'Value': f'SSL lookup failed: {str(e)}'}]
     

@@ -131,31 +131,70 @@ def _check_safe_browsing(url: str) -> dict:
 def _check_ssl(url: str) -> dict:
     try:
         domain = urlparse(url).netloc
-        context = _ssl._create_unverified_context()
-        with socket.create_connection((domain, 443), timeout=5) as sock:
-            with context.wrap_socket(sock, server_hostname=domain) as ssock:
-                cert = ssock.getpeercert()
-                cert_map = cert if isinstance(cert, dict) else {}
-                cipher = ssock.cipher()
-                expiry_raw = cert_map.get("notAfter")
+        # Try verified context first
+        try:
+            context = _ssl.create_default_context()
+            with socket.create_connection((domain, 443), timeout=5) as sock:
+                with context.wrap_socket(sock, server_hostname=domain) as ssock:
+                    cert_map = ssock.getpeercert() or {}
+                    cipher = ssock.cipher()
+                    tls_version = ssock.version()
+        except (_ssl.SSLCertVerificationError, _ssl.SSLError, OSError):
+            # Fallback: unverified but get DER for parsing
+            context = _ssl._create_unverified_context()
+            with socket.create_connection((domain, 443), timeout=5) as sock:
+                with context.wrap_socket(sock, server_hostname=domain) as ssock:
+                    cipher = ssock.cipher()
+                    tls_version = ssock.version()
+                    der = ssock.getpeercert(binary_form=True)
+                    if der:
+                        try:
+                            from cryptography import x509 as cx509
+                            from cryptography.hazmat.backends import default_backend
+                            cert_obj = cx509.load_der_x509_certificate(der, default_backend())
+                            not_after = cert_obj.not_valid_after_utc.replace(tzinfo=None) if hasattr(cert_obj.not_valid_after_utc, 'replace') else cert_obj.not_valid_after
+                            not_before = cert_obj.not_valid_before_utc.replace(tzinfo=None) if hasattr(cert_obj.not_valid_before_utc, 'replace') else cert_obj.not_valid_before
+                            expiry_days = (not_after - datetime.utcnow()).days
+                            try:
+                                issuer_cn = cert_obj.issuer.get_attributes_for_oid(cx509.oid.NameOID.COMMON_NAME)[0].value
+                            except Exception:
+                                issuer_cn = None
+                            try:
+                                subject_cn = cert_obj.subject.get_attributes_for_oid(cx509.oid.NameOID.COMMON_NAME)[0].value
+                            except Exception:
+                                subject_cn = domain
+                            return {
+                                "valid": True,
+                                "status_code": 200,
+                                "tls_version": tls_version,
+                                "cipher": cipher[0] if cipher else None,
+                                "expires_in_days": expiry_days,
+                                "issuer": issuer_cn,
+                                "subject": subject_cn,
+                            }
+                        except ImportError:
+                            pass
+                    cert_map = {}
+
+        expiry_raw = cert_map.get("notAfter")
+        expiry_days = None
+        if expiry_raw:
+            try:
+                expiry_dt = datetime.strptime(str(expiry_raw), "%b %d %H:%M:%S %Y %Z")
+                expiry_days = (expiry_dt - datetime.utcnow()).days
+            except Exception:
                 expiry_days = None
-                if expiry_raw:
-                    try:
-                        expiry_dt = datetime.strptime(str(expiry_raw), "%b %d %H:%M:%S %Y %Z")
-                        expiry_days = (expiry_dt - datetime.utcnow()).days
-                    except Exception:
-                        expiry_days = None
-                issuer = {k: v for tup in cert_map.get("issuer", []) for k, v in tup}
-                subject = {k: v for tup in cert_map.get("subject", []) for k, v in tup}
-                return {
-                    "valid": bool(cert_map),
-                    "status_code": 200,
-                    "tls_version": ssock.version(),
-                    "cipher": cipher[0] if cipher else None,
-                    "expires_in_days": expiry_days,
-                    "issuer": issuer.get("commonName") or issuer.get("organizationName"),
-                    "subject": subject.get("commonName") or subject.get("organizationName"),
-                }
+        issuer = {k: v for tup in cert_map.get("issuer", []) for k, v in tup}
+        subject = {k: v for tup in cert_map.get("subject", []) for k, v in tup}
+        return {
+            "valid": bool(cert_map),
+            "status_code": 200,
+            "tls_version": tls_version,
+            "cipher": cipher[0] if cipher else None,
+            "expires_in_days": expiry_days,
+            "issuer": issuer.get("commonName") or issuer.get("organizationName"),
+            "subject": subject.get("commonName") or subject.get("organizationName"),
+        }
     except Exception as e:
         return {"valid": False, "error": str(e)}
 
@@ -323,7 +362,7 @@ def _build_url_risk_summary(threat: dict, patterns: dict, domain: dict, ssl_info
     if domain.get("risk_level") == "high":
         score += 20
         factors.append("Domain structure appears suspicious")
-    if ssl_info and not ssl_info.get("valid", True):
+    if ssl_info and ssl_info.get("valid") is False:
         score += 15
         factors.append("TLS/SSL validation failed")
     if http_behavior.get("redirect_count", 0) >= 3:

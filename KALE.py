@@ -141,6 +141,14 @@ app = create_app()
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", cfg.FLASK_PORT))
+
+    # Start Telegram bot polling
+    try:
+        from services.notification_service import start_telegram_bot
+        start_telegram_bot()
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).warning(f"Telegram bot failed to start: {e}")
     _sep = "+" + "=" * 62 + "+"
     print(_sep)
     print("| {:^60} |".format("CyberRegis Threat Intelligence Platform"))
