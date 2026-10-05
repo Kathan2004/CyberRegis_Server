@@ -17,6 +17,7 @@ from api.validators import validate_url
 from config import get_config
 import database as db
 from services.shodan_service import ShodanService
+from netguard import safe_get
 
 logger = logging.getLogger(__name__)
 url_bp = Blueprint("url", __name__)
@@ -326,7 +327,7 @@ def _shodan_url_enrichment(domain: str) -> dict:
 
 def _analyze_http_behavior(url: str) -> dict:
     try:
-        resp = requests.get(url, timeout=12, verify=False, allow_redirects=True)
+        resp = safe_get(url, timeout=12, verify=False, allow_redirects=True)
         history = [h.url for h in resp.history] + [resp.url]
         return {
             "status_code": resp.status_code,

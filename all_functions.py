@@ -6,6 +6,7 @@ import requests
 from datetime import datetime
 import json
 from collections import Counter
+from netguard import safe_get
 
 class all_functions:
     def __init__(self):
@@ -300,7 +301,7 @@ class all_functions:
     def check_robots_txt(self, domain):
         """Check if robots.txt exists for a domain"""
         try:
-            response = requests.get(f'http://{domain}/robots.txt', timeout=5)
+            response = safe_get(f'http://{domain}/robots.txt', timeout=5)
             if response.status_code == 200:
                 content_type = response.headers.get('content-type', '').lower()
                 text = response.text.strip()
@@ -326,7 +327,7 @@ class all_functions:
             
             for location in locations:
                 try:
-                    response = requests.get(location, timeout=5)
+                    response = safe_get(location, timeout=5)
                     if response.status_code == 200:
                         content_type = response.headers.get('content-type', '').lower()
                         text = response.text.strip()
@@ -809,7 +810,7 @@ class all_functions:
             if not url.startswith('http'):
                 url = f"https://{url}"
 
-            response = requests.get(url, timeout=10, verify=False, allow_redirects=True)
+            response = safe_get(url, timeout=10, verify=False, allow_redirects=True)
             headers = response.headers
 
             header_catalog = {
