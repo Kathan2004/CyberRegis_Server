@@ -2,13 +2,11 @@
 Threat Intelligence Blueprint
 IOC management, CVE lookup, MITRE ATT&CK mapping, threat feed aggregation.
 """
-import time
 import logging
-import socket
 from urllib.parse import urlparse
 from urllib.parse import quote
 from flask import Blueprint, request
-from api.responses import success_response, error_response, paginated_response
+from api.responses import success_response, error_response
 from api.validators import validate_cve_id, validate_ip, validate_domain
 import database as db
 from services.shodan_service import ShodanService

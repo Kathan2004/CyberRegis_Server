@@ -3,7 +3,6 @@ Report Generation Blueprint
 Generate security assessment reports.
 """
 import logging
-import json
 from datetime import datetime
 from flask import Blueprint, request
 from api.responses import success_response, error_response

@@ -1,10 +1,8 @@
 import socket
 import ssl
 import dns.resolver
-import whois
 import requests
 from datetime import datetime
-import json
 from collections import Counter
 from netguard import safe_get
 
