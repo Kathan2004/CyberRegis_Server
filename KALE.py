@@ -18,6 +18,8 @@ if _sys.stdout.encoding and _sys.stdout.encoding.lower() not in ('utf-8', 'utf8'
     except Exception:
         pass
 
+import hmac
+import ipaddress
 import os
 import sys
 import logging
@@ -58,30 +60,46 @@ from flask_limiter.util import get_remote_address
 import database
 database.init_db()  # Initialize database tables on startup
 
+PUBLIC_PATHS = {"/api/health"}
+
 
 def create_app() -> Flask:
+    if cfg.FLASK_ENV == "production" and not cfg.API_TOKEN:
+        raise RuntimeError("API_TOKEN must be set when FLASK_ENV=production")
     app = Flask(__name__)
     app.config["MAX_CONTENT_LENGTH"] = cfg.MAX_CONTENT_LENGTH
 
     # ── CORS ──────────────────────────────────────────
     CORS(
         app,
-        origins=[r"http://localhost:\d+", r"http://127\.0\.0\.1:\d+"],
+        resources={r"/api/*": {"origins": cfg.cors_origins()}},
         methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        allow_headers=["Content-Type", "Authorization"],
-        supports_credentials=True,
+        allow_headers=["Content-Type", "Authorization", "X-API-Key"],
     )
 
+    # ── API authentication ────────────────────────────
+    # Every /api/* route except the health probe requires the shared API token.
     @app.before_request
-    def handle_preflight():
-        if flask_request.method == "OPTIONS":
-            resp = make_response()
-            origin = flask_request.headers.get("Origin", "*")
-            resp.headers["Access-Control-Allow-Origin"] = origin
-            resp.headers["Access-Control-Allow-Headers"] = "Content-Type,Authorization"
-            resp.headers["Access-Control-Allow-Methods"] = "GET,POST,PUT,DELETE,OPTIONS"
-            resp.headers["Access-Control-Allow-Credentials"] = "true"
-            return resp
+    def require_api_token():
+        if flask_request.method == "OPTIONS" or not flask_request.path.startswith("/api/"):
+            return None
+        if flask_request.path in PUBLIC_PATHS or not cfg.API_TOKEN:
+            return None
+        supplied = flask_request.headers.get("X-API-Key", "")
+        auth = flask_request.headers.get("Authorization", "")
+        if auth.lower().startswith("bearer "):
+            supplied = auth[7:].strip()
+        if not supplied or not hmac.compare_digest(supplied, cfg.API_TOKEN):
+            return {"status": "error", "error": {"message": "Unauthorized", "code": "ERR_401"}}, 401
+        return None
+
+    @app.after_request
+    def security_headers(resp):
+        resp.headers.setdefault("X-Content-Type-Options", "nosniff")
+        resp.headers.setdefault("X-Frame-Options", "DENY")
+        resp.headers.setdefault("Referrer-Policy", "no-referrer")
+        resp.headers.setdefault("Cache-Control", "no-store")
+        return resp
 
     # ── Rate Limiting ─────────────────────────────────
     Limiter(
@@ -139,24 +157,35 @@ def create_app() -> Flask:
 # ── Main ──────────────────────────────────────────────────────
 app = create_app()
 
+def _is_loopback(host: str) -> bool:
+    try:
+        return ipaddress.ip_address(host).is_loopback
+    except ValueError:
+        return host == "localhost"
+
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", cfg.FLASK_PORT))
+    host = cfg.FLASK_HOST
+
+    if not cfg.API_TOKEN and not _is_loopback(host):
+        sys.exit("Refusing to listen on a non-loopback address without API_TOKEN set. "
+                 "Set API_TOKEN in .env or bind FLASK_HOST=127.0.0.1.")
 
     # Start Telegram bot polling
     try:
         from services.notification_service import start_telegram_bot
         start_telegram_bot()
     except Exception as e:
-        import logging
         logging.getLogger(__name__).warning(f"Telegram bot failed to start: {e}")
     _sep = "+" + "=" * 62 + "+"
     print(_sep)
     print("| {:^60} |".format("CyberRegis Threat Intelligence Platform"))
     print(_sep)
-    print("| {:<60} |".format(f"  API Server:  http://0.0.0.0:{port}"))
-    print("| {:<60} |".format(f"  Health:      http://localhost:{port}/api/health"))
-    print("| {:<60} |".format(f"  Dashboard:   http://localhost:{port}/api/dashboard/stats"))
+    print("| {:<60} |".format(f"  API Server:  http://{host}:{port}"))
+    print("| {:<60} |".format(f"  Health:      http://{host}:{port}/api/health"))
+    print("| {:<60} |".format(f"  Auth:        {'API token required' if cfg.API_TOKEN else 'OPEN (loopback only)'}"))
     print("| {:<60} |".format(f"  Environment: {cfg.FLASK_ENV}"))
     print("| {:<60} |".format(f"  SSL Verify:  {cfg.SSL_VERIFY}"))
     print(_sep)
-    app.run(host="0.0.0.0", port=port, debug=cfg.FLASK_DEBUG, threaded=True)
+    app.run(host=host, port=port, debug=cfg.FLASK_DEBUG, threaded=True)

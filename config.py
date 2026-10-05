@@ -10,7 +10,10 @@ load_dotenv()
 
 class Config:
     """Base configuration."""
-    SECRET_KEY = os.getenv("SECRET_KEY", "change-this-to-a-random-secret-key")
+    SECRET_KEY = os.getenv("SECRET_KEY", "")
+    # Shared secret clients send as "Authorization: Bearer <token>" or "X-API-Key".
+    API_TOKEN = os.getenv("API_TOKEN", "").strip()
+    FLASK_HOST = os.getenv("FLASK_HOST", "127.0.0.1")
     FLASK_ENV = os.getenv("FLASK_ENV", "development")
     FLASK_PORT = int(os.getenv("FLASK_PORT", 5000))
     FLASK_DEBUG = os.getenv("FLASK_DEBUG", "false").lower() == "true"
@@ -37,6 +40,9 @@ class Config:
 
     # ── CORS ──────────────────────────────────────────────────
     CORS_ORIGINS = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://localhost:3001")
+
+    def cors_origins(self):
+        return [o.strip() for o in self.CORS_ORIGINS.split(",") if o.strip()]
 
     # ── SSL Verification ──────────────────────────────────────
     SSL_VERIFY = os.getenv("SSL_VERIFY", "true").lower() == "true"
@@ -65,7 +71,6 @@ class ProductionConfig(Config):
 
 
 class DevelopmentConfig(Config):
-    FLASK_DEBUG = True
     FLASK_ENV = "development"
 
 
