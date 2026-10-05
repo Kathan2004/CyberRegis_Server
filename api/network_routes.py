@@ -3,6 +3,7 @@ Network Analysis Blueprint
 PCAP file analysis with VirusTotal integration.
 """
 import os
+import uuid
 import time
 import logging
 import dpkt
@@ -444,12 +445,20 @@ def analyze_pcap():
         if not file.filename or not file.filename.endswith((".pcap", ".cap", ".pcapng")):
             return error_response("Only .pcap / .cap / .pcapng files are supported", 400)
 
+        # Never use the client-supplied filename as a path: store under a random name.
         os.makedirs(cfg.UPLOAD_FOLDER, exist_ok=True)
-        file_path = os.path.join(cfg.UPLOAD_FOLDER, file.filename)
+        ext = os.path.splitext(file.filename)[1].lower()
+        file_path = os.path.join(cfg.UPLOAD_FOLDER, f"{uuid.uuid4().hex}{ext}")
         file.save(file_path)
 
-        analyzer = PcapAnalyzer()
-        result = analyzer.analyze(file_path)
+        try:
+            analyzer = PcapAnalyzer()
+            result = analyzer.analyze(file_path)
+        finally:
+            try:
+                os.remove(file_path)
+            except OSError:
+                pass
 
         duration_ms = int((time.time() - start) * 1000)
         result["scan_duration_ms"] = duration_ms
