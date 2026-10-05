@@ -4,7 +4,7 @@ All endpoints return responses through these helpers.
 """
 from datetime import datetime
 from flask import jsonify
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 
 def success_response(data: Any = None, message: str = None,

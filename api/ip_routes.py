@@ -7,7 +7,7 @@ import requests
 import logging
 from datetime import datetime
 from flask import Blueprint, request
-from api.responses import success_response, error_response
+from api.responses import error_response
 from api.validators import validate_ip
 from config import get_config
 import database as db

@@ -5,7 +5,7 @@ AI-powered cybersecurity assistant via Google Gemini.
 import logging
 import requests
 from flask import Blueprint, request as flask_request
-from api.responses import success_response, error_response
+from api.responses import error_response
 from config import get_config
 
 logger = logging.getLogger(__name__)

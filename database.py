@@ -4,10 +4,9 @@ SQLite persistence for scan history, IOCs, and threat intelligence.
 """
 import sqlite3
 import json
-import os
 from collections import defaultdict, deque
 from datetime import datetime, timedelta
-from typing import Optional, List, Dict, Any
+from typing import Optional, List, Dict
 from config import get_config
 
 cfg = get_config()

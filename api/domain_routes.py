@@ -5,7 +5,6 @@ Comprehensive domain reconnaissance with enhanced capabilities.
 import time
 import requests
 import traceback
-from datetime import datetime
 from flask import Blueprint, request
 from api.responses import success_response, error_response
 from api.validators import validate_domain, sanitize_domain

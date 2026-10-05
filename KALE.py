@@ -51,7 +51,7 @@ if not cfg.SSL_VERIFY:
     requests.post = _patched_post
 
 # ── Flask Application Factory ─────────────────────────────────
-from flask import Flask, make_response, request as flask_request
+from flask import Flask, request as flask_request
 from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address

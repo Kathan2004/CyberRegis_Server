@@ -12,7 +12,7 @@ import re
 import socket
 import ssl as _ssl
 from flask import Blueprint, request as flask_request
-from api.responses import success_response, error_response
+from api.responses import error_response
 from api.validators import validate_url
 from config import get_config
 import database as db
