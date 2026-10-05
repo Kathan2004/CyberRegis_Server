@@ -358,6 +358,15 @@ def _get_updates(offset: int) -> list:
     return resp.json().get("result", [])
 
 
+def _allowed_chat_ids() -> set:
+    """Only chats listed in TELEGRAM_CHAT_ID (comma-separated) may issue bot commands."""
+    return {c.strip() for c in str(cfg.TELEGRAM_CHAT_ID or "").split(",") if c.strip()}
+
+
+def _api_headers() -> dict:
+    return {"Authorization": f"Bearer {cfg.API_TOKEN}"} if cfg.API_TOKEN else {}
+
+
 def _handle_update(update: dict):
     message = update.get("message") or update.get("edited_message")
     if not message:
@@ -365,6 +374,9 @@ def _handle_update(update: dict):
     chat_id = str(message["chat"]["id"])
     text = (message.get("text") or "").strip()
     if not text.startswith("/"):
+        return
+    if chat_id not in _allowed_chat_ids():
+        logger.warning("Ignoring Telegram command from unauthorised chat %s", chat_id)
         return
     parts = text.split(maxsplit=1)
     command = parts[0].lower().split("@")[0]  # strip @botname suffix
@@ -450,7 +462,7 @@ def _cmd_ip(chat_id: str, ip: str):
     _telegram_send(chat_id, f"🔄 Analysing IP `{ip}`...")
     try:
         base_url = f"http://127.0.0.1:{cfg.FLASK_PORT}"
-        resp = requests.post(f"{base_url}/api/check-ip", json={"ip": ip}, timeout=30)
+        resp = requests.post(f"{base_url}/api/check-ip", json={"ip": ip}, timeout=30, headers=_api_headers())
         resp.raise_for_status()
         result = resp.json()
         msg = _format_telegram_message("ip", ip, result)
@@ -468,7 +480,7 @@ def _cmd_url(chat_id: str, url: str):
     _telegram_send(chat_id, f"🔄 Checking URL `{url}`...")
     try:
         base_url = f"http://127.0.0.1:{cfg.FLASK_PORT}"
-        resp = requests.post(f"{base_url}/api/check-url", json={"url": url}, timeout=30)
+        resp = requests.post(f"{base_url}/api/check-url", json={"url": url}, timeout=30, headers=_api_headers())
         resp.raise_for_status()
         result = resp.json()
         msg = _format_telegram_message("url", url, result)
@@ -484,7 +496,7 @@ def _cmd_domain(chat_id: str, domain: str):
     _telegram_send(chat_id, f"🔄 Running domain recon on `{domain}`...")
     try:
         base_url = f"http://127.0.0.1:{cfg.FLASK_PORT}"
-        resp = requests.post(f"{base_url}/api/analyze-domain", json={"domain": domain}, timeout=60)
+        resp = requests.post(f"{base_url}/api/analyze-domain", json={"domain": domain}, timeout=60, headers=_api_headers())
         resp.raise_for_status()
         result = resp.json()
         data = result.get("data", result)
@@ -498,7 +510,7 @@ def _cmd_status(chat_id: str):
     try:
         base_url = f"http://127.0.0.1:{cfg.FLASK_PORT}"
         health = requests.get(f"{base_url}/api/health", timeout=5).json()
-        stats = requests.get(f"{base_url}/api/dashboard/stats", timeout=5).json()
+        stats = requests.get(f"{base_url}/api/dashboard/stats", timeout=5, headers=_api_headers()).json()
 
         scan_data = stats.get("data", {}).get("scans", {})
         ioc_data = stats.get("data", {}).get("iocs", {})

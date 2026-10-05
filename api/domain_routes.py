@@ -13,6 +13,7 @@ from all_functions import all_functions
 import database as db
 import logging
 from services.shodan_service import ShodanService
+from netguard import safe_get
 
 logger = logging.getLogger(__name__)
 domain_bp = Blueprint("domain", __name__)
@@ -233,11 +234,11 @@ def analyze_domain():
                             and item.get("Value") != "Not Found"):
                         security_txt_present = True
                         try:
-                            resp = requests.get(f"http://{domain}/.well-known/security.txt", timeout=5)
+                            resp = safe_get(f"http://{domain}/.well-known/security.txt", timeout=5)
                             if resp.status_code == 200:
                                 security_txt_url = f"http://{domain}/.well-known/security.txt"
                             else:
-                                resp = requests.get(f"http://{domain}/security.txt", timeout=5)
+                                resp = safe_get(f"http://{domain}/security.txt", timeout=5)
                                 if resp.status_code == 200:
                                     security_txt_url = f"http://{domain}/security.txt"
                         except Exception:
@@ -422,7 +423,7 @@ def get_security_file_content():
 
         for url in urls:
             try:
-                resp = requests.get(url, timeout=15, allow_redirects=True)
+                resp = safe_get(url, timeout=15, allow_redirects=True)
                 if resp.status_code == 200:
                     ct = resp.headers.get("content-type", "").lower()
                     text = resp.text
