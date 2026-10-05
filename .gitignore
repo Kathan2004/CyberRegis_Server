@@ -50,3 +50,13 @@ Thumbs.db
 # Temporary files
 tempCodeRunnerFile.py
 *.tmp
+
+# Local state (never commit)
+.venv/
+*.db
+*.sqlite3
+cyberregis.log
+.env.*
+!.env.example
+.pytest_cache/
+.ruff_cache/
